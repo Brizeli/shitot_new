@@ -20,6 +20,7 @@ public class main {
             appCtx.load("spring-db.xml");
             appCtx.refresh();
             DoctorsModelCreator dmc =appCtx.getBean( DoctorsModelCreator.class);
+//            DoctorRepository dr=appCtx.getBean(DoctorRepository.class);
             dmc.createModel();
         }
     }
