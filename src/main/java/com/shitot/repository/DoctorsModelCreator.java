@@ -65,6 +65,15 @@ public class DoctorsModelCreator {
                 cls.add(c);
                 clinGen++;
             }
+            String[] tAud={"CHILDREN","TEENS","ADULTS","ELDERY"};
+            Set<TargetAudience> targetAudiences=new LinkedHashSet<>();
+            d.setTargetAudiences(targetAudiences);
+            for(int j:getRndIntSet(getRndInt(1,4),0,3)){
+                TargetAudience tga=new TargetAudience();
+                tga.setName(tAud[j]);
+//                if(em.find(TargetAudience.class,))
+                em.persist(tga);
+            }
             em.persist(d);
         }
     }
