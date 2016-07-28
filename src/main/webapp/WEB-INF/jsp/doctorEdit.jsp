@@ -5,6 +5,7 @@
 <hr>
 <jsp:useBean id="doctor" type="com.shitot.model.Doctor" scope="request"/>
 <form action="doctors" method="post">
+    <h1>sksjdjjjd</h1>
     <%--doctors?id=&name=Doctor1&
     login=doc1&
     password=1&
