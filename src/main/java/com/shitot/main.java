@@ -22,6 +22,7 @@ public class main {
             DoctorsModelCreator dmc =appCtx.getBean( DoctorsModelCreator.class);
 //            DoctorRepository dr=appCtx.getBean(DoctorRepository.class);
             dmc.createModel();
+
         }
     }
 
