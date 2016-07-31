@@ -5,8 +5,7 @@ import com.shitot.model.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.*;
 @Repository
@@ -71,7 +70,9 @@ public class DoctorsModelCreator {
             for(int j:getRndIntSet(getRndInt(1,4),0,3)){
                 TargetAudience tga=new TargetAudience();
                 tga.setName(tAud[j]);
-//                if(em.find(TargetAudience.class,))
+                Query q = em.createNamedQuery(TargetAudience.BY_NAME,TargetAudience.class);
+                q.setParameter("name",tAud[j]);
+                System.out.println(q.getResultList()+"->");
                 em.persist(tga);
             }
             em.persist(d);
