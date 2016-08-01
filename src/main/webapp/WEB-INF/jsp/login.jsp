@@ -1,16 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<form action="spring_security_check" class="dl-horizontal" method="post">
-    <dl>
-        <dt>Name:</dt>
-        <dd><input class="form-control" type="text" name="username"></dd>
-    </dl>
-    <dl>
-        <dt>Password:</dt>
-        <dd><input class="form-control" type="password" name="password"></dd>
-    </dl>
-    <button class="btn btn-primary" type="submit">Log In</button>
-    <a class="btn btn-primary" onclick="reg()">Register</a>
-</form>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<div class="container">
+    <form action="spring_security_check" method="post">
+        <dl>
+            <dt>Name:</dt>
+            <dd><input class="form-control" type="text" name="username"></dd>
+        </dl>
+        <dl>
+            <dt>Password:</dt>
+            <dd><input class="form-control" type="password" name="password"></dd>
+        </dl>
+        <button class="btn btn-primary" type="submit">Log In</button>
+        <a class="btn btn-primary" onclick="reg()">Register</a>
+    </form>
+</div>
 <div class="container">
     <c:if test="${error}">
         <div class="error">
@@ -19,7 +23,8 @@
     </c:if>
     <c:if test="${not empty message}">
         <div class="message">
-            <fmt:message key="${message}"/>
+            ${message}
+            <%--<fmt:message key="${message}"/>--%>
         </div>
     </c:if>
 </div>
@@ -54,8 +59,6 @@
         </div>
     </div>
 </div>
-
-</body>
 <script>
     function reg() {
         $('#regForm')[0].reset();
