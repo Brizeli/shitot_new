@@ -9,24 +9,34 @@ import java.util.Set;
  * Slot is workingDay, you may create 7 slots for every clinic with empty set of intervals
  */
 @Entity(name = "slots")
-public class Slot extends BaseEntity{
+public class Slot extends BaseEntity {
+
+    public static final Slot SUNDAY     = new Slot(DayOfWeek.SUNDAY);
+    public static final Slot MONDAY     = new Slot(DayOfWeek.MONDAY);
+    public static final Slot TUESDAY    = new Slot(DayOfWeek.TUESDAY);
+    public static final Slot WEDNESDAY  = new Slot(DayOfWeek.WEDNESDAY);
+    public static final Slot THURSDAY   = new Slot(DayOfWeek.THURSDAY);
+    public static final Slot FRIDAY     = new Slot(DayOfWeek.FRIDAY);
+    public static final Slot SATURDAY   = new Slot(DayOfWeek.SATURDAY);
 
     @Enumerated
     @Column(name = "day_of_week")
     private DayOfWeek dayOfWeek;
-
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "slot_intervals", joinColumns = @JoinColumn(name = "slot_id"))
-    @Column(name = "interv")
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ManyToOne
+    private Clinic clinic;
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Interval> intervals;
 
     public Slot() {
     }
 
-    public Slot(DayOfWeek dayOfWeek, Set<Interval> intervals) {
+    public Slot(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
-        this.intervals = intervals;
+    }
+
+    public Slot(Integer id, DayOfWeek dayOfWeek) {
+        super(id);
+        this.dayOfWeek = dayOfWeek;
     }
 
     public DayOfWeek getDayOfWeek() {
@@ -43,6 +53,14 @@ public class Slot extends BaseEntity{
 
     public void setIntervals(Set<Interval> intervals) {
         this.intervals = intervals;
+    }
+
+    public Clinic getClinic() {
+        return clinic;
+    }
+
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface DoctorService {
 
     List<Specialty> getAllSpecialties();
 
-    List<Expert> getAllExperiences();
+    List<Qualification> getAllExperiences();
 
     List<Certificate> getAllCertificates();
 

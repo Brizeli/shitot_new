@@ -1,5 +1,6 @@
 package com.shitot.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -8,11 +9,12 @@ import javax.persistence.NamedQuery;
  * Created by Next on 26.07.2016.
  */
 @NamedQueries({
-                  @NamedQuery(name = User.GET_BY_LOGIN,query = "select u from users u where u.login=:login")
+                  @NamedQuery(name = User.GET_BY_LOGIN, query = "select u from users u where u.login=:login")
 })
 @Entity(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     public static final String GET_BY_LOGIN = "User.getByLogin";
+    @Column(unique = true)
     String login;
     String password;
 

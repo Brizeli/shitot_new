@@ -1,72 +1,70 @@
 package com.shitot.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Next on 12.07.2016.
  */
 @NamedQueries({
-                  @NamedQuery(name = Doctor.ALL_SORTED,query = "select d from doctors d order by d.name")
+                  @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d order by d.fullName")
 })
 @Entity(name = "doctors")
-public class Doctor extends NamedEntity {
+public class Doctor extends BaseEntity {
 
     public static final String ALL_SORTED = "Doctor.getAllSorted";
-    private String comments;
-    private String email;
-    private String lections;
+
+    @NotEmpty
+    public String fullName;
+
+    @Column(unique = true, nullable = false)
+    @NotEmpty
     private String login;
     private String password;
-    private String preferential;
-    private String telAdditional;
+    @Column(unique = true)
+    private String email;
     private String telNumber;
+    private String telHome;
+    private String homeAddress;
+    private String lections;
+    private String preferential;
+    private String comments;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Certificate certificate;
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<Expert> expertIn;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Qualification> qualifications;
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Specialty> specialties;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<TargetAudience> targetAudiences;
 
-    @OneToMany(mappedBy = "doctor",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private Set<Clinic> clinics;
 
     public Doctor() {
     }
 
-    public Doctor(Integer id, String name, String comments, String email, String lections, String login,
-                  String password, String preferential, String telAdditional, String telNumber) {
-        super(id, name);
-        this.comments = comments;
-        this.email = email;
-        this.lections = lections;
+    public Doctor(Integer id, String fullName, String login, String password, String email, String telNumber, String telHome,
+                  String homeAddress, String lections, String preferential, String comments) {
+        super(id);
+        this.fullName = fullName;
         this.login = login;
         this.password = password;
-        this.preferential = preferential;
-        this.telAdditional = telAdditional;
+        this.email = email;
         this.telNumber = telNumber;
+        this.telHome = telHome;
+        this.homeAddress = homeAddress;
+        this.lections = lections;
+        this.preferential = preferential;
+        this.comments = comments;
     }
 
-    public Doctor(Integer id, String name, Certificate certificate, String comments, String email,
-                  Set<Expert> expertIn, String lections, String login, String password, String preferential,
-                  Set<Specialty> specialties, Set<TargetAudience> targetAudiences, String telAdditional,
-                  String telNumber) {
-        super(id, name);
-        this.certificate = certificate;
-        this.comments = comments;
-        this.email = email;
-        this.expertIn = expertIn;
-        this.lections = lections;
-        this.login = login;
-        this.password = password;
-        this.preferential = preferential;
-        this.specialties = specialties;
-        this.targetAudiences = targetAudiences;
-        this.telAdditional = telAdditional;
-        this.telNumber = telNumber;
+    public Doctor(String fullName, String login, String password, String email, String telNumber, String telHome,
+                  String homeAddress, String lections, String preferential, String comments) {
+        this(null, comments, email, lections, login, fullName, password, telNumber, homeAddress, preferential, telHome);
     }
 
     public Certificate getCertificate() {
@@ -101,12 +99,20 @@ public class Doctor extends NamedEntity {
         this.email = email;
     }
 
-    public Set<Expert> getExpertIn() {
-        return expertIn;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setExpertIn(Set<Expert> expertIn) {
-        this.expertIn = expertIn;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
     }
 
     public String getLections() {
@@ -141,6 +147,14 @@ public class Doctor extends NamedEntity {
         this.preferential = preferential;
     }
 
+    public Set<Qualification> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(Set<Qualification> qualifications) {
+        this.qualifications = qualifications;
+    }
+
     public Set<Specialty> getSpecialties() {
         return specialties;
     }
@@ -157,12 +171,12 @@ public class Doctor extends NamedEntity {
         this.targetAudiences = targetAudiences;
     }
 
-    public String getTelAdditional() {
-        return telAdditional;
+    public String getTelHome() {
+        return telHome;
     }
 
-    public void setTelAdditional(String telAdditional) {
-        this.telAdditional = telAdditional;
+    public void setTelHome(String telHome) {
+        this.telHome = telHome;
     }
 
     public String getTelNumber() {
@@ -171,5 +185,21 @@ public class Doctor extends NamedEntity {
 
     public void setTelNumber(String telNumber) {
         this.telNumber = telNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                   "fullName='" + fullName + '\'' +
+                   ", login='" + login + '\'' +
+                   ", password='" + password + '\'' +
+                   ", email='" + email + '\'' +
+                   ", homeAddress='" + homeAddress + '\'' +
+                   ", telNumber='" + telNumber + '\'' +
+                   ", telHome='" + telHome + '\'' +
+                   ", lections='" + lections + '\'' +
+                   ", preferential='" + preferential + '\'' +
+                   ", comments='" + comments + '\'' +
+                   '}';
     }
 }

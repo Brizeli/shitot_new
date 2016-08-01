@@ -53,7 +53,7 @@
     <dl>
         <dt>Enter doctor additional tel:</dt>
         <dd>
-            <input type="text" name="telAdditional" value="${doctor.telAdditional}"/>
+            <input type="text" name="telAdditional" value="${doctor.telHome}"/>
         </dd>
     </dl>
     <dl>
@@ -98,7 +98,7 @@
     <dl>
         <dt>Enter doctor experiences:</dt>
         <dd>
-            <input type="text" name="expert" value="<%=StringUtils.collectionToCommaDelimitedString(doctor.getExpertIn())%>"/>
+            <input type="text" name="expert" value="<%=StringUtils.collectionToCommaDelimitedString(doctor.getQualifications())%>"/>
         </dd>
     </dl>
     <dl>

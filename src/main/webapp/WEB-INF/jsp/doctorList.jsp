@@ -80,7 +80,7 @@
                         <label class="control-label col-xs-3" for="telAdditional">Additional tel:</label>
                         <div class="col-xs-9">
                             <input class="form-control" type="text" name="telAdditional" id="telAdditional"
-                                   value="${doctor.telAdditional}"/>
+                                   value="${doctor.telHome}"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -128,7 +128,7 @@
                         <label class="control-label col-xs-3" for="expert">Expert in:</label>
                         <div class="col-xs-9">
                             <input class="form-control" type="text" name="expert" id="expert"
-                                   value="${doctor.expertIn}"/>
+                                   value="${doctor.qualifications}"/>
                         </div>
                     </div>
                     <div class="form-group">

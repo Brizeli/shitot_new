@@ -42,8 +42,8 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Expert> getAllExperiences() {
-        return repository.getAllExperiences();
+    public List<Qualification> getAllExperiences() {
+        return repository.getAllQualifications();
     }
 
     @Override

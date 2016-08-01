@@ -52,7 +52,7 @@ public class DoctorController extends AbstractDoctorController {
         if (!certificate.isEmpty())
             doctor.setCertificate(new Certificate(certificate));
         if (!expert.isEmpty())
-            doctor.setExpertIn(Stream.of(expert.split("\\P{LD}+")).map((name) -> new Expert(name)).collect(Collectors.toSet()));
+            doctor.setQualifications(Stream.of(expert.split("\\P{LD}+")).map((name) -> new Qualification(name)).collect(Collectors.toSet()));
         if (!specialty1.isEmpty() || !specialty2.isEmpty())
             doctor.setSpecialties(Stream.of(specialty1, specialty2).map(Specialty::new).collect(Collectors.toSet()));
         if (targets!=null)
