@@ -1,26 +1,28 @@
 package com.shitot.repository;
 
-import com.shitot.model.*;
+import com.shitot.model.Clinic;
+import com.shitot.model.Slot;
 
 import java.util.List;
 
 /**
- * Created by Next on 21.07.2016.
+ * Created by Oleg on 01.08.2016.
  */
 public interface ClinicRepository {
     Clinic save(Clinic clinic);
 
-    List<Slot> getAllSlots();
+    List<Slot> getSlots(int clinicId);
 
-    List<Clinic> getAll();
+    Slot getDaySlot(int dayOfWeek, int clinicId);
 
-    List<Clinic> getByCity(String specialty);
+    List<Clinic> getByCitySpecialty(String city, String specialty);
 
-    List<Clinic> getByDoctor(String qualification);
+    List<Clinic> getByDoctor(int doctorId);
 
+    Clinic get(int clinicId);
 
-    Clinic get(int id);
+    void setSlot(int dayOfWeek, int clinicId, int... hours);
 
-    void setSlot(Slot slot);
+    void setClinic(int doctorId, String name, String city, String address);
 
 }
