@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Created by Next on 21.07.2016.
  */
 @Controller
 public class RootController {
 
+    private String loggedUserName;
     @Autowired
     private DoctorService doctorService;
 
@@ -27,8 +26,8 @@ public class RootController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root(Model model) {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("loggedUser", name);
+        loggedUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("loggedUser", loggedUserName);
         model.addAttribute("page", "userHomePage");
         return "index";
     }
@@ -49,13 +48,14 @@ public class RootController {
         if (newUser != null) {
             model.addAttribute("message", "Registered");
         } else model.addAttribute("message", "User exists!");
+        model.addAttribute("loggedUser", loggedUserName);
         model.addAttribute("page", "login");
         return "index";
     }
 
     @RequestMapping(value = "/doctors", method = RequestMethod.GET)
     public String doctorList(Model model) {
-        model.addAttribute("page", "doctorList");
+        model.addAttribute("page", "doctorListDataTable");
         return "index";
     }
 }

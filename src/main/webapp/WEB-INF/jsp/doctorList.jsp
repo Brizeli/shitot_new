@@ -1,7 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<style>
-
-</style>
 <h2>Doctors <a class="btn btn-default" id="addDoctor" onclick="add()">New doctor</a></h2>
 <div class="view-box">
     <div class="container doctorlist"></div>
