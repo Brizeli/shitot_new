@@ -10,16 +10,17 @@ import java.util.Set;
  */
 
 @NamedQueries({
-        @NamedQuery(name = Patient.ALL_SORTED, query = "select d from patients d order by d.fullName")
+        @NamedQuery(name = Patient.ALL_SORTED, query = "select d from patients d order by d.name")
 })
 @Entity(name = "patients")
 public class Patient extends BaseEntity {
-    public static final String ALL_SORTED = "Doctor.getAllSorted";
+    public static final String ALL_SORTED = "Patient.getAllSorted";
 
     @NotEmpty
     private String name;
     private int age;
     private String telNumber;
+
 
     @OneToMany (mappedBy = "patient")
     private Set<Appointment> appointments;
@@ -54,5 +55,11 @@ public class Patient extends BaseEntity {
 
     public String getTelNumber() {
         return telNumber;
+    }
+
+    public Patient(String name, int age, String telNumber) {
+        this.name = name;
+        this.age = age;
+        this.telNumber = telNumber;
     }
 }

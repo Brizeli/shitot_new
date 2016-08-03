@@ -12,7 +12,7 @@ import java.util.*;
                   @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d order by d.fullName")
 })
 @Entity(name = "doctors")
-public class Doctor extends BaseEntity {
+public class  Doctor extends BaseEntity {
 
     public static final String ALL_SORTED = "Doctor.getAllSorted";
 

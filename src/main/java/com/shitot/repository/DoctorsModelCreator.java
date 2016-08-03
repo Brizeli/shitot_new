@@ -7,11 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import java.lang.reflect.*;
 @Repository
 @Transactional
 public class DoctorsModelCreator {
@@ -44,23 +43,6 @@ public class DoctorsModelCreator {
         em.persist(TargetAudience.CHILDREN);
         em.persist(TargetAudience.ELDERY);
         em.persist(TargetAudience.TEENS);
-        em.persist(Slot.MONDAY);
-        em.persist(Slot.TUESDAY);
-        em.persist(Slot.WEDNESDAY);
-        em.persist(Slot.THURSDAY);
-        em.persist(Slot.FRIDAY);
-        em.persist(Slot.SATURDAY);
-        em.persist(Slot.SUNDAY);
-        try{
-            Class IntervalC=Class.forName("com.shitot.model.Interval");
-            for (Field f:IntervalC.getDeclaredFields()) {
-                em.persist(f.get);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
         Slot[] days ={Slot.MONDAY,Slot.TUESDAY,Slot.WEDNESDAY,Slot.THURSDAY,Slot.FRIDAY,Slot.SATURDAY,Slot.SUNDAY};
         TargetAudience[] tga={TargetAudience.ADULTS,TargetAudience.CHILDREN,TargetAudience.ELDERY,TargetAudience.TEENS};
         for (int i=0;i<NUM_Doctors;i++){
@@ -107,19 +89,19 @@ public class DoctorsModelCreator {
                 cl.setAddress("Address"+clinGen);
 //                @OneToMany(mappedBy = "clinic", fetch = FetchType.EAGER)
 //                private Set<Slot> slots;
-                Set<Slot> slots=new LinkedHashSet<>();
-                for (int k = 0; k < 7 ; k++) {
-                   Slot sl=new Slot();
-                    sl.setDayOfWeek(DayOfWeek.of(k));
-                    Set<Interval>rvals=new LinkedHashSet<>();
-                    for (int l : getRndIntSet(0,0,0)) {
-
-                    }
-                    sl.setIntervals(rvals);
-                    em.persist(sl);
-                    sl.setClinic(cl);
-                }
-                cl.setSlots(slots);
+//                Set<Slot> slots=new LinkedHashSet<>();
+//                for (int k = 0; k < 7 ; k++) {
+//                   Slot sl=new Slot();
+//                    sl.setDayOfWeek(DayOfWeek.of(k));
+//                    Set<Interval>rvals=new LinkedHashSet<>();
+//                    for (int l : getRndIntSet(0,0,0)) {
+//
+//                    }
+//                    sl.setIntervals(rvals);
+//                    em.persist(sl);
+//                    sl.setClinic(cl);
+//                }
+//                cl.setSlots(slots);
 //
 //                @ManyToOne
 //                private Doctor doctor;
@@ -128,11 +110,61 @@ public class DoctorsModelCreator {
                 cls.add(cl);
             }
             d.setClinics(cls);
+
+
+
 //
 //            @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
 //            private Set<Clinic> clinics;
 
             em.persist(d);
+        }
+        createModelAppo();
+    }
+    private int maxAppo=1000;
+    private int maxSymptoms = 20;
+    private int maxProblem = 20;
+    private int maxsymbyapp=4;
+    private int maxprobyapp=4;
+    private int numPatient=40;
+    public void createModelAppo(){
+        int symGen=0;
+        for (int i = 0; i < maxSymptoms ; i++) {
+            Symptom s = new Symptom("Symptom"+ ++symGen);
+            em.persist(s);
+        }
+        int proGen=0;
+        for (int i = 0; i < maxProblem ; i++) {
+            Problem s = new Problem("Problem"+ ++proGen);
+            em.persist(s);
+        }
+        int patGen=0;
+        for (int i = 0; i < numPatient ; i++) {
+            Patient s = new Patient();
+            s.setName("Patient"+ ++patGen);
+            em.persist(s);
+        }
+        for (int i = 0; i < maxAppo ; i++) {
+            Appointment appo=new Appointment(
+                    LocalDate.parse(getRndInt(2000,2016)+"-0"+getRndInt(1,9)+"-"+getRndInt(10,28)),
+                    LocalDate.parse(getRndInt(2000,2016)+"-0"+getRndInt(1,9)+"-"+getRndInt(10,28)),
+                    LocalDate.parse(getRndInt(2000,2016)+"-0"+getRndInt(1,9)+"-"+getRndInt(10,28)),
+                    "300$","43","blah-blah-blah"
+            );
+            Set<Problem> problems=new LinkedHashSet<>();
+            Set<Symptom>symptoms=new LinkedHashSet<>();
+            for (int j:getRndIntSet(getRndInt(1,maxsymbyapp),1,maxSymptoms)){
+                symptoms.add(em.find(Symptom.class,"Symptom"+j));
+            }
+            appo.setSymptoms(symptoms);
+            for (int j:getRndIntSet(getRndInt(1,maxprobyapp),1,maxProblem)){
+                problems.add(em.find(Problem.class,"Problem"+j));
+            }
+            appo.setProblems(problems);
+            Patient p = new Patient();
+
+            appo.setPatient(p);
+            em.persist(appo);
         }
     }
 
