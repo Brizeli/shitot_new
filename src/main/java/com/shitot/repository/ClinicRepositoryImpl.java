@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Oleg on 01.08.2016.
@@ -72,10 +73,8 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     @Override
     @Transactional
     public void setSlot(int dayOfWeek, int clinicId, int... hours) {
-        Slot modifiedSlot = getDaySlot(dayOfWeek, clinicId);
-        if (modifiedSlot != null)
-            em.remove(modifiedSlot);
-        HashSet<Interval> intervalSet = new HashSet<>();
+        deleteSlot(dayOfWeek, clinicId);
+        Set<Interval> intervalSet = new HashSet<>();
         for (int hour : hours) {
             Interval addingInterval = em.find(Interval.class, hour);
             if (addingInterval == null) {
@@ -88,6 +87,27 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     }
 
     @Override
+    @Transactional
+    public void deleteSlot(int dayOfWeek, int clinicId) {
+        Slot deletingSlot = getDaySlot(dayOfWeek, clinicId);
+        if (deletingSlot != null)
+            em.remove(deletingSlot);
+    }
+
+    @Override
+    @Transactional
+    public void deleteClinic(int clinicId) {
+        Clinic deletingClinic = em.find(Clinic.class, clinicId);
+        if (deletingClinic != null) {
+            em.createNamedQuery(Slot.DELTE_BY_CLINIC, Slot.class)
+                .setParameter("id", clinicId)
+                .executeUpdate();
+            em.remove(deletingClinic);
+        }
+    }
+
+    @Override
+    @Transactional
     public void setClinic(int doctorId, String name, String city, String address) {
         Doctor doctor = em.find(Doctor.class, doctorId);
         if (doctor != null)

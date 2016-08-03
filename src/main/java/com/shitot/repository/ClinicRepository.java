@@ -1,7 +1,6 @@
 package com.shitot.repository;
 
-import com.shitot.model.Clinic;
-import com.shitot.model.Slot;
+import com.shitot.model.*;
 
 import java.util.List;
 
@@ -22,6 +21,10 @@ public interface ClinicRepository {
     Clinic get(int clinicId);
 
     void setSlot(int dayOfWeek, int clinicId, int... hours);
+
+    void deleteSlot(int dayOfWeek, int clinicId);
+
+    void deleteClinic(int clinicId);
 
     void setClinic(int doctorId, String name, String city, String address);
 

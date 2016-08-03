@@ -14,15 +14,17 @@ import java.util.Set;
         "select s from slots s join s.clinic c join s.intervals i where c.id=:id order by s.dayOfWeek, i.hour"),
     @NamedQuery(name = Slot.BY_DAY_CLINIC, query =
         "select s from slots s join s.clinic c join s.intervals i where c.id=:id and s.dayOfWeek=:dayOfWeek order by i.hour"),
+    @NamedQuery(name = Slot.DELTE_BY_CLINIC, query =
+        "delete from slots s where exists (select s1 from slots s1 join s1.clinic c where c.id=:id)")
 })
 
 @Entity(name = "slots")
-@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"day_of_week", "clinic_id"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"dayOfWeek", "clinic_id"}))
 public class Slot extends BaseEntity{
 
     public static final String BY_CLINIC = "Slot.getByClinic";
     public static final String BY_DAY_CLINIC = "Slot.getByDayClinic";
-
+    public static final String DELTE_BY_CLINIC = "Slot.deleteByClinic";
     @Min(0)
     @Max(6)
     private int dayOfWeek;
