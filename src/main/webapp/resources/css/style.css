@@ -33,6 +33,7 @@ a {
 }
 
 .content {
+    border-radius: 6px;
     background-color: azure;
 }
 

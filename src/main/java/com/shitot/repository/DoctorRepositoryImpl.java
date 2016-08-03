@@ -117,6 +117,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
     @Override
     public List<Doctor> getBySpecialty(String specialty) {
+        if (specialty.isEmpty() || specialty.equalsIgnoreCase("all")) return getAll();
         return em.createNamedQuery(Doctor.BY_SPECIALTY, Doctor.class)
                  .setParameter("specialty", specialty)
                  .getResultList();
@@ -124,6 +125,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
     @Override
     public List<Doctor> getByQualification(String qualification) {
+        if (qualification.isEmpty() || qualification.equalsIgnoreCase("all")) return getAll();
         return em.createNamedQuery(Doctor.BY_QUALIFICATION, Doctor.class)
                  .setParameter("qualification", qualification)
                  .getResultList();

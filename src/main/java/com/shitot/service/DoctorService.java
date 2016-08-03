@@ -29,4 +29,6 @@ public interface DoctorService {
     List<Doctor> getBySpecialty(String specialty);
 
     List<Doctor> getByQualification(String qualification);
+
+    List<Qualification> getAllQualifications();
 }

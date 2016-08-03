@@ -1,6 +1,7 @@
 package com.shitot.web.doctor;
 
 import com.shitot.model.Doctor;
+import com.shitot.model.Qualification;
 import com.shitot.model.Specialty;
 import com.shitot.to.DoctorTo;
 import com.shitot.utils.JsonUtil;
@@ -47,6 +48,11 @@ public class DoctorRestController extends AbstractDoctorController {
     @RequestMapping(value = "/specs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Specialty> getAllSpecialties() {
         return service.getAllSpecialties();
+    }
+
+    @RequestMapping(value = "/quals", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Qualification> getAllQualifications() {
+        return service.getAllQualifications();
     }
 
     @RequestMapping(value = "/by", params = "specialty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

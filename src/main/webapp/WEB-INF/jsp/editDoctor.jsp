@@ -58,6 +58,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-xs-3" for="comments">Professions:</label>
+                        <div class="col-xs-9">
+                            <input class="form-control" type="text" name="profession" id="profession">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>

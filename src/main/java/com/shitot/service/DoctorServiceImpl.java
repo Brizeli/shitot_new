@@ -52,6 +52,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public List<Qualification> getAllQualifications() {
+        return repository.getAllQualifications();
+    }
+
+    @Override
     public List<Certificate> getAllCertificates() {
         return repository.getAllCertificates();
     }

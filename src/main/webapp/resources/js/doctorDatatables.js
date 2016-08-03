@@ -1,14 +1,16 @@
 /**
  * Created by DDNS on 02.08.2016.
  */
+var table;
 $(function () {
-    $('#dataTable').DataTable({
+    table = $('#dataTable').DataTable({
         ajax: {
             url: "rest/doctors",
             dataSrc: ""
         },
+        dom: "lrtip",
         paging: false,
-        scrollY: 400,
+        // scrollY: 400,
         columns: [
             {
                 "defaultContent": "",
@@ -22,10 +24,10 @@ $(function () {
                 "defaultContent": "",
                 "render": renderClinics
             },
-            {
-                "defaultContent": "",
-                "render": renderCreateAppointment
-            },
+            /*{
+             "defaultContent": "",
+             "render": renderCreateAppointment
+             },*/
             {
                 "defaultContent": "",
                 "render": {}
@@ -37,7 +39,31 @@ $(function () {
         ],
         ordering: false
     });
+    $.get("rest/doctors/specs", function (specs) {
+        $.each(specs, function (key, val) {
+            $("#professions").append($('<option>').text(val.name));
+        })
+    });
+    $.get("rest/doctors/quals", function (quals) {
+        $.each(quals, function (key, val) {
+            $("#qualifications").append($('<option>').text(val.name));
+        })
+    })
 });
+$("#namesearch").on('keyup', function () {
+    table.columns(0).search(this.value).draw();
+});
+function getBySpeciality(name) {
+    $.get("rest/doctors/by/?specialty=" + name, updateTableByData);
+}
+function getByQualification(name) {
+    $.get("rest/doctors/by/?qualification=" + name, updateTableByData);
+}
+$("#professions").on('change', getBySpeciality(this.value));
+$("#qualifications").on('change', getByQualification(this.value));
+function updateTableByData(data) {
+    table.clear().rows.add(data).draw();
+}
 function renderDoctorInfo(data, type, doctor) {
     if (type == 'display') {
         var result = '<h2><a onclick="editRow(' + doctor.id + ')" title="Edit">' + doctor.fullName + '</a></h2>' +
@@ -46,6 +72,9 @@ function renderDoctorInfo(data, type, doctor) {
         if (doctor.telHome) result += 'Home tel: ' + doctor.telHome + '<br>';
         if (doctor.homeAddress) result += 'Home address: ' + doctor.homeAddress;
         return result;
+    }
+    if (type == 'filter') {
+        return doctor.fullName;
     }
     return "";
 }
@@ -61,7 +90,7 @@ function renderSpecialization(data, type, doctor) {
         }
         result += '<br><strong>Qualifications: </strong>';
         var qualifications = doctor.qualifications;
-        for (var i = 0; i < qualifications.length; i++) {
+        for (i = 0; i < qualifications.length; i++) {
             result += '<a onclick="getByQualification(\'' + qualifications[i].name + '\')">' + qualifications[i].name + '</a>';
             if (i < qualifications.length - 1) result += ', ';
         }
@@ -69,7 +98,7 @@ function renderSpecialization(data, type, doctor) {
         if (doctor.lections) result += '<br><strong>Reads lections: </strong>' + doctor.lections;
         result += '<br><strong>Target audience: </strong>';
         var target = doctor.targetAudiences;
-        for (var i = 0; i < target.length; i++) {
+        for (i = 0; i < target.length; i++) {
             result += target[i].name;
             if (i < target.length - 1) result += ', ';
         }
