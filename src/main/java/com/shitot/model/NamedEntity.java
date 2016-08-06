@@ -3,6 +3,7 @@ package com.shitot.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Next on 20.07.2016.

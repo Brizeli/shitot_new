@@ -29,4 +29,8 @@ public interface DoctorRepository {
     void setSpecialties(Integer id, String... specialtieNames);
 
     void setQualifications(Integer id, String... qualificationNames);
+
+    List<Doctor> getBySpecialty(String specialty);
+
+    List<Doctor> getByQualification(String qualification);
 }

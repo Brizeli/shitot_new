@@ -1,19 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<form action="login" method="post">
-    <fieldset>
-        <legend>Logging in</legend>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<div class="container">
+    <form action="spring_security_check" method="post">
         <dl>
-            <dt>Enter login:</dt>
-            <dd><input type="text" name="login" required/></dd>
+            <dt>Name:</dt>
+            <dd><input class="form-control" type="text" name="username"></dd>
         </dl>
         <dl>
-            <dt>Enter password:</dt>
-            <dd><input type="password" name="password" required/></dd>
+            <dt>Password:</dt>
+            <dd><input class="form-control" type="password" name="password"></dd>
         </dl>
         <button class="btn btn-primary" type="submit">Log In</button>
         <a class="btn btn-primary" onclick="reg()">Register</a>
-    </fieldset>
-</form>
+    </form>
+</div>
+<div class="container">
+    <c:if test="${error}">
+        <div class="error">
+                ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+        </div>
+    </c:if>
+    <c:if test="${not empty message}">
+        <div class="message">
+            ${message}
+            <%--<fmt:message key="${message}"/>--%>
+        </div>
+    </c:if>
+</div>
 <div class="modal fade regForm">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -45,8 +59,6 @@
         </div>
     </div>
 </div>
-
-</body>
 <script>
     function reg() {
         $('#regForm')[0].reset();

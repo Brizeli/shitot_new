@@ -1,5 +1,6 @@
 package com.shitot.model;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -9,21 +10,23 @@ import java.util.*;
  * Created by Next on 12.07.2016.
  */
 @NamedQueries({
-                  @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d order by d.fullName")
+                  @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d order by d.fullName"),
+                  @NamedQuery(name = Doctor.BY_SPECIALTY, query = "select d from doctors d join d.specialties s where s.name=:specialty order by d.fullName"),
+                  @NamedQuery(name = Doctor.BY_QUALIFICATION, query = "select d from doctors d join d.qualifications s where s.name=:qualification order by d.fullName"),
 })
 @Entity(name = "doctors")
-public class  Doctor extends BaseEntity {
+public class Doctor extends UserDoctor {
 
     public static final String ALL_SORTED = "Doctor.getAllSorted";
+    public static final String BY_SPECIALTY = "Doctor.getBySpecialty";
+    public static final String BY_QUALIFICATION = "Doctor.getByQualification";
 
     @NotEmpty
-    public String fullName;
+    private String fullName;
 
-    @Column(unique = true, nullable = false)
-    @NotEmpty
-    private String login;
-    private String password;
     @Column(unique = true)
+    @Email
+    @NotEmpty
     private String email;
     private String telNumber;
     private String telHome;
@@ -47,12 +50,12 @@ public class  Doctor extends BaseEntity {
     public Doctor() {
     }
 
-    public Doctor(Integer id, String fullName, String login, String password, String email, String telNumber, String telHome,
+    public Doctor(Integer id, String fullName, String login, String password, String email, String telNumber,
+                  String telHome,
                   String homeAddress, String lections, String preferential, String comments) {
-        super(id);
+        super(id,login,password);
+        this.role = "DOCTOR";
         this.fullName = fullName;
-        this.login = login;
-        this.password = password;
         this.email = email;
         this.telNumber = telNumber;
         this.telHome = telHome;
@@ -123,22 +126,6 @@ public class  Doctor extends BaseEntity {
         this.lections = lections;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPreferential() {
         return preferential;
     }
@@ -200,6 +187,7 @@ public class  Doctor extends BaseEntity {
                    ", lections='" + lections + '\'' +
                    ", preferential='" + preferential + '\'' +
                    ", comments='" + comments + '\'' +
+                   ", role='" + role + '\'' +
                    '}';
     }
 }

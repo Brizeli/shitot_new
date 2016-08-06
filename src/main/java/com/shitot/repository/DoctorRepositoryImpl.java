@@ -114,4 +114,18 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         }
         em.find(Doctor.class, id).setQualifications(qualifications);
     }
+
+    @Override
+    public List<Doctor> getBySpecialty(String specialty) {
+        return em.createNamedQuery(Doctor.BY_SPECIALTY, Doctor.class)
+                 .setParameter("specialty", specialty)
+                 .getResultList();
+    }
+
+    @Override
+    public List<Doctor> getByQualification(String qualification) {
+        return em.createNamedQuery(Doctor.BY_QUALIFICATION, Doctor.class)
+                 .setParameter("qualification", qualification)
+                 .getResultList();
+    }
 }

@@ -2,8 +2,11 @@ package com.shitot.service;
 
 import com.shitot.model.*;
 import com.shitot.repository.DoctorRepository;
+import com.shitot.to.DoctorTo;
+import com.shitot.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +32,23 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<TargetAudience> getAllTargetAudiences() {
         return repository.getAllTargetAudiences();
+    }
+
+    @Override
+    @Transactional
+    public void update(DoctorTo doctorTo) {
+        Doctor doctor = get(doctorTo.getId());
+        repository.save(JsonUtil.updateFromTo(doctor, doctorTo));
+    }
+
+    @Override
+    public List<Doctor> getBySpecialty(String specialty) {
+        return repository.getBySpecialty(specialty);
+    }
+
+    @Override
+    public List<Doctor> getByQualification(String qualification) {
+        return repository.getByQualification(qualification);
     }
 
     @Override

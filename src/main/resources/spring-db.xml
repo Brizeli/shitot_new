@@ -18,7 +18,14 @@
           p:driverClassName="com.mysql.jdbc.Driver"
           p:url="jdbc:mysql://localhost/shitot_new"
           p:username="root"
-          p:password=""/>
+          p:password="">
+    <property name="connectionProperties">
+        <props>
+            <prop key="useUnicode">yes</prop>
+            <prop key="characterEncoding">utf8</prop>
+        </props>
+    </property>
+    </bean>
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
@@ -27,9 +34,9 @@
           p:packagesToScan="com.shitot.model">
         <property name="jpaPropertyMap">
             <map>
-                <!--<entry key="hibernate.format_sql" value="true"/>-->
-                <!--<entry key="hibernate.use_sql_comments" value="false"/>-->
-                <entry key="hibernate.hbm2ddl.auto" value="create"/>
+                <entry key="hibernate.format_sql" value="true"/>
+                <entry key="hibernate.use_sql_comments" value="true"/>
+                <entry key="hibernate.hbm2ddl.auto" value="update"/>
                 <entry key="hibernate.cache.use_second_level_cache" value="true"/>
                 <entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             </map>

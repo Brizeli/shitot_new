@@ -1,6 +1,7 @@
 package com.shitot.service;
 
 import com.shitot.model.*;
+import com.shitot.to.DoctorTo;
 
 import java.util.List;
 
@@ -22,4 +23,10 @@ public interface DoctorService {
     Doctor get(int id);
 
     List<TargetAudience> getAllTargetAudiences();
+
+    void update(DoctorTo doctorTo);
+
+    List<Doctor> getBySpecialty(String specialty);
+
+    List<Doctor> getByQualification(String qualification);
 }

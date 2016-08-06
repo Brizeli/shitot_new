@@ -1,6 +1,8 @@
 package com.shitot.model;
 
 import javax.persistence.Entity;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Next on 12.07.2016.

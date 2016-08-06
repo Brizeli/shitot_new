@@ -40,28 +40,6 @@ public class DoctorController extends AbstractDoctorController {
         return "index";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String updateOrCreate(HttpServletRequest request, Doctor doctor) {
-        String certificate = request.getParameter("certificate");
-        String expert = request.getParameter("expert");
-        String specialty1 = request.getParameter("specialty1");
-        String specialty2 = request.getParameter("specialty2");
-        String[] targets = request.getParameterValues("target");
-//        Doctor doctor = new Doctor(id, name, comments, email, lections, login, password, preferential, telAdditional,
-//                                      telNumber);
-        if (!certificate.isEmpty())
-            doctor.setCertificate(new Certificate(certificate));
-        if (!expert.isEmpty())
-            doctor.setQualifications(Stream.of(expert.split("\\P{LD}+")).map((name) -> new Qualification(name)).collect(Collectors.toSet()));
-        if (!specialty1.isEmpty() || !specialty2.isEmpty())
-            doctor.setSpecialties(Stream.of(specialty1, specialty2).map(Specialty::new).collect(Collectors.toSet()));
-        if (targets!=null)
-            doctor.setTargetAudiences(Stream.of(targets).map(TargetAudience::new).collect(Collectors.toSet()));
-//        if (doctor.isNew()) super.create(doctor);
-//        else super.update(doctor);
-        return "redirect:/doctors";
-    }
-
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.valueOf(paramId);
