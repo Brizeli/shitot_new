@@ -1,0 +1,66 @@
+@media (min-width: 768px) {
+    .modal-xl {
+        width: 90%;
+        max-width:1200px;
+    }
+}
+body {
+    font-family: Arial, serif;
+}
+
+dl {
+    margin-bottom: 5px;
+}
+
+dt {
+    display: inline-block;
+    width: 250px;
+}
+
+dd {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: top;
+}
+
+.doctorlist {
+    border: 1px solid black;
+    border-radius: 8px;
+    overflow: auto;
+    box-shadow: 0 0 10px inset;
+}
+
+.doctorInfo {
+    border-bottom: 1px solid sandybrown;
+}
+
+a {
+    cursor: pointer;
+}
+
+.content {
+    padding-top: 50px;
+    border-radius: 6px;
+    background-color: azure;
+}
+.navbar-brand{
+    padding: 0;
+}
+.error, .message {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.error {
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+}
+
+.message {
+    color: #2f9635;
+    background-color: #c6fbc2;
+    border: 1px solid #9feba6;
+}
