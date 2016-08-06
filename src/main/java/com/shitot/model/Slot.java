@@ -1,49 +1,54 @@
 package com.shitot.model;
 
 import javax.persistence.*;
-import java.time.DayOfWeek;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Set;
 
 /**
  * Created by Next on 12.07.2016.
  * Slot is workingDay, you may create 7 slots for every clinic with empty set of intervals
  */
+@NamedQueries({
+    @NamedQuery(name = Slot.BY_CLINIC, query =
+        "select s from slots s join s.clinic c join s.intervals i where c.id=:id order by s.dayOfWeek, i.hour"),
+    @NamedQuery(name = Slot.BY_DAY_CLINIC, query =
+        "select s from slots s join s.clinic c join s.intervals i where c.id=:id and s.dayOfWeek=:dayOfWeek order by i.hour"),
+    @NamedQuery(name = Slot.DELTE_BY_CLINIC, query =
+        "delete from slots s where exists (select s1 from slots s1 join s1.clinic c where c.id=:id)")
+})
+
 @Entity(name = "slots")
-public class Slot extends BaseEntity {
+@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"dayOfWeek", "clinic_id"}))
+public class Slot extends BaseEntity{
 
-    public static final Slot SUNDAY     = new Slot(DayOfWeek.SUNDAY);
-    public static final Slot MONDAY     = new Slot(DayOfWeek.MONDAY);
-    public static final Slot TUESDAY    = new Slot(DayOfWeek.TUESDAY);
-    public static final Slot WEDNESDAY  = new Slot(DayOfWeek.WEDNESDAY);
-    public static final Slot THURSDAY   = new Slot(DayOfWeek.THURSDAY);
-    public static final Slot FRIDAY     = new Slot(DayOfWeek.FRIDAY);
-    public static final Slot SATURDAY   = new Slot(DayOfWeek.SATURDAY);
+    public static final String BY_CLINIC = "Slot.getByClinic";
+    public static final String BY_DAY_CLINIC = "Slot.getByDayClinic";
+    public static final String DELTE_BY_CLINIC = "Slot.deleteByClinic";
+    @Min(0)
+    @Max(6)
+    private int dayOfWeek;
 
-    @Enumerated
-    @Column(name = "day_of_week")
-    private DayOfWeek dayOfWeek;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Clinic clinic;
-    @OneToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Interval> intervals;
 
     public Slot() {
     }
 
-    public Slot(DayOfWeek dayOfWeek) {
+    public Slot(int dayOfWeek, Clinic clinic, Set<Interval> intervals) {
         this.dayOfWeek = dayOfWeek;
+        this.clinic = clinic;
+        this.intervals = intervals;
     }
 
-    public Slot(Integer id, DayOfWeek dayOfWeek) {
-        super(id);
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public DayOfWeek getDayOfWeek() {
+    public int getDayOfWeek() {
         return dayOfWeek;
     }
 
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+    public void setDayOfWeek(int dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
 
@@ -65,9 +70,9 @@ public class Slot extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Slot{" +
-                   "dayOfWeek=" + dayOfWeek +
-                   ", intervals=" + intervals +
-                   '}';
+        String res = "Slot{" + "dayOfWeek=" + dayOfWeek + ", intervals=";
+        for (Interval interval : intervals)
+            res += interval.toString();
+        return res + "}";
     }
 }
