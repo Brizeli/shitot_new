@@ -6,10 +6,6 @@ import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.util.Set;
 
-/**
- * Created by sfh on 31-Jul-16.
- */
-
 @Entity(name="appointment")
 public class Appointment extends BaseEntity {
 
@@ -22,8 +18,8 @@ public class Appointment extends BaseEntity {
 //    private Currency paymentAmount;
     private String checkNumber;
     private String description;
-    @ManyToOne
-    private User user;
+//    @ManyToOne
+//    private User user;
     @ManyToMany
     private Set<Problem> problems;
     @ManyToMany
@@ -101,13 +97,13 @@ public class Appointment extends BaseEntity {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public Set<Problem> getProblems() {
         return problems;

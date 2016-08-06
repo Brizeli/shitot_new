@@ -19,114 +19,94 @@ public class DoctorsModelCreator {
     @PersistenceContext
     private EntityManager em;
 
-    private int NUM_Doctors=10;
-    private int NUM_Specs=12;
-    private int NUM_Qual=100;
-    private int min_Specs_Doctor = 1;
-    private int max_Specs_Doctor = 2;
-    private int min_Clinic_Doctor = 1;
-    private int max_Clinic_Doctor = 2;
-    private int min_workingDays=1;
-    private int max_workingDays=6;
-    private int min_numintervals=2;
-    private int max_numintervals=8;
+    private int maxAppo;
+    private int maxSymptoms;
+    private int maxProblem;
+    private int maxsymbyapp;
+    private int maxprobyapp;
+    private int numPatient;
+    private int numDoctors;
+    private int numSpecs;
+    private int numQual;
+    private int minSpecsDoctor;
+    private int maxSpecsDoctor;
     private String[] Cts={"Raanana","Haifa","Tel Aviv","Hercliya","Gorelovo"};
 
     private int NUM_City=2;
+
+    public DoctorsModelCreator() {
+        maxAppo = 10;
+        maxSymptoms = 20;
+        maxProblem = 20;
+        maxsymbyapp = 4;
+        maxprobyapp = 4;
+        numPatient = 40;
+        numDoctors =2;
+        numSpecs = 12;
+        numQual = 4;
+        minSpecsDoctor = 1;
+        maxSpecsDoctor = 2;
+    }
 
     public void createModel(){
         int certGen=0;
         int docGen=0;
         int clinGen=0;
-        for(int i=0;i<NUM_Specs;i++)em.persist(new Specialty("Spec"+(i+1)));
-        for(int i=0;i<NUM_Qual;i++)em.persist(new Qualification("Qual"+(i+1)));
+        for(int i = 0; i< numSpecs; i++)em.persist(new Specialty("Spec"+(i+1)));
+        for(int i = 0; i< numQual; i++)em.persist(new Qualification("Qual"+(i+1)));
         em.persist(TargetAudience.ADULTS);
         em.persist(TargetAudience.CHILDREN);
         em.persist(TargetAudience.ELDERY);
         em.persist(TargetAudience.TEENS);
+        for (int i = 0; i < 24; i++) em.persist(new Interval(i));
         TargetAudience[] tga={TargetAudience.ADULTS,TargetAudience.CHILDREN,TargetAudience.ELDERY,TargetAudience.TEENS};
-        for (int i=0;i<NUM_Doctors;i++){
+        for (int i = 0; i< numDoctors; i++){
             Doctor d=new Doctor();
-//            @NotEmpty
-//            public String fullName;
             d.setFullName("Doctor"+ ++docGen);
-//            @Column(unique = true, nullable = false)
-//            @NotEmpty
-//            private String login;
             d.setLogin("DoctorLogin"+ docGen);
-            //1 of 5 retain null
-            if(getRndInt(1,5)!=1)setDoctorsNullableStrings(d,docGen);
+            setDoctorsNullableStrings(d,docGen);
             Certificate crt=new Certificate();
             crt.setName("Cert"+ ++certGen);
             em.persist(crt);
             d.setCertificate(crt);
-//            @OneToOne(fetch = FetchType.EAGER)
-//            private Certificate certificate;
             Set<Qualification> docQ= new LinkedHashSet<>();
-            for(int j:getRndIntSet(getRndInt(0,NUM_Qual),1,NUM_Qual))docQ.add(em.find(Qualification.class,"Qual"+j));
+            for(int j:getRndIntSet(getRndInt(0, numQual),1, numQual))docQ.add(em.find(Qualification.class,"Qual"+j));
             d.setQualifications(docQ);
-//            @ManyToMany(fetch = FetchType.EAGER)
-//            private Set<Qualification> qualifications;
             Set<Specialty> docS= new LinkedHashSet<>();
-            for(int j:getRndIntSet(getRndInt(min_Specs_Doctor,max_Specs_Doctor),1,NUM_Specs))docS.add(em.find(Specialty.class,"Spec"+j));
+            for(int j:getRndIntSet(getRndInt(minSpecsDoctor, maxSpecsDoctor),1, numSpecs))docS.add(em.find(Specialty.class,"Spec"+j));
             d.setSpecialties(docS);
-//            @ManyToMany(fetch = FetchType.EAGER)
-//            private Set<Specialty> specialties;
             Set<TargetAudience> docA= new LinkedHashSet<>();
-            for(int j=0;j<getRndInt(1,4);j++)docA.add(tga[j]);
+            for(int j:getRndIntSet(getRndInt(1,4),0,3))docA.add(tga[j]);
             d.setTargetAudiences(docA);
-//            @ManyToMany(fetch = FetchType.EAGER)
-//            private Set<TargetAudience> targetAudiences;
             Set<Clinic> cls=new LinkedHashSet<>();
             for (int j = 0; j < getRndInt(1,2); j++) {
                 Clinic cl=new Clinic();
-//                private String name;
                 cl.setName("Clinic"+ ++clinGen);
-//                @NotEmpty
-//                private String city;
                 cl.setCity(Cts[getRndInt(0,Cts.length-1)]);
-//                private String address;
                 cl.setAddress("Address"+clinGen);
-//                @OneToMany(mappedBy = "clinic", fetch = FetchType.EAGER)
-//                private Set<Slot> slots;
-//                Set<Slot> slots=new LinkedHashSet<>();
-//                for (int k = 0; k < 7 ; k++) {
-//                   Slot sl=new Slot();
-//                    sl.setDayOfWeek(DayOfWeek.of(k));
-//                    Set<Interval>rvals=new LinkedHashSet<>();
-//                    for (int l : getRndIntSet(0,0,0)) {
-//
-//                    }
-//                    sl.setIntervals(rvals);
-//                    em.persist(sl);
-//                    sl.setClinic(cl);
-//                }
-//                cl.setSlots(slots);
-//
-//                @ManyToOne
-//                private Doctor doctor;
+                Set<Slot> slots=new LinkedHashSet<>();
+                for (int k :getRndIntSet(getRndInt(1,7),0,6)) {
+                    Slot sl=new Slot();
+                    sl.setDayOfWeek(k);
+                    Set<Interval> intervals = new LinkedHashSet<>();
+                    for (int l:getRndIntSet(getRndInt(1,24),0,23)){
+                        Interval inv= em.find(Interval.class,l);
+                        intervals.add(inv);
+                    }
+                    sl.setIntervals(intervals);
+                    em.persist(sl);
+                    slots.add(sl);
+                }
+                cl.setSlots(slots);
                 em.persist(cl);
                 cl.setDoctor(d);
                 cls.add(cl);
             }
             d.setClinics(cls);
-
-
-
-//
-//            @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
-//            private Set<Clinic> clinics;
-
             em.persist(d);
         }
         createModelAppo();
     }
-    private int maxAppo=1000;
-    private int maxSymptoms = 20;
-    private int maxProblem = 20;
-    private int maxsymbyapp=4;
-    private int maxprobyapp=4;
-    private int numPatient=40;
     public void createModelAppo(){
         int symGen=0;
         for (int i = 0; i < maxSymptoms ; i++) {
@@ -139,7 +119,6 @@ public class DoctorsModelCreator {
             em.persist(s);
         }
         int patGen=0;
-
         for (int i = 0; i < numPatient ; i++) {
             Patient s = new Patient("Patient"+ ++patGen,getRndInt(1,80),"052XXXXXXX");
             em.persist(s);
@@ -161,35 +140,30 @@ public class DoctorsModelCreator {
                 problems.add(em.find(Problem.class,"Problem"+j));
             }
             appo.setProblems(problems);
-//            String ss="select p patients from patients where p.name='Patient"+getRndInt(1,numPatient)+"'";
-//            System.out.println(ss);
-//            Query q = em.createQuery(ss);
-//            Patient p = (Patient)q.getSingleResult();
-//            System.out.println(p.getName());
-//            appo.setPatient(p);
+            Query q = em.createQuery("select d from doctors d where d.email='DtrEmail"+getRndInt(1, numDoctors)+"@gmail.com'");
+            Doctor d = (Doctor)q.getSingleResult();
+            appo.setDoctor(d);
+            if(getRndInt(1,7)!=1){
+                q = em.createQuery("select d from doctors d where d.email='DtrEmail"+getRndInt(1, numDoctors)+"@gmail.com'");
+                d = (Doctor)q.getSingleResult();
+                appo.setAlternativeDoctor(d);
+            }
+            q = em.createQuery("select d from patients d where d.name='Patient"+ getRndInt(1,numPatient)+"'");
+            Patient p=(Patient)q.getSingleResult();
+            appo.setPatient(p);
             em.persist(appo);
         }
     }
 
     private void setDoctorsNullableStrings(Doctor d,int docGen){
-        //            private String password;
         d.setPassword("DoctorPwd"+ docGen);
-//            @Column(unique = true)
-//            private String email;
-        d.setEmail("DtrEmail"+docGen);
-//            private String telNumber;
+        d.setEmail("DtrEmail"+docGen+"@gmail.com");
         d.setTelNumber("telN"+ docGen);
-//            private String telHome;
         d.setHomeAddress("DoctorHome"+docGen);
-//            private String homeAddress;
         d.setLections("Lection of "+docGen);
-//            private String lections;
         d.setPreferential("prefer"+docGen);
-//            private String preferential;
         d.setComments("Comm"+docGen);
-//            private String comments;
-
-
+        d.setRole("DOCTOR");
     }
 
     public Iterable<Integer> getRndIntSet(int length, int from,int to){

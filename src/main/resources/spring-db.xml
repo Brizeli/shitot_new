@@ -34,8 +34,8 @@
           p:packagesToScan="com.shitot.model">
         <property name="jpaPropertyMap">
             <map>
-                <entry key="hibernate.format_sql" value="true"/>
-                <entry key="hibernate.use_sql_comments" value="true"/>
+                <entry key="hibernate.format_sql" value="false"/>
+                <entry key="hibernate.use_sql_comments" value="false"/>
                 <entry key="hibernate.hbm2ddl.auto" value="create"/>
                 <entry key="hibernate.cache.use_second_level_cache" value="true"/>
                 <entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
@@ -43,7 +43,7 @@
         </property>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                  p:showSql="true">
+                  p:showSql="false">
             </bean>
         </property>
     </bean>

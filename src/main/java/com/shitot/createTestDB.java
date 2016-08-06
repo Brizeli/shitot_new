@@ -4,10 +4,7 @@ import com.shitot.repository.DoctorRepository;
 import com.shitot.repository.DoctorsModelCreator;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
-/**
- * Created by Next on 12.07.2016.
- */
-public class mainIgorV {
+public class createTestDB {
 
     public static void main(String[] args) {
 
