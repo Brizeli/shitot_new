@@ -29,8 +29,10 @@ public class Clinic extends BaseEntity {
     private String name;
     @NotEmpty
     private String city;
+    @NotEmpty
     private String address;
     @OneToMany(orphanRemoval = true, mappedBy = "clinic", fetch = FetchType.EAGER)
+    @OrderBy(value = "dayOfWeek")
     private Set<Slot> slots;
 
     @ManyToOne

@@ -1,6 +1,7 @@
 package com.shitot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ import java.util.Set;
 public class Interval implements Comparable{
 
     @Id
-//    @Range(min = 0, max = 23)
+    @Range(min = 0, max = 23)
     private int hour;
 
     @ManyToMany (mappedBy = "intervals")

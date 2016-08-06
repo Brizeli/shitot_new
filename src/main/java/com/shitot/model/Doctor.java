@@ -48,6 +48,7 @@ public class Doctor extends UserDoctor {
     private Set<TargetAudience> targetAudiences;
 
     @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    @OrderBy(value = "city, address")
     private Set<Clinic> clinics;
 
     public Doctor() {

@@ -1,6 +1,7 @@
 package com.shitot.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class Slot extends BaseEntity{
 
     public static final String BY_CLINIC = "Slot.getByClinic";
     public static final String BY_DAY_CLINIC = "Slot.getByDayClinic";
-    //    @Range(min = 0, max = 6)
+    @Range(min = 0, max = 6)
     @Column(name = "day_of_week", nullable = false)
     private int dayOfWeek;
 
@@ -31,6 +32,7 @@ public class Slot extends BaseEntity{
     private Clinic clinic;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @OrderBy(value = "hour")
     private Set<Interval> intervals;
 
     public Slot() {
