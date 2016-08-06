@@ -75,7 +75,12 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<String> getAllCities() {
-        return null;
+        return repository.getAllCities();
+    }
+
+    @Override
+    public List<Doctor> getByCity(String city) {
+        return repository.getByCity(city);
     }
 
     @Override

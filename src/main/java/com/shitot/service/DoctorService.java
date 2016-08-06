@@ -33,4 +33,6 @@ public interface DoctorService {
     List<Qualification> getAllQualifications();
 
     List<String> getAllCities();
+
+    List<Doctor> getByCity(String city);
 }

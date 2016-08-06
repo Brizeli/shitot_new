@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
     <h3>Doctors
-        <a class="btn btn-sm btn-info" id="addDoctor" onclick="add()">New doctor</a>
+        <a class="btn btn-sm btn-info" id="addDoctor" onclick="addDoctor()">New doctor</a>
     </h3>
     <div class="view-box">
-        <%--<div class="panel-heading">Search</div>--%>
         <div class="row">
             <div class="col-sm-3">
                 <h5>Name</h5>
@@ -38,12 +37,13 @@
                 <th>Specializations</th>
                 <th>Clinics</th>
                 <%--<th>Create appointment</th>--%>
-                <th>1</th>
-                <th>2</th>
             </tr>
             </thead>
         </table>
     </div>
 </div>
 <jsp:include page="editDoctor.jsp"/>
+<jsp:include page="editClinic.jsp"/>
 <script type="text/javascript" src="resources/js/doctorDatatables.js"></script>
+<script type="text/javascript" src="resources/js/doctors.js"></script>
+<script type="text/javascript" src="resources/js/clinics.js"></script>

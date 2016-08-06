@@ -5,20 +5,6 @@
 <hr>
 <jsp:useBean id="doctor" type="com.shitot.model.Doctor" scope="request"/>
 <form action="doctors" method="post">
-    <%--doctors?id=&name=Doctor1&
-    login=doc1&
-    password=1&
-    email=doc1%40mail.com&
-    telNumber=1683183&
-    telAdditional=&
-    specialty1=specialty1&
-    specialty2=specialty2&
-    target=CHILDREN&target=TEENS&
-    preferential=&
-    expert=expert1&
-    certificate=certificate1&
-    lections=&
-    comments=comments--%>
     <input type="hidden" name="id" value="${doctor.id}">
     <dl>
         <dt>Enter doctor name:</dt>

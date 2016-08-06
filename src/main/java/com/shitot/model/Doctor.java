@@ -13,6 +13,7 @@ import java.util.*;
                   @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d order by d.fullName"),
                   @NamedQuery(name = Doctor.BY_SPECIALTY, query = "select d from doctors d join d.specialties s where s.name=:specialty order by d.fullName"),
                   @NamedQuery(name = Doctor.BY_QUALIFICATION, query = "select d from doctors d join d.qualifications s where s.name=:qualification order by d.fullName"),
+                  @NamedQuery(name = Doctor.BY_CITY, query = "select d from doctors d join d.clinics c where c.city=:city")
 })
 @Entity(name = "doctors")
 public class Doctor extends UserDoctor {
@@ -20,6 +21,7 @@ public class Doctor extends UserDoctor {
     public static final String ALL_SORTED = "Doctor.getAllSorted";
     public static final String BY_SPECIALTY = "Doctor.getBySpecialty";
     public static final String BY_QUALIFICATION = "Doctor.getByQualification";
+    public static final String BY_CITY = "Doctor.getByCity";
 
     @NotEmpty
     private String fullName;

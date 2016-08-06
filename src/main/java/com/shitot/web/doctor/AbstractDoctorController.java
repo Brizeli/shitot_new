@@ -48,4 +48,8 @@ public class AbstractDoctorController {
     public List<Doctor> getByQualification(String qualification) {
         return service.getByQualification(qualification);
     }
+
+    public List<Doctor> getByCity(String city) {
+        return service.getByCity(city);
+    }
 }

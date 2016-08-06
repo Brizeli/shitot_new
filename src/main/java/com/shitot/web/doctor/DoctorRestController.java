@@ -63,6 +63,7 @@ public class DoctorRestController extends AbstractDoctorController {
         return service.getAllTargetAudiences();
     }
 
+    //move to clinicsController
     @RequestMapping(value = "/cities", method = RequestMethod.GET)
     public List<String> getAllCities() {return service.getAllCities();}
 
@@ -74,5 +75,10 @@ public class DoctorRestController extends AbstractDoctorController {
     @RequestMapping(value = "/by", params = "qualification", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getByQualification(@RequestParam String qualification) {
         return super.getByQualification(qualification);
+    }
+
+    @RequestMapping(value = "/by", params = "city", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Doctor> getByCity(@RequestParam String city) {
+        return super.getByCity(city);
     }
 }

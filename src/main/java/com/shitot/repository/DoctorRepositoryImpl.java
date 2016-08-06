@@ -136,4 +136,18 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                  .setParameter("qualification", qualification)
                  .getResultList();
     }
+
+    @Override
+    public List<String> getAllCities() {
+        return em.createNamedQuery(Clinic.ALL_CITIES_SORTED,String.class)
+            .getResultList();
+    }
+
+    @Override
+    public List<Doctor> getByCity(String city) {
+        if (city.isEmpty() || city.equalsIgnoreCase("all")) return getAll();
+        return em.createNamedQuery(Doctor.BY_CITY,Doctor.class)
+            .setParameter("city",city)
+            .getResultList();
+    }
 }

@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="modal fade" id="editRow">
+<div class="modal fade" id="editDoctor">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title title">Edit doctor</h2>
+                <h2 class="modal-title title"></h2>
             </div>
-            <form class="form-horizontal" method="post" id="detailsForm">
+            <form class="form-horizontal" method="post" id="doctorDetailsForm">
                 <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
 

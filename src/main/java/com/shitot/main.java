@@ -45,7 +45,7 @@ public class main {
     private static void addClinic(Doctor doc, Clinic clinic) {
         for (Clinic c : doc.getClinics()) {
             if (clinic.getCity().equals(c.getCity())) {
-                System.out.println("Can't add clinic. City.");
+                System.out.println("Can't addDoctor clinic. City.");
                 return;
             }
         }

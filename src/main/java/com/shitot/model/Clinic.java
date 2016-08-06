@@ -3,18 +3,20 @@ package com.shitot.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
  * Created by Next on 12.07.2016.
  */
+@NamedQueries({
+                  @NamedQuery(name = Clinic.ALL_CITIES_SORTED,query = "select c.city from clinics c")
+})
 @Entity(name = "clinics")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"city","doctor_id"}))
 public class Clinic extends BaseEntity {
 
+    public static final String ALL_CITIES_SORTED = "Clinic.getAllCities";
     private String name;
     @NotEmpty
     private String city;
