@@ -16,7 +16,8 @@ public class mainIgorV {
             appCtx.refresh();
             DoctorsModelCreator dmc = appCtx.getBean(DoctorsModelCreator.class);
             DoctorRepository dr = appCtx.getBean(DoctorRepository.class);
-//            dmc.createModel();
+            dmc.createModel();
+            System.out.println("end");
         }
     }
 }

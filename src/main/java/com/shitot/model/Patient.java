@@ -16,6 +16,9 @@ import java.util.Set;
 public class Patient extends BaseEntity {
     public static final String ALL_SORTED = "Patient.getAllSorted";
 
+    public Patient() {
+    }
+
     @NotEmpty
     private String name;
     private int age;

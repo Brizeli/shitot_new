@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -43,7 +44,6 @@ public class DoctorsModelCreator {
         em.persist(TargetAudience.CHILDREN);
         em.persist(TargetAudience.ELDERY);
         em.persist(TargetAudience.TEENS);
-        Slot[] days ={Slot.MONDAY,Slot.TUESDAY,Slot.WEDNESDAY,Slot.THURSDAY,Slot.FRIDAY,Slot.SATURDAY,Slot.SUNDAY};
         TargetAudience[] tga={TargetAudience.ADULTS,TargetAudience.CHILDREN,TargetAudience.ELDERY,TargetAudience.TEENS};
         for (int i=0;i<NUM_Doctors;i++){
             Doctor d=new Doctor();
@@ -139,9 +139,9 @@ public class DoctorsModelCreator {
             em.persist(s);
         }
         int patGen=0;
+
         for (int i = 0; i < numPatient ; i++) {
-            Patient s = new Patient();
-            s.setName("Patient"+ ++patGen);
+            Patient s = new Patient("Patient"+ ++patGen,getRndInt(1,80),"052XXXXXXX");
             em.persist(s);
         }
         for (int i = 0; i < maxAppo ; i++) {
@@ -161,9 +161,12 @@ public class DoctorsModelCreator {
                 problems.add(em.find(Problem.class,"Problem"+j));
             }
             appo.setProblems(problems);
-            Patient p = new Patient();
-
-            appo.setPatient(p);
+//            String ss="select p patients from patients where p.name='Patient"+getRndInt(1,numPatient)+"'";
+//            System.out.println(ss);
+//            Query q = em.createQuery(ss);
+//            Patient p = (Patient)q.getSingleResult();
+//            System.out.println(p.getName());
+//            appo.setPatient(p);
             em.persist(appo);
         }
     }
