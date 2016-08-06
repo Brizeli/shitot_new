@@ -2,6 +2,7 @@
  * Created by DDNS on 02.08.2016.
  */
 var table;
+var editDoctorForm = $('#detailsForm');
 $(function () {
     table = $('#dataTable').DataTable({
         ajax: {
@@ -39,28 +40,53 @@ $(function () {
         ],
         ordering: false
     });
+    $.get("rest/doctors/certs", function (certs) {
+        $.each(certs, function (key, val) {
+            $("#certificates").append($('<option>').text(val.name));
+        })
+    });
     $.get("rest/doctors/specs", function (specs) {
         $.each(specs, function (key, val) {
-            $("#professions").append($('<option>').text(val.name));
+            $(".professions").append($('<option>').text(val.name));
         })
     });
     $.get("rest/doctors/quals", function (quals) {
         $.each(quals, function (key, val) {
-            $("#qualifications").append($('<option>').text(val.name));
+            $(".qualifications").append($('<option>').text(val.name));
+        });
+        $("#quals").multiselect({
+            allSelectedText: false
+        });
+    });
+    $.get("rest/doctors/cities", function (cities) {
+        $.each(cities, function (key, val) {
+            $("#cities").append($('<option>').text(val));
         })
-    })
+    });
+    $.get("rest/doctors/targets", function (targets) {
+        $.each(targets, function (key, val) {
+            $("#target").append($('<option>').text(val.name))
+        });
+        $("#target").multiselect({
+            allSelectedText: false
+        });
+    });
 });
 $("#namesearch").on('keyup', function () {
     table.columns(0).search(this.value).draw();
 });
-function getBySpeciality(name) {
+$("#professions").on('change', function () {
+    getBySpecialty(this.value);
+});
+$("#qualifications").on('change', function () {
+    getByQualification(this.value);
+});
+function getBySpecialty(name) {
     $.get("rest/doctors/by/?specialty=" + name, updateTableByData);
 }
 function getByQualification(name) {
     $.get("rest/doctors/by/?qualification=" + name, updateTableByData);
 }
-$("#professions").on('change', getBySpeciality(this.value));
-$("#qualifications").on('change', getByQualification(this.value));
 function updateTableByData(data) {
     table.clear().rows.add(data).draw();
 }
@@ -102,7 +128,7 @@ function renderSpecialization(data, type, doctor) {
             result += target[i].name;
             if (i < target.length - 1) result += ', ';
         }
-        if (doctor.comments) result += '<br>' + doctor.comments;
+        if (doctor.comments) result += '<br><strong>Comments: </strong>' + doctor.comments;
         return result;
     }
     return "";
@@ -113,20 +139,45 @@ function renderClinics(data, type, doctor) {
 function renderCreateAppointment(data, type, doctor) {
     return "";
 }
+function add() {
+    editDoctorForm.find(":text").val("");
+    editDoctorForm.find("option").removeAttr("selected");
+    $(".title").text("Add new doctor");
+    $('#id').val(null);
+    $('#editRow').modal({backdrop: 'static'});
+}
 function editRow(id) {
     $.get("rest/doctors/" + id, function (doctor) {
+        editDoctorForm.find("option").removeAttr("selected");
         $.each(doctor, function (key, val) {
-            form.find("input[name='" + key + "']").val(val);
+            if (key == 'specialties') {
+                editDoctorForm.find("[name='specialty1']").val(val[0] ? val[0].name : '');
+                editDoctorForm.find("[name='specialty2']").val(val[1] ? val[1].name : '');
+            }
+            if (key == 'targetAudiences') {
+                $('option', $('#target')).removeAttr('selected').prop('selected', false);
+                $.each(val, function (k, v) {
+                    $("option:contains(" + v.name + ")", $("#target")).prop("selected", true);
+                });
+                $('#target').multiselect('refresh');
+            }
+            if (key == 'certificate') {
+                editDoctorForm.find("[name='" + key + "']").val(val.name);
+            }
+            else editDoctorForm.find("[name='" + key + "']").val(val);
         });
-        $('#editRow').modal();
+        $(".title").text("Edit doctor");
+        $('#editRow').modal({backdrop: 'static'});
     })
 }
-var form = $('#detailsForm');
-function update(id) {
-    $.get("rest/doctors/" + id, function (data) {
-        $.each(data, function (key, value) {
-            form.find("[name='" + key + "']").val(value);
-        });
-        $('#editRow').modal();
-    })
+editDoctorForm.submit(function () {
+    $.post("rest/doctors", editDoctorForm.serialize(), function () {
+        $('#editRow').modal('hide');
+        updateTable();
+        successNoty('Saved');
+    });
+    return false;
+});
+function updateTable() {
+    $.get("rest/doctors", updateTableByData)
 }

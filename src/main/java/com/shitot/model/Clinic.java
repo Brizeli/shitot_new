@@ -1,5 +1,6 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ public class Clinic extends BaseEntity {
     private Set<Slot> slots;
 
     @ManyToOne
+    @JsonIgnore
     private Doctor doctor;
 
     public Clinic() {

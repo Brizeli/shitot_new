@@ -46,7 +46,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
     @Override
     public List<TargetAudience> getAllTargetAudiences() {
-        return em.createNamedQuery(TargetAudience.ALL_SORTED, TargetAudience.class).getResultList();
+        return em.createNamedQuery(TargetAudience.ALL, TargetAudience.class).getResultList();
     }
 
     @Override
@@ -62,10 +62,13 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     @Override
     @Transactional
     public void setCertificate(int id, String certificateName) {
-        Certificate certificate = em.find(Certificate.class, certificateName);
-        if (certificate == null) {
-            certificate = new Certificate(certificateName);
-            em.persist(certificate);
+        Certificate certificate = null;
+        if (!certificateName.isEmpty()) {
+            certificate = em.find(Certificate.class, certificateName);
+            if (certificate == null) {
+                certificate = new Certificate(certificateName);
+                em.persist(certificate);
+            }
         }
         em.find(Doctor.class, id).setCertificate(certificate);
     }
@@ -75,6 +78,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     public void setTargetAudiences(Integer id, String... audienceNames) {
         Set<TargetAudience> targetAudiences = new HashSet<>();
         for (String name : audienceNames) {
+            if (name.isEmpty()) continue;
             TargetAudience targetAudience = em.find(TargetAudience.class, name);
             if (targetAudience == null) {
                 targetAudience = new TargetAudience(name);
@@ -90,6 +94,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     public void setSpecialties(Integer id, String... specialtieNames) {
         Set<Specialty> specialties = new HashSet<>();
         for (String name : specialtieNames) {
+            if (name.isEmpty()) continue;
             Specialty specialty = em.find(Specialty.class, name);
             if (specialty == null) {
                 specialty = new Specialty(name);
@@ -105,6 +110,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     public void setQualifications(Integer id, String... qualificationNames) {
         Set<Qualification> qualifications = new HashSet<>();
         for (String name : qualificationNames) {
+            if (name.isEmpty()) continue;
             Qualification qualification = em.find(Qualification.class, name);
             if (qualification == null) {
                 qualification = new Qualification(name);

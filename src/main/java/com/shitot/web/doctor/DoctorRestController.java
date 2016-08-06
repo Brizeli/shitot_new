@@ -1,8 +1,6 @@
 package com.shitot.web.doctor;
 
-import com.shitot.model.Doctor;
-import com.shitot.model.Qualification;
-import com.shitot.model.Specialty;
+import com.shitot.model.*;
 import com.shitot.to.DoctorTo;
 import com.shitot.utils.JsonUtil;
 import org.springframework.http.HttpStatus;
@@ -40,9 +38,14 @@ public class DoctorRestController extends AbstractDoctorController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if (doctorTo.isNew()) {
-            super.create(JsonUtil.createNewFromTo(doctorTo));
+            super.create(doctorTo);
         } else super.update(doctorTo);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/certs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Certificate> getAllCertificates() {
+        return service.getAllCertificates();
     }
 
     @RequestMapping(value = "/specs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,6 +57,14 @@ public class DoctorRestController extends AbstractDoctorController {
     public List<Qualification> getAllQualifications() {
         return service.getAllQualifications();
     }
+
+    @RequestMapping(value = "/targets", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TargetAudience> getAllTargetAudiences() {
+        return service.getAllTargetAudiences();
+    }
+
+    @RequestMapping(value = "/cities", method = RequestMethod.GET)
+    public List<String> getAllCities() {return service.getAllCities();}
 
     @RequestMapping(value = "/by", params = "specialty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getBySpecialty(@RequestParam String specialty) {

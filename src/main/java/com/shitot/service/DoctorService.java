@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface DoctorService {
 
-    Doctor save(Doctor doctor);
+    Doctor save(DoctorTo doctor);
 
     List<Specialty> getAllSpecialties();
 
@@ -31,4 +31,6 @@ public interface DoctorService {
     List<Doctor> getByQualification(String qualification);
 
     List<Qualification> getAllQualifications();
+
+    List<String> getAllCities();
 }

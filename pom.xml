@@ -29,6 +29,7 @@
         <jstl.version>1.2</jstl.version>
         <javax.el-api.version>2.2.5</javax.el-api.version>
         <mysql-connector-java.version>5.1.37</mysql-connector-java.version>
+        <webjars-bootstrap-multiselect.version>0.9.13</webjars-bootstrap-multiselect.version>
     </properties>
     <build>
         <finalName>shitot</finalName>
@@ -78,6 +79,11 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
             <version>${spring-security.version}</version>
         </dependency>
         <dependency>
@@ -179,6 +185,11 @@
             <groupId>org.webjars</groupId>
             <artifactId>jquery-ui</artifactId>
             <version>${webjars-jquery-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap-multiselect</artifactId>
+            <version>${webjars-bootstrap-multiselect.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -31,8 +31,11 @@ public class Doctor extends UserDoctor {
     private String telNumber;
     private String telHome;
     private String homeAddress;
+    @Column(length = 1000)
     private String lections;
+    @Column(length = 1000)
     private String preferential;
+    @Column(length = 1000)
     private String comments;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -53,7 +56,7 @@ public class Doctor extends UserDoctor {
     public Doctor(Integer id, String fullName, String login, String password, String email, String telNumber,
                   String telHome,
                   String homeAddress, String lections, String preferential, String comments) {
-        super(id,login,password);
+        super(id, login, password);
         this.role = "DOCTOR";
         this.fullName = fullName;
         this.email = email;
@@ -67,7 +70,7 @@ public class Doctor extends UserDoctor {
 
     public Doctor(String fullName, String login, String password, String email, String telNumber, String telHome,
                   String homeAddress, String lections, String preferential, String comments) {
-        this(null, comments, email, lections, login, fullName, password, telNumber, homeAddress, preferential, telHome);
+        this(null, fullName, login, password, email, telNumber, telHome, homeAddress, lections, preferential, comments);
     }
 
     public Certificate getCertificate() {

@@ -17,7 +17,7 @@ public class AbstractDoctorController {
     @Autowired
     DoctorService service;
 
-    protected Doctor create(Doctor doctor){
+    protected Doctor create(DoctorTo doctor){
         doctor.setId(null);
         return service.save(doctor);
     }
