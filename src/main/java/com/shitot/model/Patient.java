@@ -5,10 +5,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * Created by sfh on 31-Jul-16.
- */
-
 @NamedQueries({
         @NamedQuery(name = Patient.ALL_SORTED, query = "select d from patients d order by d.name")
 })
@@ -25,7 +21,7 @@ public class Patient extends BaseEntity {
     private String telNumber;
 
 
-    @OneToMany (mappedBy = "patient")
+    @OneToMany (mappedBy = "patient",fetch = FetchType.EAGER)
     private Set<Appointment> appointments;
 
     public Set<Appointment> getAppointments() {
@@ -64,5 +60,14 @@ public class Patient extends BaseEntity {
         this.name = name;
         this.age = age;
         this.telNumber = telNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", tel='" + telNumber + '\'' +
+                "} " + super.toString();
     }
 }

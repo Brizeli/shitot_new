@@ -1,15 +1,27 @@
 package com.shitot.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
-
-@Entity(name="appointment")
+@NamedQueries({
+        @NamedQuery(name = Appointment.ALL_SORTED, query = "select a from appointments a order by a.applyDate desc"),
+        @NamedQuery(name = Appointment.BY_DOCTOR, query = "select a from appointments a join a.doctor d where d.id=:id order by a.applyDate desc"),
+        @NamedQuery(name = Appointment.BY_ALTDOCTOR, query = "select a from appointments a join a.alternativeDoctor d where d.id=:id order by a.applyDate desc"),
+        @NamedQuery(name = Appointment.BY_PATIENT, query = "select a from appointments a join a.patient d where d.id=:id order by a.applyDate desc"),
+        @NamedQuery(name = Appointment.BY_DOCTOR_AND_ALT, query = "select distinct a from appointments a where a.id in " +
+                "(select a1.id from appointments a1 join a1.alternativeDoctor d where d.id=:id ) or a.id in " +
+                "(select a2.id from appointments a2 join a2.doctor d1 where d1.id=:id ) order by a.applyDate desc")
+})
+@Entity(name="appointments")
 public class Appointment extends BaseEntity {
 
-    @ManyToOne
+    public static final String ALL_SORTED = "Appointment.getAllSorted";
+    public static final String BY_DOCTOR = "Appointment.getByDoctor";
+    public static final String BY_ALTDOCTOR = "Appointment.getByAltDoctor";
+    public static final String BY_DOCTOR_AND_ALT = "Appointment.getByDoctorAndAlt";
+    public static final String BY_PATIENT = "Appointment.getByPatient";
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Patient patient;
     private LocalDate applyDate;
     private LocalDate appointmentDate;
@@ -20,13 +32,13 @@ public class Appointment extends BaseEntity {
     private String description;
 //    @ManyToOne
 //    private User user;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Problem> problems;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Symptom>symptoms;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Doctor doctor;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Doctor alternativeDoctor;
 
     public Appointment() {
@@ -135,5 +147,22 @@ public class Appointment extends BaseEntity {
 
     public void setAlternativeDoctor(Doctor alternativeDoctor) {
         this.alternativeDoctor = alternativeDoctor;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "patient=" + patient +
+                ", applyDate=" + applyDate +
+                ", appointmentDate=" + appointmentDate +
+                ", paymentDate=" + paymentDate +
+                ", paymentAmount='" + paymentAmount + '\'' +
+                ", checkNumber='" + checkNumber + '\'' +
+                ", description='" + description + '\'' +
+                ", problems=" + problems +
+                ", symptoms=" + symptoms +
+                ", doctor=" + doctor +
+                ", alternativeDoctor=" + alternativeDoctor +
+                '}';
     }
 }

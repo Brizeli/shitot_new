@@ -1,15 +1,10 @@
 package com.shitot.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-/**
- * Created by Next on 20.07.2016.
- */
+
 @NamedQueries({
                   @NamedQuery(name = Symptom.ALL_SORTED, query = "select s from symptoms s order by s.name")
 })
@@ -24,7 +19,7 @@ public class Symptom extends NamedEntity {
         super(name);
     }
 
-    @ManyToMany(mappedBy = "symptoms")
+    @ManyToMany(mappedBy = "symptoms",fetch = FetchType.EAGER)
     private Set<Appointment>appointments ;
 
     public Set<Appointment> getAppointments() {
@@ -33,5 +28,10 @@ public class Symptom extends NamedEntity {
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

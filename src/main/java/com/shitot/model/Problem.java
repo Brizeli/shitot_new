@@ -1,12 +1,6 @@
 package com.shitot.model;
 
-/**
- * Created by sfh on 31-Jul-16.
- */
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 import java.util.Set;
 
 @NamedQueries({
@@ -24,7 +18,7 @@ public class Problem extends NamedEntity{
         super(name);
     }
 
-    @ManyToMany(mappedBy = "problems")
+    @ManyToMany(mappedBy = "problems", fetch = FetchType.EAGER)
     private Set<Appointment>appointments;
 
     public Set<Appointment> getAppointments() {
@@ -33,5 +27,10 @@ public class Problem extends NamedEntity{
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

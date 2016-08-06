@@ -95,6 +95,7 @@ public class DoctorsModelCreator {
                     }
                     sl.setIntervals(intervals);
                     em.persist(sl);
+                    sl.setClinic(cl);
                     slots.add(sl);
                 }
                 cl.setSlots(slots);
