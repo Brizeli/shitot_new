@@ -9,6 +9,7 @@
             <div class="modal-body">
                 <form class="form-horizontal" method="post" id="clinicDetailsForm">
                     <input type="text" hidden="hidden" name="id" id="id">
+                    <input type="text" hidden="hidden" name="doctorid" id="doctorid">
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="name">Clinic name:</label>
                         <div class="col-xs-8">
