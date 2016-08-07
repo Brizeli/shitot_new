@@ -107,7 +107,17 @@ public class DoctorsModelCreator {
             em.persist(d);
         }
         createModelAppo();
+        createUsers();
     }
+
+    private void createUsers() {
+        User oper1=new User("oper1","123");
+        oper1.setEnabled(true);
+        oper1.setRole("USER");
+        em.persist(oper1);
+//        CREATE VIEW users_doctors AS SELECT login,password,enabled,role FROM users UNION SELECT login,password,enabled,role FROM doctors;
+    }
+
     public void createModelAppo(){
         int symGen=0;
         for (int i = 0; i < maxSymptoms ; i++) {
