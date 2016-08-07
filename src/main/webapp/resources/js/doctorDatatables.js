@@ -38,39 +38,10 @@ $(function () {
              "render": {}
              }*/
         ],
-        ordering: false
+        ordering: false,
+        initComplete: updateTable
     });
-    $.get("rest/doctors/certs", function (certs) {
-        $.each(certs, function (key, val) {
-            $("#certificates").append($('<option>').text(val.name));
-        })
-    });
-    $.get("rest/doctors/specs", function (specs) {
-        $.each(specs, function (key, val) {
-            $(".professions").append($('<option>').text(val.name));
-        })
-    });
-    $.get("rest/doctors/quals", function (quals) {
-        $.each(quals, function (key, val) {
-            $(".qualifications").append($('<option>').text(val.name));
-        });
-        $("#quals").multiselect({
-            allSelectedText: false
-        });
-    });
-    $.get("rest/doctors/cities", function (cities) {
-        $.each(cities, function (key, val) {
-            $("#cities").append($('<option>').text(val));
-        })
-    });
-    $.get("rest/doctors/targets", function (targets) {
-        $.each(targets, function (key, val) {
-            $("#target").append($('<option>').text(val.name))
-        });
-        $("#target").multiselect({
-            allSelectedText: false
-        });
-    });
+
 });
 $("#namesearch").on('keyup', function () {
     table.columns(0).search(this.value).draw();
@@ -98,5 +69,36 @@ function updateTableByData(data) {
     table.clear().rows.add(data).draw();
 }
 function updateTable() {
+    $.get("rest/doctors/certs", function (certs) {
+        $.each(certs, function (key, val) {
+            $("#certificates").append($('<option>').text(val.name));
+        })
+    });
+    $.get("rest/doctors/specs", function (specs) {
+        $.each(specs, function (key, val) {
+            $(".professions").append($('<option>').text(val.name));
+        })
+    });
+    $.get("rest/doctors/quals", function (quals) {
+        $.each(quals, function (key, val) {
+            $(".qualifications").append($('<option>').text(val.name));
+        });
+        $("#quals").multiselect({
+            allSelectedText: false
+        });
+    });
+    $.get("rest/clinics/cities", function (cities) {
+        $.each(cities, function (key, val) {
+            $("#cities").append($('<option>').text(val));
+        })
+    });
+    $.get("rest/doctors/targets", function (targets) {
+        $.each(targets, function (key, val) {
+            $("#target").append($('<option>').text(val.name))
+        });
+        $("#target").multiselect({
+            allSelectedText: false
+        });
+    });
     $.get("rest/doctors", updateTableByData)
 }

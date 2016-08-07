@@ -49,9 +49,10 @@ function renderCreateAppointment(data, type, doctor) {
     return "";
 }
 function addDoctor() {
-    editDoctorForm.find(":text").val("");
+    $(":text",editDoctorForm).empty();
     editDoctorForm.find("option").removeAttr("selected");
-    $(".title", editDoctorForm).text("Add new doctor");
+    $(".title", $("#editDoctor")).text("Add new doctor");
+    $("textarea",editDoctorForm).empty();
     $('#id').val(null);
     $('#editDoctor').modal({backdrop: 'static'});
 }

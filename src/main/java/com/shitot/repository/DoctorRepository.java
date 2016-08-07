@@ -37,4 +37,5 @@ public interface DoctorRepository {
     List<String> getAllCities();
 
     List<Doctor> getByCity(String city);
+
 }

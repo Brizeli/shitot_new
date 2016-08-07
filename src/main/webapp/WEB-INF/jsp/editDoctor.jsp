@@ -92,13 +92,13 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-2" for="lections">Lections:</label>
                                 <div class="col-xs-10">
-                                    <textarea class="form-control" type="text" name="lections" id="lections"></textarea>
+                                    <textarea class="form-control" name="lections" id="lections"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-2" for="comments">Comments:</label>
                                 <div class="col-xs-10">
-                                    <textarea class="form-control" type="text" name="comments" id="comments"></textarea>
+                                    <textarea class="form-control" name="comments" id="comments"></textarea>
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,8 @@
 package com.shitot.utils;
 
+import com.shitot.model.Clinic;
 import com.shitot.model.Doctor;
 import com.shitot.to.DoctorTo;
-
-import java.util.Arrays;
 
 /**
  * Created by Next on 29.07.2016.
@@ -30,4 +29,5 @@ public class JsonUtil {
                                       doctorTo.getComments());
         return doctor;
     }
+
 }

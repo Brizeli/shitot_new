@@ -1,6 +1,7 @@
 package com.shitot;
 
 import com.shitot.model.*;
+import com.shitot.repository.ClinicRepository;
 import com.shitot.repository.DoctorRepository;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -20,8 +21,13 @@ public class main {
             appCtx.load("spring-db.xml");
 //            appCtx.load("spring-app.xml", "spring-db.xml", "spring-mvc.xml");
             appCtx.refresh();
-            DoctorRepository repository = appCtx.getBean(DoctorRepository.class);
-            repository.setSpecialties(3, "Specialty1");
+//            DoctorRepository repository = appCtx.getBean(DoctorRepository.class);
+            ClinicRepository repository = appCtx.getBean(ClinicRepository.class);
+            Clinic clinic = repository.get(21,3);
+            repository.setSlot(1,21,1,2,3);
+            System.out.println(clinic);
+
+//            repository.setSpecialties(3, "Specialty1");
 //            Doctor doctor1 = new Doctor(1, "doctor1", "doc1", "1", "doc1@mail", "123456789", "654321", "homeaddress1",
 //                                          "lections1", "prefers1", "comments1");
 //            Doctor doctor2 = new Doctor(2, "doctor2", "doc2", "2", "doc2@mail", "223456789", "654322", "homeaddress2",

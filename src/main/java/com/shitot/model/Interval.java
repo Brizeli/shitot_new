@@ -1,59 +1,91 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
-import java.util.Arrays;
-import java.util.List;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Next on 12.07.2016.
  */
 @Entity(name = "intervals")
-public class Interval extends NamedEntity {
+public class Interval implements Comparable{
 
-    public static final Interval INT_7_8   = new Interval("07:00 - 08:00");
-    public static final Interval INT_8_9   = new Interval("08:00 - 09:00");
-    public static final Interval INT_9_10  = new Interval("09:00 - 10:00");
-    public static final Interval INT_10_11 = new Interval("10:00 - 11:00");
-    public static final Interval INT_11_12 = new Interval("11:00 - 12:00");
-    public static final Interval INT_12_13 = new Interval("12:00 - 13:00");
-    public static final Interval INT_13_14 = new Interval("13:00 - 14:00");
-    public static final Interval INT_14_15 = new Interval("14:00 - 15:00");
-    public static final Interval INT_15_16 = new Interval("15:00 - 16:00");
-    public static final Interval INT_16_17 = new Interval("16:00 - 17:00");
-    public static final Interval INT_17_18 = new Interval("17:00 - 18:00");
-    public static final Interval INT_18_19 = new Interval("18:00 - 19:00");
-    public static final Interval INT_19_20 = new Interval("19:00 - 20:00");
-    public static final Interval INT_20_21 = new Interval("20:00 - 21:00");
-    public static final Interval INT_21_22 = new Interval("21:00 - 22:00");
-    public static final Interval INT_22_23 = new Interval("22:00 - 23:00");
+    @Id
+//    @Range(min = 0, max = 23)
+    private int hour;
+
+    @ManyToMany(mappedBy = "intervals")
+    @JsonIgnore
+    private Set<Slot> slots;
 
     public Interval() {
     }
 
-    public Interval(String name) {
-        super(name);
+    public Interval(int hour) {
+        this.hour = hour;
+    }
+
+    public static String intervalEnd(int hour) {
+        return (hour >= 0 && hour <= 23) ? String.format("%02d", hour) : "";
+    }
+
+    public static String intervalStart(int hour) {
+        return (hour >= 0 && hour <= 23) ? String.format("%02d", (hour + 1) % 24) : "";
+    }
+
+    private static String intervalName(int hour) {
+        return (hour >= 0 && hour <= 23) ? String.format("%02d - %02d", hour, (hour + 1) % 24) : "";
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public Set<Slot> getSlots() {
+        return slots;
+    }
+
+    public void setSlots(Set<Slot> slots) {
+        this.slots = slots;
+    }
+
+    public void addSlot(Slot slot) {
+        if (slots == null)
+            slots = new HashSet<Slot>();
+        slots.add(slot);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Interval interval = (Interval) o;
+
+        return hour == interval.hour;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return hour + 1;
+    }
+
+    @Override
+    public String toString() {
+        return "Interval{" + intervalName(hour) + "}";
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return hour - ((Interval) o).hour;
     }
 }
-//
-//    private String name;
-//
-//    Interval() {
-//    }
-//
-//    Interval(String name) {
-//        this.name = name;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return name;
-//    }
-//}

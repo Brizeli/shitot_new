@@ -3,6 +3,7 @@ package com.shitot.web.doctor;
 import com.shitot.model.*;
 import com.shitot.to.DoctorTo;
 import com.shitot.utils.JsonUtil;
+import com.shitot.web.ExceptionInfoHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/rest/doctors")
-public class DoctorRestController extends AbstractDoctorController {
+public class DoctorRestController extends AbstractDoctorController implements ExceptionInfoHandler {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getAll() {
@@ -38,8 +39,8 @@ public class DoctorRestController extends AbstractDoctorController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if (doctorTo.isNew()) {
-            super.create(doctorTo);
-        } else super.update(doctorTo);
+            service.save(doctorTo);
+        } else service.update(doctorTo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -62,10 +63,6 @@ public class DoctorRestController extends AbstractDoctorController {
     public List<TargetAudience> getAllTargetAudiences() {
         return service.getAllTargetAudiences();
     }
-
-    //move to clinicsController
-    @RequestMapping(value = "/cities", method = RequestMethod.GET)
-    public List<String> getAllCities() {return service.getAllCities();}
 
     @RequestMapping(value = "/by", params = "specialty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getBySpecialty(@RequestParam String specialty) {
