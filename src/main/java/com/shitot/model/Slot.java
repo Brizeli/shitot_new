@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -31,17 +36,18 @@ public class Slot extends BaseEntity{
     @JsonBackReference
     private Clinic clinic;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @OrderBy(value = "hour")
-    private Set<Interval> intervals;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @OrderBy("hour")
+    private Set<Interval> intervals = new HashSet();
 
     public Slot() {
     }
 
-    public Slot(Integer id, int dayOfWeek, Clinic clinic) {
+    public Slot(Integer id, int dayOfWeek, Clinic clinic, Set<Interval> intervals) {
         super(id);
         this.dayOfWeek = dayOfWeek;
         this.clinic = clinic;
+        this.intervals = intervals;
     }
 
     public int getDayOfWeek() {

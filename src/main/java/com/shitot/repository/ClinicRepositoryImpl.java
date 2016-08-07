@@ -9,8 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -86,31 +85,24 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     @Override
     @Transactional
     public void setSlot(int dayOfWeek, int clinicId, int... hours) {
-        Set<Interval> intervals = new LinkedHashSet<>();
-        Arrays.sort(hours);
-        int prevHour = hours[0] - 1;
+        Set<Interval> intervals = new HashSet<>();
         for (int hour : hours) {
-            if (hour == prevHour)
-                continue;
-            prevHour = hour;
-            Interval addingInterval = em.find(Interval.class, hour);
-            if (addingInterval == null) {
-                addingInterval = new Interval(hour);
-                em.persist(addingInterval);
-            }
-            intervals.add(addingInterval);
+            intervals.add(new Interval(hour));
         }
-        Slot newSlot = getDaySlot(dayOfWeek, clinicId);
-        if (newSlot == null) {
-            Clinic clinic = em.find(Clinic.class, clinicId);
-            if (clinic == null)
-                throw new IllegalArgumentException("Clinic with id " + clinicId + " not found");
-            newSlot = new Slot(null, dayOfWeek, em.find(Clinic.class, clinicId));
-            newSlot.setIntervals(intervals);
-            em.persist(newSlot);
-        } else {
-            newSlot.setIntervals(intervals);
-            em.merge(newSlot);
+        if (intervals.isEmpty())
+            deleteSlot(dayOfWeek, clinicId);
+        else {
+            Slot newSlot = getDaySlot(dayOfWeek, clinicId);
+            if (newSlot == null) {
+                Clinic clinic = em.find(Clinic.class, clinicId);
+                if (clinic == null)
+                    throw new IllegalArgumentException("Clinic with id " + clinicId + " not found");
+                newSlot = new Slot(null, dayOfWeek, em.find(Clinic.class, clinicId), intervals);
+                em.persist(newSlot);
+            } else {
+                newSlot.setIntervals(intervals);
+                em.merge(newSlot);
+            }
         }
     }
 
