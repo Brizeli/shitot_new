@@ -462,7 +462,7 @@
                 this.enable();
             }
 
-            // Manually add button width if set.
+            // Manually addDoctor button width if set.
             if (this.options.buttonWidth && this.options.buttonWidth !== 'auto') {
                 this.$button.css({
                     'width' : '100%', //this.options.buttonWidth,
@@ -965,7 +965,7 @@
             if (!alreadyHasSelectAll && this.options.includeSelectAllOption && this.options.multiple
                     && $('option', this.$select).length > this.options.includeSelectAllIfMoreThan) {
 
-                // Check whether to add a divider after the select all.
+                // Check whether to addDoctor a divider after the select all.
                 if (this.options.includeSelectAllDivider) {
                     this.$ul.prepend($(this.options.templates.divider));
                 }
@@ -1455,7 +1455,7 @@
                         disabled: !!option.disabled
                     });
 
-                    forEach(option.children, function(subOption) { // add children option tags
+                    forEach(option.children, function(subOption) { // addDoctor children option tags
                         var attributes = {
                             value: subOption.value,
                             label: subOption.label || subOption.value,
@@ -1464,7 +1464,7 @@
                             disabled: !!subOption.disabled
                         };
 
-                        //Loop through attributes object and add key-value for each attribute
+                        //Loop through attributes object and addDoctor key-value for each attribute
                        for (var key in subOption.attributes) {
                             attributes['data-' + key] = subOption.attributes[key];
                        }
@@ -1482,7 +1482,7 @@
                         'selected': !!option.selected,
                         'disabled': !!option.disabled
                     };
-                    //Loop through attributes object and add key-value for each attribute
+                    //Loop through attributes object and addDoctor key-value for each attribute
                     for (var key in option.attributes) {
                       attributes['data-' + key] = option.attributes[key];
                     }

@@ -1,5 +1,6 @@
 package com.shitot.utils;
 
+import com.shitot.model.Clinic;
 import com.shitot.model.Doctor;
 import com.shitot.to.DoctorTo;
 
@@ -9,6 +10,8 @@ import com.shitot.to.DoctorTo;
 public class JsonUtil {
     public static Doctor updateFromTo(Doctor doctor, DoctorTo doctorTo) {
         doctor.setFullName(doctorTo.getFullName());
+        doctor.setLogin(doctorTo.getLogin());
+        doctor.setPassword(doctorTo.getPassword());
         doctor.setEmail(doctorTo.getEmail());
         doctor.setTelNumber(doctorTo.getTelNumber());
         doctor.setTelHome(doctorTo.getTelHome());
@@ -20,7 +23,11 @@ public class JsonUtil {
     }
 
     public static Doctor createNewFromTo(DoctorTo doctorTo) {
-        //
-        return null;
+        Doctor doctor = new Doctor(doctorTo.getFullName(), doctorTo.getLogin(), doctorTo.getPassword(),
+                                      doctorTo.getEmail(), doctorTo.getTelNumber(), doctorTo.getTelHome(),
+                                      doctorTo.getHomeAddress(), doctorTo.getLections(), doctorTo.getPreferential(),
+                                      doctorTo.getComments());
+        return doctor;
     }
+
 }

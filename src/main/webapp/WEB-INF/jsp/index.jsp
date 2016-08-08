@@ -5,11 +5,11 @@
     <jsp:include page="fragments/headTag.jsp"/>
 </head>
 <body>
-    <div class="container wrapper">
+    <div class="container-fluid wrapper">
         <jsp:include page="fragments/bodyHeader.jsp"/>
         <div class="row content">
             <jsp:include page="${page}.jsp"/>
         </div>
+        <jsp:include page="fragments/pageFooter.jsp"/>
     </div>
-    <jsp:include page="fragments/pageFooter.jsp"/>
 </body>

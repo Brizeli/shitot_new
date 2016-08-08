@@ -36,9 +36,26 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     @Transactional
+    public Doctor save(DoctorTo doctorTo) {
+        Doctor doctor = repository.save(JsonUtil.createNewFromTo(doctorTo));
+        Integer id = doctor.getId();
+        repository.setSpecialties(id, doctorTo.getSpecialty1(), doctorTo.getSpecialty2());
+        repository.setQualifications(id, doctorTo.getQualifications());
+        repository.setTargetAudiences(id, doctorTo.getTargetAudiences());
+        repository.setCertificate(id, doctorTo.getCertificate());
+        return doctor;
+    }
+
+    @Override
+    @Transactional
     public void update(DoctorTo doctorTo) {
-        Doctor doctor = get(doctorTo.getId());
+        Integer id = doctorTo.getId();
+        Doctor doctor = get(id);
         repository.save(JsonUtil.updateFromTo(doctor, doctorTo));
+        repository.setSpecialties(id, doctorTo.getSpecialty1(), doctorTo.getSpecialty2());
+        repository.setQualifications(id, doctorTo.getQualifications());
+        repository.setTargetAudiences(id, doctorTo.getTargetAudiences());
+        repository.setCertificate(id, doctorTo.getCertificate());
     }
 
     @Override
@@ -49,6 +66,21 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Doctor> getByQualification(String qualification) {
         return repository.getByQualification(qualification);
+    }
+
+    @Override
+    public List<Qualification> getAllQualifications() {
+        return repository.getAllQualifications();
+    }
+
+    @Override
+    public List<String> getAllCities() {
+        return repository.getAllCities();
+    }
+
+    @Override
+    public List<Doctor> getByCity(String city) {
+        return repository.getByCity(city);
     }
 
     @Override
@@ -64,11 +96,5 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Qualification> getAllExperiences() {
         return repository.getAllQualifications();
-    }
-
-    @Override
-    public Doctor save(Doctor doctor) {
-        doctor.setId(null);
-        return repository.save(doctor);
     }
 }

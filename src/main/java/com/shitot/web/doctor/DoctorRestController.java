@@ -1,9 +1,9 @@
 package com.shitot.web.doctor;
 
-import com.shitot.model.Doctor;
-import com.shitot.model.Specialty;
+import com.shitot.model.*;
 import com.shitot.to.DoctorTo;
 import com.shitot.utils.JsonUtil;
+import com.shitot.web.ExceptionInfoHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/rest/doctors")
-public class DoctorRestController extends AbstractDoctorController {
+public class DoctorRestController extends AbstractDoctorController implements ExceptionInfoHandler {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getAll() {
@@ -39,14 +39,29 @@ public class DoctorRestController extends AbstractDoctorController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if (doctorTo.isNew()) {
-            super.create(JsonUtil.createNewFromTo(doctorTo));
-        } else super.update(doctorTo);
+            service.save(doctorTo);
+        } else service.update(doctorTo);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/certs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Certificate> getAllCertificates() {
+        return service.getAllCertificates();
     }
 
     @RequestMapping(value = "/specs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Specialty> getAllSpecialties() {
         return service.getAllSpecialties();
+    }
+
+    @RequestMapping(value = "/quals", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Qualification> getAllQualifications() {
+        return service.getAllQualifications();
+    }
+
+    @RequestMapping(value = "/targets", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TargetAudience> getAllTargetAudiences() {
+        return service.getAllTargetAudiences();
     }
 
     @RequestMapping(value = "/by", params = "specialty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,5 +72,10 @@ public class DoctorRestController extends AbstractDoctorController {
     @RequestMapping(value = "/by", params = "qualification", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getByQualification(@RequestParam String qualification) {
         return super.getByQualification(qualification);
+    }
+
+    @RequestMapping(value = "/by", params = "city", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Doctor> getByCity(@RequestParam String city) {
+        return super.getByCity(city);
     }
 }

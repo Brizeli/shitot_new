@@ -1,3 +1,9 @@
+@media (min-width: 768px) {
+    .modal-xl {
+        width: 90%;
+        max-width:1200px;
+    }
+}
 body {
     font-family: Arial, serif;
 }
@@ -33,9 +39,13 @@ a {
 }
 
 .content {
+    padding-top: 50px;
+    border-radius: 6px;
     background-color: azure;
 }
-
+.navbar-brand{
+    padding: 0;
+}
 .error, .message {
     padding: 10px;
     margin-bottom: 20px;

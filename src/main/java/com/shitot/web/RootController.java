@@ -56,6 +56,7 @@ public class RootController {
     @RequestMapping(value = "/doctors", method = RequestMethod.GET)
     public String doctorList(Model model) {
         model.addAttribute("page", "doctorListDataTable");
+        model.addAttribute("loggedUser", loggedUserName);
         return "index";
     }
 }

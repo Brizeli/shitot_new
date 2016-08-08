@@ -33,4 +33,9 @@ public interface DoctorRepository {
     List<Doctor> getBySpecialty(String specialty);
 
     List<Doctor> getByQualification(String qualification);
+
+    List<String> getAllCities();
+
+    List<Doctor> getByCity(String city);
+
 }

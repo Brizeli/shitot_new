@@ -1,25 +1,25 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by Next on 12.07.2016.
  */
 @Entity(name = "intervals")
-public class Interval {
+public class Interval implements Comparable{
 
     @Id
-    @Min(0)
-    @Max(23)
+//    @Range(min = 0, max = 23)
     private int hour;
 
-    @ManyToMany (mappedBy = "intervals", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "intervals")
+    @JsonIgnore
     private Set<Slot> slots;
 
     public Interval() {
@@ -37,7 +37,7 @@ public class Interval {
         return (hour >= 0 && hour <= 23) ? String.format("%02d", (hour + 1) % 24) : "";
     }
 
-    public static String intervalName(int hour) {
+    private static String intervalName(int hour) {
         return (hour >= 0 && hour <= 23) ? String.format("%02d - %02d", hour, (hour + 1) % 24) : "";
     }
 
@@ -57,6 +57,12 @@ public class Interval {
         this.slots = slots;
     }
 
+    public void addSlot(Slot slot) {
+        if (slots == null)
+            slots = new HashSet<Slot>();
+        slots.add(slot);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,11 +76,16 @@ public class Interval {
 
     @Override
     public int hashCode() {
-        return hour;
+        return hour + 1;
     }
 
     @Override
     public String toString() {
         return "Interval{" + intervalName(hour) + "}";
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return hour - ((Interval) o).hour;
     }
 }

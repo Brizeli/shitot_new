@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<div class="container">
+<div class="container-fluid">
+    <br>
     <form action="spring_security_check" method="post">
         <dl>
             <dt>Name:</dt>
@@ -15,7 +16,7 @@
         <a class="btn btn-primary" onclick="reg()">Register</a>
     </form>
 </div>
-<div class="container">
+<div class="container-fluid">
     <c:if test="${error}">
         <div class="error">
                 ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
@@ -24,7 +25,6 @@
     <c:if test="${not empty message}">
         <div class="message">
             ${message}
-            <%--<fmt:message key="${message}"/>--%>
         </div>
     </c:if>
 </div>

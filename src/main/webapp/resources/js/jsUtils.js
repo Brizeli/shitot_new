@@ -13,10 +13,13 @@ function closeNoty() {
 }
 function failNoty(event, jqXHR, options, jsExc) {
     closeNoty();
+    console.log(jqXHR.responseText);
+    var errorInfo = $.parseJSON(jqXHR.responseText);
     failedNote = noty({
-        text: 'Failed: ' + jqXHR.statusText + "<br>" + jqXHR.responseJSON,
+        text: 'Failed: ' + jqXHR.statusText + "<br>" + errorInfo.cause + "<br>" + errorInfo.detail,
         type: 'error',
-        layout: 'center'
+        layout: 'center',
+        timeout:1000
     });
 }
 function successNoty(text) {
@@ -28,6 +31,3 @@ function successNoty(text) {
         timeout: 1000
     });
 }
-$(document).ajaxError(function (event, jqXHR, options, jsExc) {
-    failNoty(event, jqXHR, options, jsExc);
-});

@@ -1,8 +1,9 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import java.time.DayOfWeek;
 import java.util.Set;
 
 /**
@@ -10,26 +11,24 @@ import java.util.Set;
  * Slot is workingDay, you may create 7 slots for every clinic with empty set of intervals
  */
 @NamedQueries({
-    @NamedQuery(name = Slot.BY_CLINIC, query =
-        "select s from slots s join s.clinic c join s.intervals i where c.id=:id order by s.dayOfWeek, i.hour"),
-    @NamedQuery(name = Slot.BY_DAY_CLINIC, query =
-        "select s from slots s join s.clinic c join s.intervals i where c.id=:id and s.dayOfWeek=:dayOfWeek order by i.hour"),
-    @NamedQuery(name = Slot.DELTE_BY_CLINIC, query =
-        "delete from slots s where exists (select s1 from slots s1 join s1.clinic c where c.id=:id)")
+                  @NamedQuery(name = Slot.BY_CLINIC, query =
+                                                         "select distinct s from slots s where s.id in (select s1.id from slots s1 join s1.clinic c where c.id=:id) order by s.dayOfWeek"),
+                  @NamedQuery(name = Slot.BY_DAY_CLINIC, query =
+                                                             "select distinct s from slots s join s.clinic c where c.id=:id and s.dayOfWeek=:dayOfWeek"),
 })
 
 @Entity(name = "slots")
-@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"dayOfWeek", "clinic_id"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"clinic_id", "day_of_week"}))
 public class Slot extends BaseEntity{
 
     public static final String BY_CLINIC = "Slot.getByClinic";
     public static final String BY_DAY_CLINIC = "Slot.getByDayClinic";
-    public static final String DELTE_BY_CLINIC = "Slot.deleteByClinic";
-    @Min(0)
-    @Max(6)
+    //    @Range(min = 0, max = 6)
+    @Column(name = "day_of_week", nullable = false)
     private int dayOfWeek;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @JsonIgnore
     private Clinic clinic;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -38,10 +37,10 @@ public class Slot extends BaseEntity{
     public Slot() {
     }
 
-    public Slot(int dayOfWeek, Clinic clinic, Set<Interval> intervals) {
+    public Slot(Integer id, int dayOfWeek, Clinic clinic) {
+        super(id);
         this.dayOfWeek = dayOfWeek;
         this.clinic = clinic;
-        this.intervals = intervals;
     }
 
     public int getDayOfWeek() {
@@ -70,9 +69,7 @@ public class Slot extends BaseEntity{
 
     @Override
     public String toString() {
-        String res = "Slot{" + "dayOfWeek=" + dayOfWeek + ", intervals=";
-        for (Interval interval : intervals)
-            res += interval.toString();
-        return res + "}";
+        return "Slot{" +
+                   "dayOfWeek=" + dayOfWeek + '}';
     }
 }

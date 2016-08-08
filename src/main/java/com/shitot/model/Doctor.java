@@ -13,6 +13,7 @@ import java.util.*;
                   @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d order by d.fullName"),
                   @NamedQuery(name = Doctor.BY_SPECIALTY, query = "select d from doctors d join d.specialties s where s.name=:specialty order by d.fullName"),
                   @NamedQuery(name = Doctor.BY_QUALIFICATION, query = "select d from doctors d join d.qualifications s where s.name=:qualification order by d.fullName"),
+                  @NamedQuery(name = Doctor.BY_CITY, query = "select d from doctors d join d.clinics c where c.city=:city order by d.fullName")
 })
 @Entity(name = "doctors")
 public class Doctor extends UserDoctor {
@@ -20,6 +21,7 @@ public class Doctor extends UserDoctor {
     public static final String ALL_SORTED = "Doctor.getAllSorted";
     public static final String BY_SPECIALTY = "Doctor.getBySpecialty";
     public static final String BY_QUALIFICATION = "Doctor.getByQualification";
+    public static final String BY_CITY = "Doctor.getByCity";
 
     @NotEmpty
     private String fullName;
@@ -31,8 +33,11 @@ public class Doctor extends UserDoctor {
     private String telNumber;
     private String telHome;
     private String homeAddress;
+    @Column(length = 1000)
     private String lections;
+    @Column(length = 1000)
     private String preferential;
+    @Column(length = 1000)
     private String comments;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -53,7 +58,7 @@ public class Doctor extends UserDoctor {
     public Doctor(Integer id, String fullName, String login, String password, String email, String telNumber,
                   String telHome,
                   String homeAddress, String lections, String preferential, String comments) {
-        super(id,login,password);
+        super(id, login, password);
         this.role = "DOCTOR";
         this.fullName = fullName;
         this.email = email;
@@ -67,7 +72,7 @@ public class Doctor extends UserDoctor {
 
     public Doctor(String fullName, String login, String password, String email, String telNumber, String telHome,
                   String homeAddress, String lections, String preferential, String comments) {
-        this(null, comments, email, lections, login, fullName, password, telNumber, homeAddress, preferential, telHome);
+        this(null, fullName, login, password, email, telNumber, telHome, homeAddress, lections, preferential, comments);
     }
 
     public Certificate getCertificate() {

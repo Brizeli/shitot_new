@@ -8,24 +8,28 @@ import java.util.List;
  * Created by Oleg on 01.08.2016.
  */
 public interface ClinicRepository {
-    Clinic save(Clinic clinic);
 
-    List<Slot> getSlots(int clinicId);
+    Clinic save(Clinic clinic, Integer doctorId);
 
-    Slot getDaySlot(int dayOfWeek, int clinicId);
+    List<String> getAllCities();
 
-    List<Clinic> getByCitySpecialty(String city, String specialty);
+    Clinic get(int clinicId, int doctorId);
 
-    List<Clinic> getByDoctor(int doctorId);
+    boolean delete(int id, int doctorId);
 
-    Clinic get(int clinicId);
+    boolean setSlots(int clinicId, List<Slot> slots);
+
+
+
+
+    List<Slot> getSlotsByClinic(int clinicId);
+
+    Slot getSlotByDayClinic(int dayOfWeek, int clinicId);
 
     void setSlot(int dayOfWeek, int clinicId, int... hours);
 
     void deleteSlot(int dayOfWeek, int clinicId);
 
-    void deleteClinic(int clinicId);
-
-    void setClinic(int doctorId, String name, String city, String address);
+    void setClinic(Integer id, String name, String city, String address, int doctorId);
 
 }
