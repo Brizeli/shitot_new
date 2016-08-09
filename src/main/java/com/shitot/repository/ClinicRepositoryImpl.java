@@ -8,9 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Oleg on 01.08.2016.
@@ -84,19 +82,23 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     @Override
     @Transactional
     public void setSlot(int dayOfWeek, int clinicId, int... hours) {
-        Set<Integer> intervals = new HashSet<>();
-        for (int hour : hours) {
-            intervals.add(hour);
+        StringBuilder intervals = new StringBuilder(" ");
+        for (int i = 0; i < hours.length - 1; i += 2) {
+            if (hours[i] < 0 || hours[i+1] > 24 || hours[i] >= hours[i+1] || i > 0 && hours[i-1] >= hours[i])
+                throw new IllegalArgumentException("Incorrect hours sequence");
+            if(i > 0)
+                intervals.append(',');
+            intervals.append(hours[i]).append('-').append(hours[i+1]);
         }
         Slot newSlot = getDaySlot(dayOfWeek, clinicId);
         if (newSlot == null) {
             Clinic clinic = em.find(Clinic.class, clinicId);
             if (clinic == null)
                 throw new IllegalArgumentException("Clinic with id " + clinicId + " not found");
-            newSlot = new Slot(null, dayOfWeek, em.find(Clinic.class, clinicId), intervals);
+            newSlot = new Slot(null, dayOfWeek, clinic, intervals.toString());
             em.persist(newSlot);
         } else {
-            newSlot.setIntervals(intervals);
+            newSlot.setIntervals(intervals.toString());
             em.merge(newSlot);
         }
     }

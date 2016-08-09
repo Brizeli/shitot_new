@@ -1,15 +1,10 @@
 package com.shitot.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Next on 12.07.2016.
@@ -36,14 +31,14 @@ public class Slot extends BaseEntity{
     @JsonBackReference
     private Clinic clinic;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @OrderBy("intervals")
-    private Set<Integer> intervals = new HashSet<>();
+    @Column(nullable = false)
+    @NotEmpty
+    private String intervals = " ";
 
     public Slot() {
     }
 
-    public Slot(Integer id, int dayOfWeek, Clinic clinic, Set<Integer> intervals) {
+    public Slot(Integer id, int dayOfWeek, Clinic clinic, String intervals) {
         super(id);
         this.dayOfWeek = dayOfWeek;
         this.clinic = clinic;
@@ -58,11 +53,11 @@ public class Slot extends BaseEntity{
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Set<Integer> getIntervals() {
+    public String getIntervals() {
         return intervals;
     }
 
-    public void setIntervals(Set<Integer> intervals) {
+    public void setIntervals(String intervals) {
         this.intervals = intervals;
     }
 
