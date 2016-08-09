@@ -2,7 +2,6 @@ package com.shitot.repository;
 
 import com.shitot.model.Clinic;
 import com.shitot.model.Doctor;
-import com.shitot.model.Interval;
 import com.shitot.model.Slot;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,24 +84,20 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     @Override
     @Transactional
     public void setSlot(int dayOfWeek, int clinicId, int... hours) {
-        Set<Interval> intervals = new HashSet<>();
+        Set<Integer> intervals = new HashSet<>();
         for (int hour : hours) {
-            intervals.add(new Interval(hour));
+            intervals.add(hour);
         }
-        if (intervals.isEmpty())
-            deleteSlot(dayOfWeek, clinicId);
-        else {
-            Slot newSlot = getDaySlot(dayOfWeek, clinicId);
-            if (newSlot == null) {
-                Clinic clinic = em.find(Clinic.class, clinicId);
-                if (clinic == null)
-                    throw new IllegalArgumentException("Clinic with id " + clinicId + " not found");
-                newSlot = new Slot(null, dayOfWeek, em.find(Clinic.class, clinicId), intervals);
-                em.persist(newSlot);
-            } else {
-                newSlot.setIntervals(intervals);
-                em.merge(newSlot);
-            }
+        Slot newSlot = getDaySlot(dayOfWeek, clinicId);
+        if (newSlot == null) {
+            Clinic clinic = em.find(Clinic.class, clinicId);
+            if (clinic == null)
+                throw new IllegalArgumentException("Clinic with id " + clinicId + " not found");
+            newSlot = new Slot(null, dayOfWeek, em.find(Clinic.class, clinicId), intervals);
+            em.persist(newSlot);
+        } else {
+            newSlot.setIntervals(intervals);
+            em.merge(newSlot);
         }
     }
 

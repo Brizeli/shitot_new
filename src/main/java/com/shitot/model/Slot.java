@@ -37,13 +37,13 @@ public class Slot extends BaseEntity{
     private Clinic clinic;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @OrderBy("hour")
-    private Set<Interval> intervals = new HashSet();
+    @OrderBy("intervals")
+    private Set<Integer> intervals = new HashSet<>();
 
     public Slot() {
     }
 
-    public Slot(Integer id, int dayOfWeek, Clinic clinic, Set<Interval> intervals) {
+    public Slot(Integer id, int dayOfWeek, Clinic clinic, Set<Integer> intervals) {
         super(id);
         this.dayOfWeek = dayOfWeek;
         this.clinic = clinic;
@@ -58,11 +58,11 @@ public class Slot extends BaseEntity{
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Set<Interval> getIntervals() {
+    public Set<Integer> getIntervals() {
         return intervals;
     }
 
-    public void setIntervals(Set<Interval> intervals) {
+    public void setIntervals(Set<Integer> intervals) {
         this.intervals = intervals;
     }
 
