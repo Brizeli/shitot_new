@@ -19,7 +19,7 @@
         <intercept-url pattern="/login" access="permitAll"/>
         <intercept-url pattern="/register" access="permitAll"/>
         <intercept-url pattern="/**/doctor" access="hasRole('DOCTOR')"/>
-        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
 
         <form-login login-page="/login" default-target-url="/"
                     authentication-failure-url="/login?error=true"

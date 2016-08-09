@@ -35,18 +35,19 @@ public class DoctorsModelCreator {
     private int NUM_City=2;
 
     public DoctorsModelCreator() {
-        maxAppo = 10;
+        maxAppo = 1000;
         maxSymptoms = 20;
         maxProblem = 20;
         maxsymbyapp = 4;
         maxprobyapp = 4;
-        numPatient = 40;
-        numDoctors =2;
+        numPatient = 1400;
+        numDoctors =200;
         numSpecs = 12;
-        numQual = 4;
+        numQual = 40;
         minSpecsDoctor = 1;
         maxSpecsDoctor = 2;
     }
+
 
     public void createModel(){
         int certGen=0;
@@ -79,10 +80,10 @@ public class DoctorsModelCreator {
             for(int j:getRndIntSet(getRndInt(1,4),0,3))docA.add(tga[j]);
             d.setTargetAudiences(docA);
             Set<Clinic> cls=new LinkedHashSet<>();
-            for (int j = 0; j < getRndInt(1,2); j++) {
+            for (int j : getRndIntSet( getRndInt(1,2),0,Cts.length-1)) {
                 Clinic cl=new Clinic();
                 cl.setName("Clinic"+ ++clinGen);
-                cl.setCity(Cts[getRndInt(0,Cts.length-1)]);
+                cl.setCity(Cts[j]);
                 cl.setAddress("Address"+clinGen);
                 Set<Slot> slots=new LinkedHashSet<>();
                 for (int k :getRndIntSet(getRndInt(1,7),0,6)) {
@@ -151,7 +152,9 @@ public class DoctorsModelCreator {
                 problems.add(em.find(Problem.class,"Problem"+j));
             }
             appo.setProblems(problems);
-            Query q = em.createQuery("select d from doctors d where d.email='DtrEmail"+getRndInt(1, numDoctors)+"@gmail.com'");
+            String ss="select d from doctors d where d.email='DtrEmail"+getRndInt(1, numDoctors)+"@gmail.com'";
+            Query q = em.createQuery(ss);
+//            System.out.println(ss);
             Doctor d = (Doctor)q.getSingleResult();
             appo.setDoctor(d);
             if(getRndInt(1,7)!=1){

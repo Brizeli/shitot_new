@@ -35,4 +35,5 @@ public interface AppointmentRepository {
     void setAltDoctor(int id, int altDoctorId);
 
 
+    void deletePatient(int id);
 }

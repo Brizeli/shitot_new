@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -134,5 +135,17 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     @Transactional
     public void setAltDoctor(int id, int altDoctorId) {
         em.find(Appointment.class,id).setDoctor(em.find(Doctor.class,altDoctorId));
+    }
+
+    @Override
+    @Transactional
+    public void deletePatient(int id) {
+        Patient p = em.find(Patient.class,id);
+//        System.out.println(p);
+        Query q=em.createNamedQuery(Appointment.BY_PATIENT,Appointment.class).setParameter("id",id);
+        for(Appointment a:(List<Appointment>) q.getResultList()){
+            em.remove(a);
+        }
+        if(p!=null)em.remove(p);
     }
 }

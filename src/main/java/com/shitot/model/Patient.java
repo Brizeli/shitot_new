@@ -1,5 +1,6 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ public class Patient extends BaseEntity {
     private int age;
     private String telNumber;
 
-
+    @JsonIgnore
     @OneToMany (mappedBy = "patient",fetch = FetchType.EAGER)
     private Set<Appointment> appointments;
 

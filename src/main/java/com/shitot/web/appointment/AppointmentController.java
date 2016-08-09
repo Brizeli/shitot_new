@@ -2,7 +2,10 @@ package com.shitot.web.appointment;
 
 import com.shitot.model.Doctor;
 import com.shitot.model.Specialty;
+import com.shitot.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +17,20 @@ import java.util.Objects;
 
 
 @Controller
-@RequestMapping(value = "/doctors")
+@RequestMapping(value = "/patients")
 @Scope("session")
 public class AppointmentController extends AbstractAppointmentController {
+    @Autowired
+    private UserService userService;
+    private String loggedUserName;
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String doctorList(Model model) {
+        loggedUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("page", "patientListDataTable");
+        model.addAttribute("loggedUser", loggedUserName);
+        return "index";
+    }
 
 //    @RequestMapping(value = "/create", method = RequestMethod.GET)
 //    public String editForCreate(Model model) {

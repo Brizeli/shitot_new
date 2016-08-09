@@ -2,6 +2,7 @@ package com.shitot.web.appointment;
 
 import com.shitot.model.Appointment;
 import com.shitot.model.Doctor;
+import com.shitot.model.Patient;
 import com.shitot.service.AppointmentService;
 import com.shitot.service.DoctorService;
 import com.shitot.to.DoctorTo;
@@ -34,14 +35,19 @@ public class AbstractAppointmentController {
         model.addAttribute("doctorList", serviceDoctor.getAll());
     }
 
-    protected List<Appointment> getAll() {
+    protected List<Appointment> getAllAppointment() {
         return service.getAll();
     }
-
+    protected List<Patient> getAllPatients(){
+        return service.getAllPatients();
+    }
 //    protected void update(DoctorTo doctor) {
 //        service.update(doctor);
 //    }
 
+    protected void deletePatient(int id){
+        service.deletePatient(id);
+    }
     protected List<Doctor> getBySpecialty(String specialty) {
         return serviceDoctor.getBySpecialty(specialty);
     }

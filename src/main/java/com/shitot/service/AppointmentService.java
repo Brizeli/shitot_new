@@ -32,6 +32,8 @@ public interface AppointmentService {
 
     void setSymptoms(int id, String... symptoms);
 
+    void deletePatient(int id);
+
     void setPatient(int id, int patientId);
 
     void setDoctor(int id, int doctorId);

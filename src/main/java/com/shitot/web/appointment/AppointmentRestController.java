@@ -1,6 +1,8 @@
 package com.shitot.web.appointment;
 
+import com.shitot.model.Appointment;
 import com.shitot.model.Doctor;
+import com.shitot.model.Patient;
 import com.shitot.model.Specialty;
 import com.shitot.to.DoctorTo;
 import com.shitot.utils.JsonUtil;
@@ -15,13 +17,24 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/rest/doctors")
+@RequestMapping("/rest/patients")
 public class AppointmentRestController extends AbstractAppointmentController {
 
-//    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Doctor> getAll() {
-//        return super.getAll();
-//    }
+    @RequestMapping(value="/appointment", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Appointment> getAllAppointment() {
+        return super.getAllAppointment();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Patient> getAllPatients() {
+        return super.getAllPatients();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable int id) {
+        System.out.println(id+"arc");
+        super.deletePatient(id);
+    }
 //
 //    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //    public Doctor get(@PathVariable int id) {

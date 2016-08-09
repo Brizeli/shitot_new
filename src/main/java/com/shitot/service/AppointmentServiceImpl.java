@@ -82,6 +82,12 @@ public class AppointmentServiceImpl implements AppointmentService {
         repository.setSymptoms(id, symptoms);
     }
 
+    @Transactional
+    @Override
+    public void deletePatient(int id) {
+        repository.deletePatient(id);
+    }
+
     @Override
     @Transactional
     public void setPatient(int id, int patientId) {
