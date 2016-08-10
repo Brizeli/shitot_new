@@ -19,10 +19,11 @@ public class Patient extends BaseEntity {
     @NotEmpty
     private String name;
     private int age;
+    @NotEmpty
     private String telNumber;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "patient",fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "patient",fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
     private Set<Appointment> appointments;
 
     public Set<Appointment> getAppointments() {

@@ -1,5 +1,5 @@
 
-//var editDoctorForm = $('#doctorDetailsForm');
+var editPatientForm = $('#patientDetailsForm');
 
 function renderPatientName(data, type, patient) {
     if (type == 'display') {
@@ -41,13 +41,13 @@ function renderButton(data, type, patient){
 function renderCreateAppointment(data, type, doctor) {
     return "";
 }
-function addDoctor() {
-    //$(":text",editDoctorForm).empty();
+function addPatient() {
+    $(":text",editPatientForm).empty();
     //editDoctorForm.find("option").removeAttr("selected");
-    //$(".title", $("#editDoctor")).text("Add new doctor");
-    //$("textarea",editDoctorForm).empty();
-    //$('#id').val(null);
-    //$('#editDoctor').modal({backdrop: 'static'});
+    $(".title", $("#editPatient")).text("Add new patient");
+    $("textarea",editPatientForm).empty();
+    $('#id').val(null);
+    $('#editPatient').modal({backdrop: 'static'});
 }
 function editDoctor(id) {
     //$.get("rest/doctors/" + id, function (doctor) {
@@ -73,14 +73,14 @@ function editDoctor(id) {
     //    $('#editDoctor').modal({backdrop: 'static'});
     //})
 }
-//editDoctorForm.submit(function () {
-//    $.post("rest/doctors", editDoctorForm.serialize(), function () {
-//        $('#editDoctor').modal('hide');
-//        updateTable();
-//        successNoty('Saved');
-//    });
-//    return false;
-//});
+editDoctorForm.submit(function () {
+    $.post("rest/patients", editPatientForm.serialize(), function () {
+        $('#editPatient').modal('hide');
+        updateTable();
+        successNoty('Saved');
+    });
+    return false;
+});
 function deletePatient(patientId){
     $.ajax({
         url: "rest/patients/" + patientId + "/" ,

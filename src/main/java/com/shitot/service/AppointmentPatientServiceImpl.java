@@ -1,28 +1,32 @@
 package com.shitot.service;
 
 import com.shitot.model.*;
-import com.shitot.repository.AppointmentRepository;
-import com.shitot.repository.DoctorRepository;
+import com.shitot.repository.AppointmentPatientRepository;
+import com.shitot.to.DoctorTo;
+import com.shitot.to.PatientTo;
+import com.shitot.utils.JsonUtil;
+import com.shitot.utils.JsonUtilAppointmentPatient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 @Transactional(readOnly = true)
-public class AppointmentServiceImpl implements AppointmentService {
+public class AppointmentPatientServiceImpl implements AppointmentPatientService {
 
     @Autowired
-    AppointmentRepository repository;
+    AppointmentPatientRepository repository;
 
     @Override
     public Appointment save(Appointment appointment) {
         return repository.save(appointment);
+    }
+
+    @Override
+    public Patient save(Patient patient) {
+        return repository.save(patient);
     }
 
     @Override
@@ -71,6 +75,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public Patient getPatient(int id) {
+        return repository.getPatient(id);
+    }
+
+    @Override
     @Transactional
     public void setProblems(int id, String... problems) {
         repository.setProblems(id, problems);
@@ -105,4 +114,21 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void setAltDoctor(int id, int altDoctorId){
         repository.setAltDoctor( id,  altDoctorId);
     }
+
+    @Override
+    @Transactional
+    public Patient save(PatientTo patientTo) {
+        Patient patient = repository.save(JsonUtilAppointmentPatient.createNewFromTo(patientTo));
+        Integer id = patient.getId();
+        return patient;
+    }
+
+    @Override
+    @Transactional
+    public void update(PatientTo patientTo) {
+        Integer id = patientTo.getId();
+        Patient patient = getPatient(id);
+        repository.save(JsonUtilAppointmentPatient.updateFromTo(patient, patientTo));
+    }
+
 }

@@ -1,7 +1,5 @@
 package com.shitot.web.appointment;
 
-import com.shitot.model.Doctor;
-import com.shitot.model.Specialty;
 import com.shitot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,15 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Iterator;
-import java.util.Objects;
-
 
 @Controller
 @RequestMapping(value = "/patients")
 @Scope("session")
-public class AppointmentController extends AbstractAppointmentController {
+public class AppointmentPatientController extends AbstractAppointmentPatientController {
     @Autowired
     private UserService userService;
     private String loggedUserName;

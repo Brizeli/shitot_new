@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Repository
 @Transactional(readOnly = true)
-public class AppointmentRepositoryImpl implements AppointmentRepository {
+public class AppointmentPatientRepositoryImpl implements AppointmentPatientRepository {
 
     @PersistenceContext
     private EntityManager em;
@@ -89,6 +89,11 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
 
     @Override
+    public Patient getPatient(int id) {
+        return em.find(Patient.class,id);
+    }
+
+    @Override
     @Transactional
     public void setProblems(int id, String... problems) {
         Set<Problem> problemSet=new LinkedHashSet<>();
@@ -147,5 +152,13 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             em.remove(a);
         }
         if(p!=null)em.remove(p);
+    }
+
+    @Override
+    public Patient save(Patient patient) {
+        if (patient.isNew()) {
+            em.persist(patient);
+            return patient;
+        } else return em.merge(patient);
     }
 }

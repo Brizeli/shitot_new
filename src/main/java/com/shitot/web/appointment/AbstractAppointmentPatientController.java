@@ -3,25 +3,29 @@ package com.shitot.web.appointment;
 import com.shitot.model.Appointment;
 import com.shitot.model.Doctor;
 import com.shitot.model.Patient;
-import com.shitot.service.AppointmentService;
+import com.shitot.service.AppointmentPatientService;
 import com.shitot.service.DoctorService;
-import com.shitot.to.DoctorTo;
+import com.shitot.to.PatientTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import java.util.List;
 
 
-public class AbstractAppointmentController {
+public class AbstractAppointmentPatientController {
 
     @Autowired
-    AppointmentService service;
+    AppointmentPatientService service;
     @Autowired
     DoctorService serviceDoctor;
 
     protected Appointment create(Appointment appointment){
         appointment.setId(null);
         return service.save(appointment);
+    }
+    protected Patient create(Patient patient){
+        patient.setId(null);
+        return service.save(patient);
     }
 
     protected Appointment get(int id) {
@@ -41,9 +45,9 @@ public class AbstractAppointmentController {
     protected List<Patient> getAllPatients(){
         return service.getAllPatients();
     }
-//    protected void update(DoctorTo doctor) {
-//        service.update(doctor);
-//    }
+    protected void update(PatientTo patientTo) {
+        service.update(patientTo);
+    }
 
     protected void deletePatient(int id){
         service.deletePatient(id);

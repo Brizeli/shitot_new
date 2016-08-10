@@ -1,11 +1,10 @@
 package com.shitot.web.appointment;
 
 import com.shitot.model.Appointment;
-import com.shitot.model.Doctor;
 import com.shitot.model.Patient;
-import com.shitot.model.Specialty;
-import com.shitot.to.DoctorTo;
+import com.shitot.to.PatientTo;
 import com.shitot.utils.JsonUtil;
+import com.shitot.utils.JsonUtilAppointmentPatient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/patients")
-public class AppointmentRestController extends AbstractAppointmentController {
+public class AppointmentPatientRestController extends AbstractAppointmentPatientController {
 
     @RequestMapping(value="/appointment", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Appointment> getAllAppointment() {
@@ -41,19 +40,19 @@ public class AppointmentRestController extends AbstractAppointmentController {
 //        return super.get(id);
 //    }
 //
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ResponseEntity<String> createOrUpdate(@Valid DoctorTo doctorTo, BindingResult result) {
-//        if (result.hasErrors()) {
-//            StringBuilder sb = new StringBuilder();
-//            result.getFieldErrors()
-//                  .forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-//            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
-//        }
-//        if (doctorTo.isNew()) {
-//            super.create(JsonUtil.createNewFromTo(doctorTo));
-//        } else super.update(doctorTo);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<String> createOrUpdate(@Valid PatientTo patientTo, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder sb = new StringBuilder();
+            result.getFieldErrors()
+                  .forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
+            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        if (patientTo.isNew()) {
+            super.create(JsonUtilAppointmentPatient.createNewFromTo(patientTo));
+        } else super.update(patientTo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 //
 //    @RequestMapping(value = "/specs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //    public List<Specialty> getAllSpecialties() {

@@ -34,8 +34,7 @@
         </table>
     </div>
 </div>
-<%--<jsp:include page="editDoctor.jsp"/>--%>
-<%--<jsp:include page="editClinic.jsp"/>--%>
+<jsp:include page="editPatient.jsp"/>
 <script type="text/javascript" src="resources/js/patientDatatables.js"></script>
 <script type="text/javascript" src="resources/js/patient.js"></script>
 <%--<script type="text/javascript" src="resources/js/clinics.js"></script>--%>

@@ -5,7 +5,7 @@ import com.shitot.model.*;
 import java.util.List;
 
 
-public interface AppointmentRepository {
+public interface AppointmentPatientRepository {
     Appointment save(Appointment appointment);
 
     List<Problem> getAllProblems();
@@ -24,6 +24,7 @@ public interface AppointmentRepository {
     List<Patient> getAllPatients();
 
     Appointment get(int id);
+    Patient getPatient(int id);
 
     void setProblems(int id,String... problems);
 
@@ -36,4 +37,6 @@ public interface AppointmentRepository {
 
 
     void deletePatient(int id);
+
+    Patient save(Patient patient);
 }
