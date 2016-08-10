@@ -18,7 +18,7 @@ public class AppointmentPatientController extends AbstractAppointmentPatientCont
     private UserService userService;
     private String loggedUserName;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping( method = RequestMethod.GET)
     public String doctorList(Model model) {
         loggedUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("page", "patientListDataTable");
