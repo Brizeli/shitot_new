@@ -58,6 +58,15 @@ public class ClinicRestController implements ExceptionInfoHandler{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/slots", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Slot> getSlots(@PathVariable int id) {
+        return service.getSlots(id);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
     @RequestMapping(value = "/setclinic", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,10 +77,6 @@ public class ClinicRestController implements ExceptionInfoHandler{
         return id + "<br>" + city + "<br>" + name + "<br>" + address;
     }
 
-    @RequestMapping(value = "/slots/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Slot> getSlots(@PathVariable int id) {
-        return service.getSlots(id);
-    }
 
     @RequestMapping(value = "/dayslot/{dayofweek}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Slot getDaySlot(@PathVariable int dayofweek, @PathVariable int id) {

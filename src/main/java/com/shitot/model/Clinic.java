@@ -27,6 +27,7 @@ public class Clinic extends BaseEntity {
     @NotEmpty
     private String address;
     @OneToMany(mappedBy = "clinic", fetch = FetchType.EAGER)
+    @OrderBy("dayOfWeek")
     private Set<Slot> slots;
 
     @ManyToOne(fetch = FetchType.LAZY)

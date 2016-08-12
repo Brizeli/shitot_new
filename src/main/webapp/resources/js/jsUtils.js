@@ -1,5 +1,5 @@
 /**
- * Created by DDNS on 02.08.2016.
+ * Created by Next on 02.08.2016.
  */
 $(document).ajaxError(function (event, jqXHR, options, jsExc) {
     failNoty(event, jqXHR, options, jsExc);
@@ -14,12 +14,12 @@ function closeNoty() {
 function failNoty(event, jqXHR, options, jsExc) {
     closeNoty();
     console.log(jqXHR.responseText);
-    var errorInfo = $.parseJSON(jqXHR.responseText);
+    debugger;
     failedNote = noty({
-        text: 'Failed: ' + jqXHR.statusText + "<br>" + errorInfo.cause + "<br>" + errorInfo.detail,
+        text: 'Failed: ' + jqXHR.statusText + "<br>" + jqXHR.responseJSON.cause + "<br>" + jqXHR.responseJSON.detail,
         type: 'error',
         layout: 'center',
-        timeout:1000
+        timeout: 2000
     });
 }
 function successNoty(text) {

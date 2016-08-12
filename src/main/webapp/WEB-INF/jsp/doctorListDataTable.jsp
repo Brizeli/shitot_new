@@ -6,7 +6,7 @@
         <a class="btn btn-sm btn-info" id="addDoctor" onclick="addDoctor()">New doctor</a>
     </h3>
     <div class="view-box">
-        <div class="row">
+        <div class="row searchrow">
             <div class="col-sm-3">
                 <h5>Name</h5>
                 <input class="form-control" type="text" id="namesearch">

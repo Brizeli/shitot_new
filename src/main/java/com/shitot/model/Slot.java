@@ -1,10 +1,10 @@
 package com.shitot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import java.time.DayOfWeek;
-import java.util.Set;
 
 /**
  * Created by Next on 12.07.2016.
@@ -16,14 +16,13 @@ import java.util.Set;
                   @NamedQuery(name = Slot.BY_DAY_CLINIC, query =
                                                              "select distinct s from slots s join s.clinic c where c.id=:id and s.dayOfWeek=:dayOfWeek"),
 })
-
 @Entity(name = "slots")
-@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"clinic_id", "day_of_week"}))
-public class Slot extends BaseEntity{
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"clinic_id", "day_of_week"}))
+public class Slot extends BaseEntity {
 
     public static final String BY_CLINIC = "Slot.getByClinic";
     public static final String BY_DAY_CLINIC = "Slot.getByDayClinic";
-    //    @Range(min = 0, max = 6)
+    @Range(min = 0, max = 6)
     @Column(name = "day_of_week", nullable = false)
     private int dayOfWeek;
 
@@ -31,16 +30,18 @@ public class Slot extends BaseEntity{
     @JsonIgnore
     private Clinic clinic;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Interval> intervals;
+    @Column(nullable = false)
+    @NotEmpty
+    private String intervals = " ";
 
     public Slot() {
     }
 
-    public Slot(Integer id, int dayOfWeek, Clinic clinic) {
+    public Slot(Integer id, int dayOfWeek, Clinic clinic, String intervals) {
         super(id);
         this.dayOfWeek = dayOfWeek;
         this.clinic = clinic;
+        this.intervals = intervals;
     }
 
     public int getDayOfWeek() {
@@ -51,11 +52,11 @@ public class Slot extends BaseEntity{
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Set<Interval> getIntervals() {
+    public String getIntervals() {
         return intervals;
     }
 
-    public void setIntervals(Set<Interval> intervals) {
+    public void setIntervals(String intervals) {
         this.intervals = intervals;
     }
 
@@ -70,6 +71,8 @@ public class Slot extends BaseEntity{
     @Override
     public String toString() {
         return "Slot{" +
-                   "dayOfWeek=" + dayOfWeek + '}';
+                   "dayOfWeek=" + dayOfWeek +
+                   ", intervals='" + intervals + '\'' +
+                   '}';
     }
 }

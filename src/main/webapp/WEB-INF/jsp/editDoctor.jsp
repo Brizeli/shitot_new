@@ -51,7 +51,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-xs-4">Professions:</label>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <label class="control-label col-xs-12">Professions:</label>
+                                    </div>
+                                    <a class="btn btn-xs btn-default pull-right" onclick="$('#addSpec').modal()">Add profession</a>
+                                </div>
                                 <div class="col-xs-4">
                                     <select class="form-control professions" type="text" name="specialty1">
                                         <option></option>
@@ -106,13 +111,17 @@
                 </div>
                 <div class="modal-footer">
                     <div class="form-group">
-                        <label class="control-label col-xs-2" for="login">Login:</label>
-                        <div class="col-xs-2">
-                            <input class="form-control" type="text" name="login" id="login" required>
-                        </div>
-                        <label class="control-label col-xs-2" for="password">Password:</label>
-                        <div class="col-xs-2">
-                            <input class="form-control" type="text" name="password" id="password" required>
+                        <div class="col-xs-8">
+                            <div class="row" id="sec">
+                                <label class="control-label col-xs-2" for="login">Login:</label>
+                                <div class="col-xs-2">
+                                    <input class="form-control" type="text" name="login" id="login" required>
+                                </div>
+                                <label class="control-label col-xs-2" for="password">Password:</label>
+                                <div class="col-xs-2">
+                                    <input class="form-control" type="text" name="password" id="password" required>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="pull-right">
@@ -125,4 +134,14 @@
             </form>
         </div>
     </div>
+</div>
+<div class="modal modal-sm" id="addSpec">
+        <div class="modal-content">
+            <form class="form-inline" id="addSpecForm">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
 </div>

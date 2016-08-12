@@ -66,20 +66,11 @@ public class ClinicRepositoryImpl implements ClinicRepository {
         if (clinic == null) return false;
         Set<Slot> slots = new HashSet<>();
         for (Slot newSlot : newSlots) {
-            Set<Interval> intervals = new HashSet<>();
-            for (Interval newInterval : newSlot.getIntervals()) {
-                Interval interval = em.find(Interval.class, newInterval.getHour());
-                if (interval == null) {
-                    interval = newInterval;
-                    em.persist(interval);
-                }
-                intervals.add(interval);
-            }
-            Slot slot = getSlotByDayClinic(newSlot.getDayOfWeek(), clinicId);
+            int dayOfWeek = newSlot.getDayOfWeek();
+            String intervals = newSlot.getIntervals();
+            Slot slot = getSlotByDayClinic(dayOfWeek, clinicId);
             if (slot == null) {
-                slot = newSlot;
-                slot.setClinic(clinic);
-                slot.setIntervals(intervals);
+                slot = new Slot(null, dayOfWeek, clinic, intervals);
                 em.persist(slot);
             } else {
                 slot.setIntervals(intervals);
@@ -113,32 +104,32 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     @Override
     @Transactional
     public void setSlot(int dayOfWeek, int clinicId, int... hours) {
-        Set<Interval> intervals = new LinkedHashSet<>();
-        Arrays.sort(hours);
-        int prevHour = hours[0] - 1;
-        for (int hour : hours) {
-            if (hour == prevHour)
-                continue;
-            prevHour = hour;
-            Interval addingInterval = em.find(Interval.class, hour);
-            if (addingInterval == null) {
-                addingInterval = new Interval(hour);
-                em.persist(addingInterval);
-            }
-            intervals.add(addingInterval);
-        }
-        Slot newSlot = getSlotByDayClinic(dayOfWeek, clinicId);
-        if (newSlot == null) {
-            Clinic clinic = em.find(Clinic.class, clinicId);
-            if (clinic == null)
-                throw new IllegalArgumentException("Clinic with id " + clinicId + " not found");
-            newSlot = new Slot(null, dayOfWeek, em.find(Clinic.class, clinicId));
-            newSlot.setIntervals(intervals);
-            em.persist(newSlot);
-        } else {
-            newSlot.setIntervals(intervals);
-            em.merge(newSlot);
-        }
+//        Set<Interval> intervals = new LinkedHashSet<>();
+//        Arrays.sort(hours);
+//        int prevHour = hours[0] - 1;
+//        for (int hour : hours) {
+//            if (hour == prevHour)
+//                continue;
+//            prevHour = hour;
+//            Interval addingInterval = em.find(Interval.class, hour);
+//            if (addingInterval == null) {
+//                addingInterval = new Interval(hour);
+//                em.persist(addingInterval);
+//            }
+//            intervals.add(addingInterval);
+//        }
+//        Slot newSlot = getSlotByDayClinic(dayOfWeek, clinicId);
+//        if (newSlot == null) {
+//            Clinic clinic = em.find(Clinic.class, clinicId);
+//            if (clinic == null)
+//                throw new IllegalArgumentException("Clinic with id " + clinicId + " not found");
+//            newSlot = new Slot(null, dayOfWeek, em.find(Clinic.class, clinicId));
+//            newSlot.setIntervals(intervals);
+//            em.persist(newSlot);
+//        } else {
+//            newSlot.setIntervals(intervals);
+//            em.merge(newSlot);
+//        }
     }
 
     @Override
