@@ -43,11 +43,11 @@ $('#clearsearch').click(function () {
     $('#namesearch').val('').trigger('keyup');
 });
 function fillSearch() {
-    $("#cetificates, .professions, .qualifications, #cities, #target")
+    $("#certificates, .professions, .qualifications, #cities, #target")
         .empty();
     $(".professions, .qualifications, #cities", $('.searchrow'))
         .append($('<option>').text('All'));
-    $("#cetificates, .professions", editDoctorForm)
+    $("#certificates, .professions", editDoctorForm)
         .append($('<option>'));
     $.get("rest/doctors/certs", function (certs) {
         $.each(certs, function (key, val) {

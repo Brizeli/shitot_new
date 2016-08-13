@@ -110,7 +110,7 @@ $(".addSpec").popover({
     $('a', $("#addSpecForm")).click(function () {
         var value = $('input', $('#addSpecForm')).val();
         if (value.trim() != '') {
-            $(this).parentsUntil('.form-group').parent().find('select').append($('<option>').text(value));
+            $(this).parentsUntil('.form-group').parent().find('select').append($('<option selected>').text(value));
             $('#target, #quals').multiselect('rebuild');
             $(".addSpec").popover('hide');
         }

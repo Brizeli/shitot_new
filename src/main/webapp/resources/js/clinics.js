@@ -58,7 +58,6 @@ function deleteClinic(id, doctorId) {
     });
 }
 editClinicForm.submit(function () {
-    console.log(editClinicForm.serialize());
     $.post(clinicsRestUrl, editClinicForm.serialize(), function () {
         $('#editClinic').modal('hide');
         updateTable();
