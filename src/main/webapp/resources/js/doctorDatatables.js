@@ -1,5 +1,5 @@
 /**
- * Created by DDNS on 02.08.2016.
+ * Created by Next on 02.08.2016.
  */
 var table;
 $(function () {
@@ -32,31 +32,17 @@ $(function () {
 $("#namesearch").on('keyup', function () {
     table.columns(0).search(this.value).draw();
 });
-$("#professions").on('change', function () {
+$("#professions, #qualifications").on('change', function () {
     table.columns(1).search(this.value == 'All' ? '' : this.value).draw();
-    // getBySpecialty(this.value);
-});
-$("#qualifications").on('change', function () {
-    table.columns(1).search(this.value == 'All' ? '' : this.value).draw();
-    // getByQualification(this.value);
 });
 $("#cities").on('change', function () {
     table.columns(2).search(this.value == 'All' ? '' : this.value).draw();
-    // getByCity(this.value);
 });
-$('a[data-slots]').hover(function () {
-    console.log($(this));
+$('#clearsearch').click(function () {
+    $('select', $('.searchrow')).val('All').trigger('change');
+    $('#namesearch').val('').trigger('keyup');
 });
-// function getBySpecialty(name) {
-//     $.get("rest/doctors/by/?specialty=" + name, updateTableByData);
-// }
-// function getByQualification(name) {
-//     $.get("rest/doctors/by/?qualification=" + name, updateTableByData);
-// }
-// function getByCity(name) {
-//     $.get("rest/doctors/by/?city=" + name, updateTableByData);
-// }
-function initTable() {
+function fillSearch() {
     $("#cetificates, .professions, .qualifications, #cities, #target")
         .empty();
     $(".professions, .qualifications, #cities", $('.searchrow'))
@@ -94,6 +80,9 @@ function initTable() {
             $("#cities").append($('<option>').text(val));
         })
     });
+}
+function initTable() {
+    fillSearch();
     $('[data-slots]').each(function () {
         $(this).popover({
             title: 'Open hours',
@@ -101,9 +90,13 @@ function initTable() {
             content: function () {
                 var slots = $(this).data('slots');
                 var res = '<table>';
-                $.each(slots, function (ind, slot) {
-                    res += '<tr><td>' + daysOfWeek[slot.dayOfWeek] + ': </td><td>' + slot.intervals + '</td></tr>';
-                });
+                for (var i = 0; i < daysOfWeek.length; i++) {
+                    res += '<tr><td>' + daysOfWeek[i] + ': </td><td>';
+                    $.each(slots, function (ind, slot) {
+                        if (slot.dayOfWeek == i) res += slot.intervals;
+                    });
+                    res += '</td></tr>';
+                }
                 res += '</table>';
                 return res;
             },
@@ -116,4 +109,5 @@ function updateTable() {
     $.get("rest/doctors", function (data) {
         table.clear().rows.add(data).draw();
     });
+    fillSearch();
 }

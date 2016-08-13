@@ -1,9 +1,10 @@
 package com.shitot.web.doctor;
 
 import com.shitot.model.*;
+import com.shitot.service.DoctorService;
 import com.shitot.to.DoctorTo;
-import com.shitot.utils.JsonUtil;
 import com.shitot.web.ExceptionInfoHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +19,19 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/rest/doctors")
-public class DoctorRestController extends AbstractDoctorController implements ExceptionInfoHandler {
+public class DoctorRestController implements ExceptionInfoHandler {
+
+    @Autowired
+    DoctorService service;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getAll() {
-        return super.getAll();
+        return service.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Doctor get(@PathVariable int id) {
-        return super.get(id);
+        return service.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -66,16 +70,16 @@ public class DoctorRestController extends AbstractDoctorController implements Ex
 
     @RequestMapping(value = "/by", params = "specialty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getBySpecialty(@RequestParam String specialty) {
-        return super.getBySpecialty(specialty);
+        return service.getBySpecialty(specialty);
     }
 
     @RequestMapping(value = "/by", params = "qualification", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getByQualification(@RequestParam String qualification) {
-        return super.getByQualification(qualification);
+        return service.getByQualification(qualification);
     }
 
     @RequestMapping(value = "/by", params = "city", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getByCity(@RequestParam String city) {
-        return super.getByCity(city);
+        return service.getByCity(city);
     }
 }

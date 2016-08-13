@@ -7,30 +7,36 @@
     </h3>
     <div class="view-box">
         <div class="row searchrow">
-            <div class="col-sm-3">
-                <h5>Name</h5>
-                <input class="form-control" type="text" id="namesearch">
+            <div class="col-sm-11">
+                <div class="col-sm-3">
+                    <h5>Name</h5>
+                    <input class="form-control" type="text" id="namesearch">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Profession</h5>
+                    <select class="form-control professions" id="professions">
+                        <option>All</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Qualification</h5>
+                    <select class="form-control qualifications" id="qualifications">
+                        <option>All</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <h5>City</h5>
+                    <select class="form-control" id="cities">
+                        <option>All</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <h5>Profession</h5>
-                <select class="form-control professions" id="professions">
-                    <option>All</option>
-                </select>
-            </div>
-            <div class="col-sm-3">
-                <h5>Qualification</h5>
-                <select class="form-control qualifications" id="qualifications">
-                    <option>All</option>
-                </select>
-            </div>
-            <div class="col-sm-3">
-                <h5>City</h5>
-                <select class="form-control" id="cities">
-                    <option>All</option>
-                </select>
+            <div class="col-sm-1">
+                <h5>&nbsp;</h5>
+                <a class="btn btn-default" id="clearsearch">&times; Clear</a>
             </div>
         </div>
-        <table class="table table-striped display" id="dataTable">
+        <table class="table table-striped display" style="width: 100%" id="dataTable">
             <thead>
             <tr>
                 <th>Info</th>

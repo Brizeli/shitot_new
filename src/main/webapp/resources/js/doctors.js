@@ -1,7 +1,8 @@
 /**
- * Created by DDNS on 06.08.2016.
+ * Created by Next on 06.08.2016.
  */
-var editDoctorForm = $('#doctorDetailsForm');
+var editDoctorWindow = $("#editDoctorWindow");
+var editDoctorForm = $('#editDoctorForm');
 var doctorsRestUrl = "rest/doctors";
 function renderDoctorInfo(data, type, doctor) {
     if (type == 'display') {
@@ -53,16 +54,17 @@ function renderSpecialization(data, type, doctor) {
     return "";
 }
 function addDoctor() {
-    $(":text", editDoctorForm).empty();
-    $("option", editDoctorForm).removeAttr("selected");
-    $(".title", $("#editDoctor")).text("Add new doctor");
-    $("textarea", editDoctorForm).empty();
+    $(":text", editDoctorForm).val('');
+    $("option", editDoctorForm).removeAttr('selected').prop('selected', false);
+    $('#target, #quals').multiselect('refresh');
+    $(".title", editDoctorWindow).text("Add new doctor");
+    $("textarea", editDoctorForm).val('');
     $('#id').val(null);
-    $('#editDoctor').modal({backdrop: 'static'});
+    $('.popover').popover('hide');
+    editDoctorWindow.modal({backdrop: 'static'});
 }
 function editDoctor(id) {
     $.get(doctorsRestUrl + "/" + id, function (doctor) {
-        console.log($("option", editDoctorForm));
         $("option", editDoctorForm).removeAttr('selected').prop('selected', false);
         $('#target, #quals').multiselect('refresh');
         $("#sec").hide();
@@ -91,18 +93,43 @@ function editDoctor(id) {
                     $("[name='" + key + "']", editDoctorForm).val(val);
             }
         });
-        $(".title", $("#editDoctor")).text("Edit doctor");
-        $("#editDoctor").modal({backdrop: "static"});
+        $(".title", editDoctorWindow).text("Edit doctor");
+        $("#addSpec").popover('hide');
+        editDoctorWindow.modal({backdrop: "static"});
     })
 }
+$(".addSpec").popover({
+    html: true,
+    trigger: 'manual',
+    placement: 'bottom',
+    content: function () {
+        return $('#addspec').html();
+    }
+}).click(function () {
+    $(this).popover('toggle');
+    $('a', $("#addSpecForm")).click(function () {
+        var value = $('input', $('#addSpecForm')).val();
+        if (value.trim() != '') {
+            $(this).parentsUntil('.form-group').parent().find('select').append($('<option>').text(value));
+            $('#target, #quals').multiselect('rebuild');
+            $(".addSpec").popover('hide');
+        }
+    });
+});
 editDoctorForm.submit(function () {
     $.post(doctorsRestUrl, editDoctorForm.serialize(), function () {
-        $('#editDoctor').modal('hide');
+        editDoctorWindow.modal('hide');
         updateTable();
         successNoty('Saved');
     });
     return false;
 });
-$("#addSpecForm").submit(function () {
-    $('#addSpec').modal('hide');
-});
+function getBySpecialty(name) {
+    $("#professions").val(name).trigger('change');
+}
+function getByQualification(name) {
+    $('#qualifications').val(name).trigger('change');
+}
+function getByCity(name) {
+    $('#cities').val(name).trigger('change');
+}

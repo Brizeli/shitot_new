@@ -1,17 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="modal fade" id="editDoctor">
+<div class="modal fade" id="editDoctorWindow">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title title"></h2>
             </div>
-            <form class="form-horizontal" method="post" id="doctorDetailsForm">
+            <form class="form-horizontal" method="post" id="editDoctorForm">
                 <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
 
                     <div class="row">
-                        <div class="col-xs-6" style="border-right: 1px solid grey">
+                        <div class="col-xs-6">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="name">Name:</label>
                                 <div class="col-xs-8">
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-6" style="border-left: 1px solid grey">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="prefer">Prefferencies:</label>
                                 <div class="col-xs-8">
@@ -52,10 +52,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-4">
-                                    <div class="row">
-                                        <label class="control-label col-xs-12">Professions:</label>
-                                    </div>
-                                    <a class="btn btn-xs btn-default pull-right" onclick="$('#addSpec').modal()">Add profession</a>
+                                    <label class="control-label col-xs-12">Professions:</label>
                                 </div>
                                 <div class="col-xs-4">
                                     <select class="form-control professions" type="text" name="specialty1">
@@ -67,11 +64,17 @@
                                         <option></option>
                                     </select>
                                 </div>
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <a class="btn btn-xs btn-default addSpec">Add profession</a>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4">Target audience:</label>
                                 <div class="col-xs-8">
                                     <select class="form-control" name="targetAudiences" id="target" multiple="multiple"></select>
+                                </div>
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <a class="btn btn-xs btn-default addSpec">Add target audience</a>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -80,6 +83,9 @@
                                     <select class="form-control qualifications" name="qualifications" id="quals"
                                             multiple="multiple"></select>
                                 </div>
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <a class="btn btn-xs btn-default addSpec">Add qualification</a>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4">Certificate:</label>
@@ -87,6 +93,9 @@
                                     <select class="form-control" name="certificate" id="certificates">
                                         <option></option>
                                     </select>
+                                </div>
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <a class="btn btn-xs btn-default addSpec">Add certificate</a>
                                 </div>
                             </div>
                         </div>
@@ -135,13 +144,11 @@
         </div>
     </div>
 </div>
-<div class="modal modal-sm" id="addSpec">
-        <div class="modal-content">
-            <form class="form-inline" id="addSpecForm">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="name">
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-            </form>
-        </div>
+<div class="hide" id="addspec">
+    <div class="input-group" id="addSpecForm">
+        <input class="form-control" type="text">
+        <span class="input-group-btn">
+            <a class="btn btn-primary">Add</a>
+        </span>
+    </div>
 </div>
