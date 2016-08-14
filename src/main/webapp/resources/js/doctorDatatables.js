@@ -10,8 +10,12 @@ $(function () {
         },
         dom: "lrtip",
         paging: false,
+        columnDefs: [
+            {"width": "25%", "targets": [0, 2]}
+        ],
         columns: [
             {
+                "width": "20",
                 "defaultContent": "",
                 "render": renderDoctorInfo
             },
@@ -20,7 +24,7 @@ $(function () {
                 "render": renderSpecialization
             },
             {
-                "width": "25%",
+                "width": "20%",
                 "defaultContent": "",
                 "render": renderClinics
             }
@@ -28,19 +32,19 @@ $(function () {
         ordering: false,
         initComplete: initTable
     });
-});
-$("#namesearch").on('keyup', function () {
-    table.columns(0).search(this.value).draw();
-});
-$("#professions, #qualifications").on('change', function () {
-    table.columns(1).search(this.value == 'All' ? '' : this.value).draw();
-});
-$("#cities").on('change', function () {
-    table.columns(2).search(this.value == 'All' ? '' : this.value).draw();
-});
-$('#clearsearch').click(function () {
-    $('select', $('.searchrow')).val('All').trigger('change');
-    $('#namesearch').val('').trigger('keyup');
+    $("#namesearch").on('keyup', function () {
+        table.columns(0).search(this.value).draw();
+    });
+    $("#professions, #qualifications").on('change', function () {
+        table.columns(1).search(this.value == 'All' ? '' : this.value).draw();
+    });
+    $("#cities").on('change', function () {
+        table.columns(2).search(this.value == 'All' ? '' : this.value).draw();
+    });
+    $('#clearsearch').click(function () {
+        $('select', $('.searchrow')).val('All').trigger('change');
+        $('#namesearch').val('').trigger('keyup');
+    });
 });
 function fillSearch() {
     $("#certificates, .professions, .qualifications, #cities, #target")

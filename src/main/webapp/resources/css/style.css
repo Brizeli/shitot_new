@@ -1,9 +1,15 @@
 @media (min-width: 768px) {
     .modal-xl {
         width: 90%;
-        max-width:1200px;
+        max-width: 1200px;
     }
 }
+
+table#dataTable {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
 body {
     font-family: Arial, serif;
 }
@@ -23,13 +29,6 @@ dd {
     vertical-align: top;
 }
 
-.doctorlist {
-    border: 1px solid black;
-    border-radius: 8px;
-    overflow: auto;
-    box-shadow: 0 0 10px inset;
-}
-
 .doctorInfo {
     border-bottom: 1px solid sandybrown;
 }
@@ -43,9 +42,11 @@ a {
     border-radius: 6px;
     background-color: azure;
 }
-.navbar-brand{
+
+.navbar-brand {
     padding: 0;
 }
+
 .error, .message {
     padding: 10px;
     margin-bottom: 20px;

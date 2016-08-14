@@ -36,16 +36,18 @@
                 <a class="btn btn-default" id="clearsearch">&times; Clear</a>
             </div>
         </div>
-        <table class="table table-striped display" style="width: 100%" id="dataTable">
-            <thead>
-            <tr>
-                <th>Info</th>
-                <th>Specializations</th>
-                <th>Clinics</th>
-                <%--<th>Create appointment</th>--%>
-            </tr>
-            </thead>
-        </table>
+        <div class="row">
+            <table class="table table-striped display" style="width: 100%;" id="dataTable">
+                <thead>
+                <tr>
+                    <th>Info</th>
+                    <th>Specializations</th>
+                    <th>Clinics</th>
+                    <%--<th>Create appointment</th>--%>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
 <jsp:include page="editDoctor.jsp"/>

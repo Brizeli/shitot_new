@@ -1,7 +1,6 @@
 package com.shitot.web;
 
 import com.shitot.model.User;
-import com.shitot.service.DoctorService;
 import com.shitot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

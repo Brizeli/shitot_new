@@ -3,12 +3,8 @@ package com.shitot.web.clinic;
 import com.shitot.model.Clinic;
 import com.shitot.model.Slot;
 import com.shitot.service.ClinicService;
-import com.shitot.web.ExceptionInfoHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/rest/clinics")
-public class ClinicRestController implements ExceptionInfoHandler{
+public class ClinicRestController {
 
     @Autowired
     private ClinicService service;
@@ -33,40 +29,27 @@ public class ClinicRestController implements ExceptionInfoHandler{
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> createOrUpdate(@Valid Clinic clinic, @RequestParam Integer doctorId,
-                                                 BindingResult result) {
-        if (result.hasErrors()) {
-            StringBuilder sb = new StringBuilder();
-            result.getFieldErrors()
-                  .forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+    public void createOrUpdate(@Valid Clinic clinic, @RequestParam Integer doctorId) {
         if (clinic.isNew()) {
             service.save(clinic, doctorId);
         } else service.update(clinic, doctorId);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/{doctorId}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id, @PathVariable int doctorId) {
-        service.delete(id,doctorId);
+        service.delete(id, doctorId);
     }
 
-    @RequestMapping(value = "/{id}/slots",method = RequestMethod.POST)
-    public ResponseEntity<String> updateSlots(@RequestBody List<Slot> slots, @PathVariable("id") int clinicId){
-        service.setSlots(clinicId,slots);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @RequestMapping(value = "/{id}/slots", method = RequestMethod.POST)
+    public void updateSlots(@RequestBody List<Slot> slots, @PathVariable("id") int clinicId) {
+        service.setSlots(clinicId, slots);
     }
 
     @RequestMapping(value = "/{id}/slots", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Slot> getSlots(@PathVariable int id) {
         return service.getSlots(id);
     }
-
 ///////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
     @RequestMapping(value = "/setclinic", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -98,5 +81,4 @@ public class ClinicRestController implements ExceptionInfoHandler{
         service.deleteSlot(day, id);
         return "OK";
     }
-
 }
