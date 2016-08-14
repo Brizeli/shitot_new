@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="modal fade" id="editPatient">
+<div class="modal fade" id="editAppointment">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,8 +7,8 @@
                 <h2 class="modal-title title"></h2>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="post" id="patientDetailsForm">
-                    <input type="text" hidden="hidden" name="id" id="id">
+                <form class="form-horizontal" method="post" id="appointmentDetailsForm">
+                    <input type="text" hidden="hidden" name="id" id="idA">
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="name">Patient name:</label>
                         <div class="col-xs-8">

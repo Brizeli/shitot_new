@@ -21,7 +21,7 @@ public interface AppointmentPatientService {
     List<Appointment> getAllByAltDoctor(int id);
     List<Appointment> getAllByDoctorAndAlt(int id);
 
-    List<Appointment> getAllByPatient(int id);
+    List<Appointment> getAll(int patientId);
 
     List<Appointment> getAll();
 //    List getJPQL(String s);
@@ -45,4 +45,8 @@ public interface AppointmentPatientService {
 
     void update(PatientTo patientTo);
     Patient save(PatientTo patientTo);
+
+    void removeDoctor(int appointmentId);
+
+    void removeAltDoctor(int appointmentId);
 }

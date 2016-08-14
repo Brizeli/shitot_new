@@ -55,8 +55,8 @@ public class AppointmentPatientServiceImpl implements AppointmentPatientService 
     }
 
     @Override
-    public List<Appointment> getAllByPatient(int id) {
-        return repository.getAllByPatient(id);
+    public List<Appointment> getAll(int patientId) {
+        return repository.getAllByPatient(patientId);
     }
 
     @Override
@@ -121,6 +121,16 @@ public class AppointmentPatientServiceImpl implements AppointmentPatientService 
         Patient patient = repository.save(JsonUtilAppointmentPatient.createNewFromTo(patientTo));
         Integer id = patient.getId();
         return patient;
+    }
+
+    @Override
+    public void removeDoctor(int appointmentId) {
+        repository.removeDoctor(appointmentId);
+    }
+
+    @Override
+    public void removeAltDoctor(int appointmentId) {
+        repository.removeAltDoctor(appointmentId);
     }
 
     @Override

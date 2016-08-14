@@ -1,5 +1,7 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
@@ -20,6 +22,7 @@ public class Symptom extends NamedEntity {
     }
 
     @ManyToMany(mappedBy = "symptoms",fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Appointment>appointments ;
 
     public Set<Appointment> getAppointments() {

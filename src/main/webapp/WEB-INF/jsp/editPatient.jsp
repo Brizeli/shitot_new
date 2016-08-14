@@ -22,9 +22,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="tel">Telephone:</label>
+                        <label class="control-label col-xs-4" for="telNumber">Telephone:</label>
                         <div class="col-xs-8">
-                            <input class="form-control" type="text" name="tel" id="tel" required>
+                            <input class="form-control" type="text" name="telNumber" id="telNumber" required>
                         </div>
                     </div>
                     <div class="modal-footer">

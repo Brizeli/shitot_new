@@ -32,15 +32,12 @@ public class AbstractAppointmentPatientController {
         return service.get(id);
     }
 
-    protected void fillListsAttributes(Model model) {
-        model.addAttribute("patientList", service.getAllPatients());
-        model.addAttribute("problemList", service.getAllProblems());
-        model.addAttribute("symptomList", service.getAllSymptoms());
-        model.addAttribute("doctorList", serviceDoctor.getAll());
-    }
 
     protected List<Appointment> getAllAppointment() {
         return service.getAll();
+    }
+    protected List<Appointment> getAllAppointment(int patientId) {
+        return service.getAll(patientId);
     }
     protected List<Patient> getAllPatients(){
         return service.getAllPatients();
@@ -48,7 +45,9 @@ public class AbstractAppointmentPatientController {
     protected void update(PatientTo patientTo) {
         service.update(patientTo);
     }
-
+    protected Patient getPatient(int id){
+        return service.getPatient(id);
+    }
     protected void deletePatient(int id){
         service.deletePatient(id);
     }
@@ -58,5 +57,13 @@ public class AbstractAppointmentPatientController {
 
     public List<Doctor> getByQualification(String qualification) {
         return serviceDoctor.getByQualification(qualification);
+    }
+
+    public void removeDoctorFromAppointment(int appointmentId) {
+        service.removeDoctor(appointmentId);
+    }
+
+    public void removeAltDoctorFromAppointment(int appointmentId) {
+        service.removeAltDoctor(appointmentId);
     }
 }

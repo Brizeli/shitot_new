@@ -6,24 +6,31 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
+import javax.transaction.Transaction;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class AppointmentPatientRepositoryImpl implements AppointmentPatientRepository {
 
-    @PersistenceContext
+    @PersistenceContext(type= PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override
+    @Transactional
     public Appointment save(Appointment appointment) {
         if (appointment.isNew()) {
             em.persist(appointment);
             return appointment;
-        } else return em.merge(appointment);
+        } else {
+            Appointment a = em.merge(appointment);
+            em.flush();
+            return a;
+        }
     }
 
     @Override
@@ -49,6 +56,7 @@ public class AppointmentPatientRepositoryImpl implements AppointmentPatientRepos
                 .setParameter("id",id)
                 .getResultList();
     }
+    @Override
     public List<Appointment> getAllByDoctorAndAlt(int id) {
         return em.createNamedQuery(Appointment.BY_DOCTOR_AND_ALT,Appointment.class)
                 .setParameter("id",id)
@@ -153,12 +161,26 @@ public class AppointmentPatientRepositoryImpl implements AppointmentPatientRepos
         }
         if(p!=null)em.remove(p);
     }
-
+    @Transactional
     @Override
     public Patient save(Patient patient) {
         if (patient.isNew()) {
             em.persist(patient);
             return patient;
         } else return em.merge(patient);
+    }
+    @Transactional
+    @Override
+    public Appointment removeDoctor(int appointmentId) {
+        Appointment a= em.find(Appointment.class,appointmentId);
+        a.setDoctor(null);
+        return save(a);
+    }
+    @Transactional
+    @Override
+    public Appointment removeAltDoctor(int appointmentId) {
+        Appointment a= em.find(Appointment.class,appointmentId);
+        a.setAlternativeDoctor(null);
+        return save(a);
     }
 }

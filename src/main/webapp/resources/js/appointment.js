@@ -1,98 +1,100 @@
-
 var editAppointmentForm = $('#appointmentDetailsForm');
-
+$(document).ready(renderPatientInfo);
 function renderAppointmentInfo(data, type, appointment) {
-    if (type == 'display') {
-        var res= '<a class="btn btn-xs btn-primary" onclick="editAppointment(' + appointment.id + ')" title="Edit">Edit</a>';
-        res+='<br>Appointment Date:'+appointment.appointmentDate;
-        res+='<br>Apply Date:'+appointment.applyDate;
-        res+='<br>Payment amount:'+appointment.paymentAmount;
-        res+='<br>Payment Date:'+appointment.paymentDate;
-        return res;
-    }
-    if (type == 'filter') {
-        //return appointment.name;
-    }
-    return "";
+    var res = '<a class="btn btn-xs btn-success" onclick="editAppointment(' + appointment.id + ')" title="Edit">Edit</a> ';
+    res += '<a class="btn btn-xs btn-danger" onclick="deleteAppointment(' + appointment.id + ')" title="Delete">Delete</a>';
+    res += '<br>Appointment Date:' + appointment.appointmentDate;
+    res += '<br>Apply Date:' + appointment.applyDate;
+    res += '<br>Payment amount:' + appointment.paymentAmount;
+    res += '<br>Payment Date:' + appointment.paymentDate;
+    return res;
 }
-function renderTelephone(data, type, patient) {
-    if (type == 'display') {
-        return  patient.telNumber;
-    }
-    if (type == 'filter') {
-        return patient.telNumber;
-    }
-    return "";
+function renderAppointmentProblems(data, type, appointment){
+    var res ='<strong>Problems: </strong>';
+    var problems=appointment.problems;
+    for (var i = 0; i < problems.length; i++) {
+        res +=  problems[i].name;
+        if (i < problems.length - 1) res += ', ';
+    };
+    res+='<br><strong>Symptoms: </strong>';
+    var symptoms=appointment.symptoms;
+    for (var i = 0; i < symptoms.length; i++) {
+        res +=  symptoms[i].name;
+        if (i < symptoms.length - 1) res += ', ';
+    };
+    return res;
 }
-function renderPatientAge(data, type, patient) {
-    if (type == 'display') {
-        var res ="";
-        if(patient.age)res=patient.age;
-        return res;
-    }
-    if (type == 'filter') {
-        return patient.age;
-    }
-    return "";
-}
-function renderButton(data, type, patient){
-    var result="";
-    result += '<a class="btn btn-xs btn-primary" onclick="editPatient(' + patient.id + ');">Edit</a> ';
-    result += '<a class="btn btn-xs btn-danger" onclick="deletePatient(' + patient.id+ ');">Delete</a> ';
-    result += '<a class="btn btn-xs btn-success" onclick="showAppointments(' + patient.id+ ');">Appointments</a> ';
-    return result;
+function renderPatientInfo(){
+    var patientId=$('#patientId').val();
+    var res1="";
+    $.get("rest/patients/"+patientId, function (patient) {
+        res1+=patient.name+' (Age: '+patient.age+', Tel: '+patient.telNumber+')';
+        $('#patient1').html(res1);
+    });
 
 }
-function renderCreateAppointment(data, type, doctor) {
-    return "";
+function renderAppointmentDoctors(data, type, appointment) {
+    var res ='';
+    if(appointment.doctor){
+        res+='<strong>Doctor: </strong>'+renderDoctorInfo(appointment.doctor);
+        res += '<br><a class="btn btn-xs btn-success" onclick="changeDoctor(' + appointment.id + ',\'change\',\'Doctor\')">Change</a> ';
+        res += '<a class="btn btn-xs btn-danger" onclick="changeDoctor(' + appointment.id+ ',\'remove\',\'Doctor\')">Remove</a><br>  ';
+    }else{
+        res+="<strong>Doctor: </strong>";
+        res += '<a class="btn btn-xs btn-primary" onclick="changeDoctor(' + appointment.id+ ',\'add\',\'Doctor\')">Add</a><br> ';
+
+    }
+    if(appointment.alternativeDoctor){
+        res+="<strong>Another Doctor: </strong>"+renderDoctorInfo(appointment.alternativeDoctor);
+        res += '<br><a class="btn btn-xs btn-success" onclick="changeDoctor(' + appointment.id + ',\'change\',\'AltDoctor\')">Change</a> ';
+        res += '<a class="btn btn-xs btn-danger" onclick="changeDoctor(' + appointment.id+ ',\'remove\',\'AltDoctor\')">Remove</a> ';
+    }else{
+        res+="<strong>Another Doctor: </strong>";
+        res += '<a class="btn btn-xs btn-primary" onclick="changeDoctor(' + appointment.id+ ',\'add\',\'AltDoctor\')">Add</a> ';
+    }
+    return res;
 }
-function addPatient() {
-    $(":text",editPatientForm).empty();
-    //editDoctorForm.find("option").removeAttr("selected");
-    $(".title", $("#editPatient")).text("Add new patient");
-    $("textarea",editPatientForm).empty();
-    $('#id').val(null);
-    $('#editPatient').modal({backdrop: 'static'});
+
+function renderDoctorInfo(doctorA) {
+        var result = doctorA.fullName + '<br>' +
+            '<a href="mailto:' + doctorA.email + '">' + doctorA.email + '</a><br>' +
+            'Tel: ' + doctorA.telNumber + '<br>';
+        if (doctorA.telHome) result += 'Home tel: ' + doctorA.telHome + '<br>';
+        if (doctorA.homeAddress) result += 'Home address: ' + doctorA.homeAddress;
+        return result;
 }
-function editDoctor(id) {
-    //$.get("rest/doctors/" + id, function (doctor) {
-    //    editDoctorForm.find("option").removeAttr("selected");
-    //    $.each(doctor, function (key, val) {
-    //        if (key == 'specialties') {
-    //            editDoctorForm.find("[name='specialty1']").val(val[0] ? val[0].name : '');
-    //            editDoctorForm.find("[name='specialty2']").val(val[1] ? val[1].name : '');
-    //        }
-    //        if (key == 'targetAudiences') {
-    //            $('option', $('#target')).removeAttr('selected').prop('selected', false);
-    //            $.each(val, function (k, v) {
-    //                $("option:contains(" + v.name + ")", $("#target")).prop("selected", true);
-    //            });
-    //            $('#target').multiselect('refresh');
-    //        }
-    //        if (key == 'certificate') {
-    //            editDoctorForm.find("[name='" + key + "']").val(val.name);
-    //        }
-    //        else editDoctorForm.find("[name='" + key + "']").val(val);
-    //    });
-    //    $(".title", editDoctorForm).text("Edit doctor");
-    //    $('#editDoctor').modal({backdrop: 'static'});
-    //})
+function changeDoctor(id,type,doctorAlt){
+    //window.location.href='patients/appointment/'+patienId;
+    if(type=="remove") {
+        $.ajax({
+            url: "rest/patients/appointment/"+doctorAlt+"/" + id + "/",
+            type: 'DELETE',
+            success: function () {
+                updateTable();
+                successNoty('Deleted');
+            }
+        });
+    }else{
+        $.ajax({
+            url: "patients/appointment/doctorList/params/"+id+"/"+doctorAlt,
+            type: 'POST',
+            success: function(){
+                window.location.href='patients/appointment/doctorList';
+            }
+        });
+
+
+    }
 }
-editDoctorForm.submit(function () {
-    $.post("rest/patients", editPatientForm.serialize(), function () {
-        $('#editPatient').modal('hide');
-        updateTable();
-        successNoty('Saved');
-    });
+
+function addAppointment() {
+
+}
+function editAppointment(id) {
+
+}
+editAppointmentForm.submit(function () {
+
     return false;
 });
-function deletePatient(patientId){
-    $.ajax({
-        url: "rest/patients/" + patientId + "/" ,
-        type: 'DELETE',
-        success: function () {
-            updateTable();
-            successNoty('Deleted');
-        }
-    });
-}
+

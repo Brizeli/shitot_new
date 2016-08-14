@@ -1,5 +1,7 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
@@ -36,9 +38,9 @@ public class Appointment extends BaseEntity {
     private Set<Problem> problems;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Symptom>symptoms;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Doctor doctor;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Doctor alternativeDoctor;
 
     public Appointment() {

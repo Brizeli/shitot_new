@@ -13,8 +13,8 @@
                 <input class="form-control" type="text" id="namesearch">
             </div>
             <%--<div class="col-sm-6">--%>
-                <%--<h5>Age</h5>--%>
-                <%--<input class="form-control" type="text" id="agesearch">--%>
+            <%--<h5>Age</h5>--%>
+            <%--<input class="form-control" type="text" id="agesearch">--%>
             <%--</div>--%>
             <div class="col-sm-6">
                 <h5>Telephone Number</h5>

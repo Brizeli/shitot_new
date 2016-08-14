@@ -39,4 +39,8 @@ public interface AppointmentPatientRepository {
     void deletePatient(int id);
 
     Patient save(Patient patient);
+
+    Appointment removeDoctor(int appointmentId);
+
+    Appointment removeAltDoctor(int appointmentId);
 }

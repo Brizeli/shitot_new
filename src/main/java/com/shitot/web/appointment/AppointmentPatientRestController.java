@@ -31,15 +31,27 @@ public class AppointmentPatientRestController extends AbstractAppointmentPatient
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id) {
-        System.out.println(id+"arc");
+//        System.out.println(id+"arc");
         super.deletePatient(id);
     }
-//
-//    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Doctor get(@PathVariable int id) {
-//        return super.get(id);
-//    }
-//
+    @RequestMapping(value = "/appointmentDoctor/{appointmentId}", method = RequestMethod.DELETE)
+    public void removeDoctor(@PathVariable int appointmentId) {
+        super.removeDoctorFromAppointment(appointmentId);
+    }
+    @RequestMapping(value = "/appointmentAltDoctor/{appointmentId}", method = RequestMethod.DELETE)
+    public void removeAltDoctor(@PathVariable int appointmentId) {
+        super.removeAltDoctorFromAppointment(appointmentId);
+    }
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Patient getPatient(@PathVariable int id) {
+//        System.out.println(id+"arc");
+        return super.getPatient(id);
+    }
+    @RequestMapping(value = "/appointment/{patientId}", method = RequestMethod.GET)
+    public List<Appointment> getAppointments(@PathVariable int patientId) {
+        return super.getAllAppointment(patientId);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<String> createOrUpdate(@Valid PatientTo patientTo, BindingResult result) {
         if (result.hasErrors()) {
@@ -53,19 +65,5 @@ public class AppointmentPatientRestController extends AbstractAppointmentPatient
         } else super.update(patientTo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//
-//    @RequestMapping(value = "/specs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Specialty> getAllSpecialties() {
-//        return service.getAllSpecialties();
-//    }
-//
-//    @RequestMapping(value = "/by", params = "specialty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Doctor> getBySpecialty(@RequestParam String specialty) {
-//        return super.getBySpecialty(specialty);
-//    }
-//
-//    @RequestMapping(value = "/by", params = "qualification", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Doctor> getByQualification(@RequestParam String qualification) {
-//        return super.getByQualification(qualification);
-//    }
+
 }
