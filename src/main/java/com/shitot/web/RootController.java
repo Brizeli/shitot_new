@@ -17,20 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class RootController {
 
-    private String loggedUserName;
-    @Autowired
-    private DoctorService doctorService;
-
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root(Model model) {
-        loggedUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("loggedUser", loggedUserName);
+        model.addAttribute("loggedUser", getLoggedUserName());
         model.addAttribute("page", "userHomePage");
         return "index";
     }
+
+    private String getLoggedUserName() {return SecurityContextHolder.getContext().getAuthentication().getName();}
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model,
@@ -43,12 +40,12 @@ public class RootController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUser(@RequestParam String newlogin,@RequestParam String newpassword, Model model) {
+    public String registerUser(@RequestParam String newlogin, @RequestParam String newpassword, Model model) {
         User newUser = userService.register(new User(newlogin, newpassword));
         if (newUser != null) {
             model.addAttribute("message", "Registered");
         } else model.addAttribute("message", "User exists!");
-        model.addAttribute("loggedUser", loggedUserName);
+        model.addAttribute("loggedUser", getLoggedUserName());
         model.addAttribute("page", "login");
         return "index";
     }
@@ -56,7 +53,7 @@ public class RootController {
     @RequestMapping(value = "/doctors", method = RequestMethod.GET)
     public String doctorList(Model model) {
         model.addAttribute("page", "doctorListDataTable");
-        model.addAttribute("loggedUser", loggedUserName);
+        model.addAttribute("loggedUser", getLoggedUserName());
         return "index";
     }
 }

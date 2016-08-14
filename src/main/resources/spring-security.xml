@@ -9,12 +9,12 @@
     <http pattern="/resources/**" security="none"/>
     <http pattern="/webjars/**" security="none"/>
 
-    <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
+    <!--<http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
         <http-basic/>
         <intercept-url pattern="/rest/doctor/**" access="hasRole('DOCTOR')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <csrf disabled="true"/>
-    </http>
+    </http>-->
     <http>
         <intercept-url pattern="/login" access="permitAll"/>
         <intercept-url pattern="/register" access="permitAll"/>

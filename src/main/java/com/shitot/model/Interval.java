@@ -1,44 +1,36 @@
 package com.shitot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Embeddable;
 
 /**
- * Created by Next on 12.07.2016.
+ * Created by Oleg on 07.08.2016.
  */
-@Entity(name = "intervals")
-public class Interval implements Comparable{
+@Embeddable
+public class Interval implements Comparable {
 
-    @Id
-//    @Range(min = 0, max = 23)
-    private int hour;
+    private int hour = 0;
 
-    @ManyToMany(mappedBy = "intervals")
-    @JsonIgnore
-    private Set<Slot> slots;
+    public static boolean validate(int hour) {
+        return hour >= 0 && hour <= 23;
+    }
 
     public Interval() {
     }
 
     public Interval(int hour) {
-        this.hour = hour;
+        setHour(hour);
     }
 
     public static String intervalEnd(int hour) {
-        return (hour >= 0 && hour <= 23) ? String.format("%02d", hour) : "";
+        return validate(hour) ? String.format("%02d", hour) : "";
     }
 
     public static String intervalStart(int hour) {
-        return (hour >= 0 && hour <= 23) ? String.format("%02d", (hour + 1) % 24) : "";
+        return validate(hour) ? String.format("%02d", (hour + 1)%24) : "";
     }
 
-    private static String intervalName(int hour) {
-        return (hour >= 0 && hour <= 23) ? String.format("%02d - %02d", hour, (hour + 1) % 24) : "";
+    public static String intervalName(int hour) {
+        return validate(hour) ? String.format("%02d - %02d", hour, (hour + 1)%24) : "";
     }
 
     public int getHour() {
@@ -46,32 +38,18 @@ public class Interval implements Comparable{
     }
 
     public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public Set<Slot> getSlots() {
-        return slots;
-    }
-
-    public void setSlots(Set<Slot> slots) {
-        this.slots = slots;
-    }
-
-    public void addSlot(Slot slot) {
-        if (slots == null)
-            slots = new HashSet<Slot>();
-        slots.add(slot);
+        if (validate(hour))
+            this.hour = hour;
+        else
+            throw new IllegalArgumentException("hour muse be in range 0..23");
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Interval interval = (Interval) o;
-
         return hour == interval.hour;
-
     }
 
     @Override

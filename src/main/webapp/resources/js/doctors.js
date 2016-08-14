@@ -1,7 +1,9 @@
 /**
- * Created by DDNS on 06.08.2016.
+ * Created by Next on 06.08.2016.
  */
-var editDoctorForm = $('#doctorDetailsForm');
+var editDoctorWindow = $("#editDoctorWindow");
+var editDoctorForm = $('#editDoctorForm');
+var doctorsRestUrl = "rest/doctors";
 function renderDoctorInfo(data, type, doctor) {
     if (type == 'display') {
         var result = '<h2><a onclick="editDoctor(' + doctor.id + ')" title="Edit">' + doctor.fullName + '</a></h2>' +
@@ -17,74 +19,117 @@ function renderDoctorInfo(data, type, doctor) {
     return "";
 }
 function renderSpecialization(data, type, doctor) {
+    var filter = '';
+    var display = '<strong>Certificate: </strong>';
+    if (doctor.certificate) display += doctor.certificate.name;
+    display += '<br><strong>Profession: </strong>';
+    var specialties = doctor.specialties;
+    for (var i = 0; i < specialties.length; i++) {
+        display += '<a onclick="getBySpecialty(\'' + specialties[i].name + '\')">' + specialties[i].name + '</a>';
+        if (i < specialties.length - 1) display += ', ';
+        filter += specialties[i].name + ' ';
+    }
+    display += '<br><strong>Qualifications: </strong>';
+    var qualifications = doctor.qualifications;
+    for (i = 0; i < qualifications.length; i++) {
+        display += '<a onclick="getByQualification(\'' + qualifications[i].name + '\')">' + qualifications[i].name + '</a>';
+        if (i < qualifications.length - 1) display += ', ';
+        filter += qualifications[i].name;
+    }
+    if (doctor.preferential) display += '<br><strong>Prefers: </strong>' + doctor.preferential;
+    if (doctor.lections) display += '<br><strong>Reads lections: </strong>' + doctor.lections;
+    display += '<br><strong>Target audience: </strong>';
+    var target = doctor.targetAudiences;
+    for (i = 0; i < target.length; i++) {
+        display += target[i].name;
+        if (i < target.length - 1) display += ', ';
+    }
+    if (doctor.comments) display += '<br><strong>Comments: </strong>' + doctor.comments;
     if (type == 'display') {
-        var result = '<strong>Certificate: </strong>';
-        if (doctor.certificate) result += doctor.certificate.name;
-        result += '<br><strong>Profession: </strong>';
-        var specialties = doctor.specialties;
-        for (var i = 0; i < specialties.length; i++) {
-            result += '<a onclick="getBySpecialty(\'' + specialties[i].name + '\')">' + specialties[i].name + '</a>';
-            if (i < specialties.length - 1) result += ', ';
-        }
-        result += '<br><strong>Qualifications: </strong>';
-        var qualifications = doctor.qualifications;
-        for (i = 0; i < qualifications.length; i++) {
-            result += '<a onclick="getByQualification(\'' + qualifications[i].name + '\')">' + qualifications[i].name + '</a>';
-            if (i < qualifications.length - 1) result += ', ';
-        }
-        if (doctor.preferential) result += '<br><strong>Prefers: </strong>' + doctor.preferential;
-        if (doctor.lections) result += '<br><strong>Reads lections: </strong>' + doctor.lections;
-        result += '<br><strong>Target audience: </strong>';
-        var target = doctor.targetAudiences;
-        for (i = 0; i < target.length; i++) {
-            result += target[i].name;
-            if (i < target.length - 1) result += ', ';
-        }
-        if (doctor.comments) result += '<br><strong>Comments: </strong>' + doctor.comments;
-        return result;
+        return display;
+    }
+    if (type == 'filter') {
+        return filter;
     }
     return "";
 }
-function renderCreateAppointment(data, type, doctor) {
-    return "";
-}
 function addDoctor() {
-    $(":text",editDoctorForm).empty();
-    editDoctorForm.find("option").removeAttr("selected");
-    $(".title", $("#editDoctor")).text("Add new doctor");
-    $("textarea",editDoctorForm).empty();
+    $(":text", editDoctorForm).val('');
+    $("option", editDoctorForm).removeAttr('selected').prop('selected', false);
+    $('#target, #quals').multiselect('refresh');
+    $(".title", editDoctorWindow).text("Add new doctor");
+    $("textarea", editDoctorForm).val('');
     $('#id').val(null);
-    $('#editDoctor').modal({backdrop: 'static'});
+    $('.popover').popover('hide');
+    editDoctorWindow.modal({backdrop: 'static'});
 }
 function editDoctor(id) {
-    $.get("rest/doctors/" + id, function (doctor) {
-        editDoctorForm.find("option").removeAttr("selected");
+    $.get(doctorsRestUrl + "/" + id, function (doctor) {
+        $("option", editDoctorForm).removeAttr('selected').prop('selected', false);
+        $('#target, #quals').multiselect('refresh');
+        $("#sec").hide();
         $.each(doctor, function (key, val) {
-            if (key == 'specialties') {
-                editDoctorForm.find("[name='specialty1']").val(val[0] ? val[0].name : '');
-                editDoctorForm.find("[name='specialty2']").val(val[1] ? val[1].name : '');
+            switch (key) {
+                case 'specialties':
+                    $("[name='specialty1']", editDoctorForm).val(val[0] ? val[0].name : '');
+                    $("[name='specialty2']", editDoctorForm).val(val[1] ? val[1].name : '');
+                    break;
+                case 'targetAudiences':
+                    $.each(val, function (k, v) {
+                        $("option:contains(" + v.name + ")", $("#target")).prop("selected", true);
+                    });
+                    $('#target').multiselect('refresh');
+                    break;
+                case'qualifications':
+                    $.each(val, function (k, v) {
+                        $("option:contains(" + v.name + ")", $("#quals")).prop("selected", true);
+                    });
+                    $('#quals').multiselect('refresh');
+                    break;
+                case 'certificate':
+                    $("[name='" + key + "']", editDoctorForm).val(val.name);
+                    break;
+                default:
+                    $("[name='" + key + "']", editDoctorForm).val(val);
             }
-            if (key == 'targetAudiences') {
-                $('option', $('#target')).removeAttr('selected').prop('selected', false);
-                $.each(val, function (k, v) {
-                    $("option:contains(" + v.name + ")", $("#target")).prop("selected", true);
-                });
-                $('#target').multiselect('refresh');
-            }
-            if (key == 'certificate') {
-                editDoctorForm.find("[name='" + key + "']").val(val.name);
-            }
-            else editDoctorForm.find("[name='" + key + "']").val(val);
         });
-        $(".title", editDoctorForm).text("Edit doctor");
-        $('#editDoctor').modal({backdrop: 'static'});
+        $(".title", editDoctorWindow).text("Edit doctor");
+        $("#addSpec").popover('hide');
+        editDoctorWindow.modal({backdrop: "static"});
     })
 }
+$(".addSpec").popover({
+    html: true,
+    trigger: 'manual',
+    placement: 'bottom',
+    content: function () {
+        return $('#addspec').html();
+    }
+}).click(function () {
+    $(this).popover('toggle');
+    $('a', $("#addSpecForm")).click(function () {
+        var value = $('input', $('#addSpecForm')).val();
+        if (value.trim() != '') {
+            $(this).parentsUntil('.form-group').parent().find('select').append($('<option selected>').text(value));
+            $('#target, #quals').multiselect('rebuild');
+            $(".addSpec").popover('hide');
+        }
+    });
+});
 editDoctorForm.submit(function () {
-    $.post("rest/doctors", editDoctorForm.serialize(), function () {
-        $('#editDoctor').modal('hide');
+    $.post(doctorsRestUrl, editDoctorForm.serialize(), function () {
+        editDoctorWindow.modal('hide');
         updateTable();
         successNoty('Saved');
     });
     return false;
 });
+function getBySpecialty(name) {
+    $("#professions").val(name).trigger('change');
+}
+function getByQualification(name) {
+    $('#qualifications').val(name).trigger('change');
+}
+function getByCity(name) {
+    $('#cities').val(name).trigger('change');
+}

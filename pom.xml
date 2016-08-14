@@ -30,6 +30,7 @@
         <javax.el-api.version>2.2.5</javax.el-api.version>
         <mysql-connector-java.version>5.1.37</mysql-connector-java.version>
         <webjars-bootstrap-multiselect.version>0.9.13</webjars-bootstrap-multiselect.version>
+        <webjars-x-editable-bootstrap3.version>1.5.1-1</webjars-x-editable-bootstrap3.version>
     </properties>
     <build>
         <finalName>shitot</finalName>
@@ -190,6 +191,11 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap-multiselect</artifactId>
             <version>${webjars-bootstrap-multiselect.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>x-editable-bootstrap3</artifactId>
+            <version>${webjars-x-editable-bootstrap3.version}</version>
         </dependency>
     </dependencies>
 </project>
