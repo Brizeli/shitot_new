@@ -3,6 +3,8 @@ package com.shitot.web.appointment;
 import com.shitot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +21,7 @@ public class AppointmentPatientController extends AbstractAppointmentPatientCont
     @Autowired
     private UserService userService;
     private String loggedUserName;
-    private Integer appointmentId;
-    private String doctorAlt;
+
 
 
     @RequestMapping( method = RequestMethod.GET)
@@ -39,17 +40,18 @@ public class AppointmentPatientController extends AbstractAppointmentPatientCont
         return "index";
     }
     @RequestMapping(value = "/appointment/doctorList/params/{appId}/{DoctorAlt}", method = RequestMethod.POST)
-    public void addParamAppId(@RequestParam int appId,@RequestParam String DoctorAlt){
+    public ResponseEntity<String> addParamAppId(@PathVariable int appId, @PathVariable String DoctorAlt){
         appointmentId=appId;
         doctorAlt=DoctorAlt;
-        System.out.println("appointmentId: "+appointmentId+", doctorAlt: "+doctorAlt);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/appointment/doctorList", method = RequestMethod.GET)
     public String doctorListAppointment(Model model ) {
         model.addAttribute("page", "doctorListDataTableAppointment");
         model.addAttribute("loggedUser", loggedUserName);
-
+        model.addAttribute("appointmentId",appointmentId);
+        model.addAttribute("doctorAlt",doctorAlt);
         return "index";
     }
 

@@ -76,7 +76,7 @@ function changeDoctor(id,type,doctorAlt){
         });
     }else{
         $.ajax({
-            url: "patients/appointment/doctorList/params/"+id+"/"+doctorAlt,
+            url: "patients/appointment/doctorList/params/"+id+"/"+doctorAlt+"/",
             type: 'POST',
             success: function(){
                 window.location.href='patients/appointment/doctorList';

@@ -49,4 +49,8 @@ public interface AppointmentPatientService {
     void removeDoctor(int appointmentId);
 
     void removeAltDoctor(int appointmentId);
+
+    void setDoctorToAppointment(int appointmentId, int doctorId);
+
+    void setAltDoctorToAppointment(int appointmentId, int doctorId);
 }

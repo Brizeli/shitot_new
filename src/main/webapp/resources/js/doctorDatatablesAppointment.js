@@ -1,5 +1,5 @@
 /**
- * Created by DDNS on 02.08.2016.
+ * Created by Next on 02.08.2016.
  */
 var table;
 $(function () {
@@ -10,7 +10,6 @@ $(function () {
         },
         dom: "lrtip",
         paging: false,
-        // scrollY: 400,
         columns: [
             {
                 "defaultContent": "",
@@ -29,56 +28,32 @@ $(function () {
                 "width": "10%",
                 "defaultContent": "",
                 "render": renderChooseButton
-             }
-            /*{
-             "defaultContent": "",
-             "render": {}
-             },
-             {
-             "defaultContent": "",
-             "render": {}
-             }*/
+            }
         ],
         ordering: false,
-        initComplete: updateTable
+        initComplete: initTable
     });
-
 });
-function renderChooseButton(data, type, doctor){
-    var res="";
-    res+='<a class="btn btn-xs btn-info" onclick="chooseDoctor(' + docotr.id + ');">Choose</a>';
-    return res;
-}
-function chooseDoctor(doctorId){
-
-    history.back();
-}
 $("#namesearch").on('keyup', function () {
     table.columns(0).search(this.value).draw();
 });
-$("#professions").on('change', function () {
-    getBySpecialty(this.value);
-});
-$("#qualifications").on('change', function () {
-    getByQualification(this.value);
+$("#professions, #qualifications").on('change', function () {
+    table.columns(1).search(this.value == 'All' ? '' : this.value).draw();
 });
 $("#cities").on('change', function () {
-    table.columns(2).search(this.value == 'All' ? "" : this.value).draw();
-    // getByCity(this.value);
+    table.columns(2).search(this.value == 'All' ? '' : this.value).draw();
 });
-function getBySpecialty(name) {
-    $.get("rest/doctors/by/?specialty=" + name, updateTableByData);
-}
-function getByQualification(name) {
-    $.get("rest/doctors/by/?qualification=" + name, updateTableByData);
-}
-function getByCity(name) {
-    $.get("rest/doctors/by/?city=" + name, updateTableByData);
-}
-function updateTableByData(data) {
-    table.clear().rows.add(data).draw();
-}
-function updateTable() {
+$('#clearsearch').click(function () {
+    $('select', $('.searchrow')).val('All').trigger('change');
+    $('#namesearch').val('').trigger('keyup');
+});
+function fillSearch() {
+    $("#certificates, .professions, .qualifications, #cities, #target")
+        .empty();
+    $(".professions, .qualifications, #cities", $('.searchrow'))
+        .append($('<option>').text('All'));
+    $("#certificates, .professions", editDoctorForm)
+        .append($('<option>'));
     $.get("rest/doctors/certs", function (certs) {
         $.each(certs, function (key, val) {
             $("#certificates").append($('<option>').text(val.name));
@@ -97,11 +72,6 @@ function updateTable() {
             allSelectedText: false
         });
     });
-    $.get("rest/clinics/cities", function (cities) {
-        $.each(cities, function (key, val) {
-            $("#cities").append($('<option>').text(val));
-        })
-    });
     $.get("rest/doctors/targets", function (targets) {
         $.each(targets, function (key, val) {
             $("#target").append($('<option>').text(val.name))
@@ -110,5 +80,54 @@ function updateTable() {
             allSelectedText: false
         });
     });
-    $.get("rest/doctors", updateTableByData)
+    $.get("rest/clinics/cities", function (cities) {
+        $.each(cities, function (key, val) {
+            $("#cities").append($('<option>').text(val));
+        })
+    });
+}
+function initTable() {
+    fillSearch();
+    $('[data-slots]').each(function () {
+        $(this).popover({
+            title: 'Open hours',
+            trigger: 'focus',
+            content: function () {
+                var slots = $(this).data('slots');
+                var res = '<table>';
+                for (var i = 0; i < daysOfWeek.length; i++) {
+                    res += '<tr><td>' + daysOfWeek[i] + ': </td><td>';
+                    $.each(slots, function (ind, slot) {
+                        if (slot.dayOfWeek == i) res += slot.intervals;
+                    });
+                    res += '</td></tr>';
+                }
+                res += '</table>';
+                return res;
+            },
+            placement: 'left',
+            html: true
+        });
+    });
+}
+function updateTable() {
+    $.get("rest/doctors", function (data) {
+        table.clear().rows.add(data).draw();
+    });
+    fillSearch();
+}
+function renderChooseButton(data, type, doctor){
+    var res="";
+    res+='<a class="btn btn-xs btn-info" onclick="chooseDoctor(' + doctor.id + ');">Choose</a>';
+    return res;
+}
+function chooseDoctor(doctorId){
+    $.ajax({
+        url: "rest/patients/appointmentDoctor/"+doctorId,
+        type: 'POST',
+        success: function(){
+            history.back();
+        }
+    });
+
 }

@@ -43,4 +43,8 @@ public interface AppointmentPatientRepository {
     Appointment removeDoctor(int appointmentId);
 
     Appointment removeAltDoctor(int appointmentId);
+
+    void setDoctorToAppointment(int appointmentId, int doctorId);
+
+    void setAltDoctorToAppointment(int appointmentId, int doctorId);
 }

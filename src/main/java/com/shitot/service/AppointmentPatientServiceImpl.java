@@ -134,6 +134,16 @@ public class AppointmentPatientServiceImpl implements AppointmentPatientService 
     }
 
     @Override
+    public void setDoctorToAppointment(int appointmentId, int doctorId) {
+        repository.setDoctorToAppointment(appointmentId, doctorId);
+    }
+
+    @Override
+    public void setAltDoctorToAppointment(int appointmentId, int doctorId) {
+        repository.setAltDoctorToAppointment(appointmentId, doctorId);
+    }
+
+    @Override
     @Transactional
     public void update(PatientTo patientTo) {
         Integer id = patientTo.getId();

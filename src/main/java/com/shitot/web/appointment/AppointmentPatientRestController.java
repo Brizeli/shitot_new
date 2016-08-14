@@ -38,10 +38,22 @@ public class AppointmentPatientRestController extends AbstractAppointmentPatient
     public void removeDoctor(@PathVariable int appointmentId) {
         super.removeDoctorFromAppointment(appointmentId);
     }
+    @RequestMapping(value = "/appointmentDoctor/{doctorId}", method = RequestMethod.POST)
+    public ResponseEntity<String> changeDoctor(@PathVariable int doctorId) {
+        if(doctorAlt.equals("Doctor")) {
+            super.setDoctorToAppointment(appointmentId,doctorId);
+            System.out.println(appointmentId+" - "+doctorId);
+
+        }else{
+            super.setAltDoctorToAppointment(appointmentId,doctorId);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @RequestMapping(value = "/appointmentAltDoctor/{appointmentId}", method = RequestMethod.DELETE)
     public void removeAltDoctor(@PathVariable int appointmentId) {
         super.removeAltDoctorFromAppointment(appointmentId);
     }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Patient getPatient(@PathVariable int id) {
 //        System.out.println(id+"arc");

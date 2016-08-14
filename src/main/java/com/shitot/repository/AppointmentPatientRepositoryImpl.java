@@ -183,4 +183,20 @@ public class AppointmentPatientRepositoryImpl implements AppointmentPatientRepos
         a.setAlternativeDoctor(null);
         return save(a);
     }
+
+    @Override
+    public void setDoctorToAppointment(int appointmentId, int doctorId) {
+        Appointment a= em.find(Appointment.class,appointmentId);
+        Doctor d= em.find(Doctor.class,doctorId);
+        a.setDoctor(d);
+        save(a);
+    }
+
+    @Override
+    public void setAltDoctorToAppointment(int appointmentId, int doctorId) {
+        Appointment a= em.find(Appointment.class,appointmentId);
+        Doctor d= em.find(Doctor.class,doctorId);
+        a.setAlternativeDoctor(d);
+        save(a);
+    }
 }

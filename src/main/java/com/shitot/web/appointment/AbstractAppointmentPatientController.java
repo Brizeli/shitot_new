@@ -18,6 +18,8 @@ public class AbstractAppointmentPatientController {
     AppointmentPatientService service;
     @Autowired
     DoctorService serviceDoctor;
+    protected Integer appointmentId;
+    protected String doctorAlt;
 
     protected Appointment create(Appointment appointment){
         appointment.setId(null);
@@ -65,5 +67,13 @@ public class AbstractAppointmentPatientController {
 
     public void removeAltDoctorFromAppointment(int appointmentId) {
         service.removeAltDoctor(appointmentId);
+    }
+
+    public void setDoctorToAppointment(int appointmentId, int doctorId) {
+        service.setDoctorToAppointment(appointmentId, doctorId);
+    }
+
+    public void setAltDoctorToAppointment(int appointmentId, int doctorId) {
+        service.setAltDoctorToAppointment(appointmentId, doctorId);
     }
 }

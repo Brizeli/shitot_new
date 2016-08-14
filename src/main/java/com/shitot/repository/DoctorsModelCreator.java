@@ -59,7 +59,7 @@ public class DoctorsModelCreator {
         em.persist(TargetAudience.CHILDREN);
         em.persist(TargetAudience.ELDERY);
         em.persist(TargetAudience.TEENS);
-        for (int i = 0; i < 24; i++) em.persist(new Interval(i));
+//        for (int i = 0; i < 24; i++) em.persist(new Interval(i));
         TargetAudience[] tga={TargetAudience.ADULTS,TargetAudience.CHILDREN,TargetAudience.ELDERY,TargetAudience.TEENS};
         for (int i = 0; i< numDoctors; i++){
             Doctor d=new Doctor();
@@ -89,12 +89,7 @@ public class DoctorsModelCreator {
                 for (int k :getRndIntSet(getRndInt(1,7),0,6)) {
                     Slot sl=new Slot();
                     sl.setDayOfWeek(k);
-                    Set<Interval> intervals = new LinkedHashSet<>();
-                    for (int l:getRndIntSet(getRndInt(1,24),0,23)){
-                        Interval inv= em.find(Interval.class,l);
-                        intervals.add(inv);
-                    }
-                    sl.setIntervals(intervals);
+                    sl.setIntervals("7-12");
                     em.persist(sl);
                     sl.setClinic(cl);
                     slots.add(sl);
