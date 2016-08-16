@@ -1,5 +1,7 @@
 
 var editPatientForm = $('#patientDetailsForm');
+var editPatientWindow = $('#editPatient');
+
 
 //function renderPatientName(data, type, patient) {
 //    if (type == 'display') {
@@ -46,10 +48,8 @@ function renderCreateAppointment(data, type, doctor) {
     return "";
 }
 function addPatient() {
-    $(":text",editPatientForm).empty();
-    //editDoctorForm.find("option").removeAttr("selected");
-    $(".title", $("#editPatient")).text("Add new patient");
-    $("textarea",editPatientForm).empty();
+    $(":input",editPatientForm).val("");
+    $(".title", editPatientWindow).text("Add new patient");
     $('#id').val(null);
     $('#editPatient').modal({backdrop: 'static'});
 }
@@ -58,7 +58,7 @@ function editPatient(id) {
         $.each(patient, function (key, val) {
             editPatientForm.find("[name='" + key + "']").val(val);
         });
-        $(".title", editPatientForm).text("Edit patient");
+        $(".title", editPatientWindow).text("Edit patient");
         $('#editPatient').modal({backdrop: 'static'});
     })
 }

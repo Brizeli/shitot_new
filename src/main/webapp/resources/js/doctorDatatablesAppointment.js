@@ -122,8 +122,10 @@ function renderChooseButton(data, type, doctor){
     return res;
 }
 function chooseDoctor(doctorId){
+    var appointmentId=$('#appointmentId').val();
+    var doctorAlt=$('#doctorAlt').val();
     $.ajax({
-        url: "rest/patients/appointmentDoctor/"+doctorId,
+        url: 'rest/patients/appointmentDoctor/'+doctorId+'/'+appointmentId+'/'+doctorAlt,
         type: 'POST',
         success: function(){
             history.back();

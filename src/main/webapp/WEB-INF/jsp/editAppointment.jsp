@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" method="post" id="appointmentDetailsForm">
-                    <input type="text" hidden="hidden" name="id" id="idA">
+                    <input type="text" hidden="hidden" name="id" id="id">
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="name">Patient name:</label>
                         <div class="col-xs-8">

@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 /**
  * Created by Igor on 10-Aug-16.
  */
-public class PatientTo {
+public class  PatientTo {
     private Integer id;
 
     public int getId() {
