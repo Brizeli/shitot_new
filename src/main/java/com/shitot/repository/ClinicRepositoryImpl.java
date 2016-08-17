@@ -2,9 +2,7 @@ package com.shitot.repository;
 
 import com.shitot.model.Clinic;
 import com.shitot.model.Doctor;
-import com.shitot.model.Interval;
 import com.shitot.model.Slot;
-import com.shitot.utils.exception.NotFoundException;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

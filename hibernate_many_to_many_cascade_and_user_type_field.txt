@@ -1,0 +1,5 @@
+Пользовательские типы в hibernate
+https://habrahabr.ru/post/91328/
+
+@ManyToMany правильная настройка каскадных операций
+http://stackoverflow.com/questions/14585836/hibernate-many-to-many-cascading-delete
