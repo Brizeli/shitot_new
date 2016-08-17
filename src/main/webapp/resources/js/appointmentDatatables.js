@@ -1,14 +1,12 @@
-
 var table;
 $(function () {
     table = $('#dataTableA').DataTable({
         ajax: {
-            url: "rest/appointments/all/"+$('#patientId').val(),
+            url: "rest/appointments/all/" + $('#patientId').val(),
             dataSrc: ""
         },
         dom: "lrtip",
         paging: false,
-        // scrollY: 400,
         columns: [
             {
                 "defaultContent": "",
@@ -25,15 +23,14 @@ $(function () {
         ],
         ordering: false,
         initComplete: function () {
-            
+            renderPatientInfo();
         }
     });
 });
 
-function updateTableByData(data) {
-    table.clear().rows.add(data).draw();
-}
 function updateTable() {
-    $.get("rest/appointments/all/"+$('#patientId').val(), updateTableByData)
+    $.get("rest/appointments/all/" + $('#patientId').val(), function (data) {
+        table.clear().rows.add(data).draw();
+    });
 }
 

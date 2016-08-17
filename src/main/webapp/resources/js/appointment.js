@@ -1,7 +1,4 @@
 var editAppointmentForm = $('#appointmentDetailsForm');
-$(function () {
-    renderPatientInfo();
-});
 function renderAppointmentInfo(data, type, appointment) {
     var res = '<a class="btn btn-xs btn-success" onclick="editAppointment(' + appointment.id + ')" title="Edit">Edit</a> ';
     res += '<a class="btn btn-xs btn-danger" onclick="deleteAppointment(' + appointment.id + ')" title="Delete">Delete</a>';
@@ -55,12 +52,12 @@ function renderAppointmentDoctors(data, type, appointment) {
     return res;
 }
 
-function renderDoctorInfo(doctorA) {
-    var result = doctorA.fullName + '<br>' +
-        '<a href="mailto:' + doctorA.email + '">' + doctorA.email + '</a><br>' +
-        'Tel: ' + doctorA.telNumber + '<br>';
-    if (doctorA.telHome) result += 'Home tel: ' + doctorA.telHome + '<br>';
-    if (doctorA.homeAddress) result += 'Home address: ' + doctorA.homeAddress;
+function renderDoctorInfo(doctor) {
+    var result = doctor.fullName + '<br>' +
+        '<a href="mailto:' + doctor.email + '">' + doctor.email + '</a><br>' +
+        'Tel: ' + doctor.telNumber + '<br>';
+    if (doctor.telHome) result += 'Home tel: ' + doctor.telHome + '<br>';
+    if (doctor.homeAddress) result += 'Home address: ' + doctor.homeAddress;
     return result;
 }
 function removeDoctor(id, doctorAlt) {
