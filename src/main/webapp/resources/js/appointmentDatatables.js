@@ -24,7 +24,9 @@ $(function () {
             }
         ],
         ordering: false,
-        initComplete: updateTable
+        initComplete: function () {
+            
+        }
     });
 });
 

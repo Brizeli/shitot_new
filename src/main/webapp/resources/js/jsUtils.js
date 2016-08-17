@@ -4,6 +4,12 @@
 $(document).ajaxError(function (event, jqXHR, options, jsExc) {
     failNoty(event, jqXHR, options, jsExc);
 });
+$(function () {
+    $('.nav li a').on('click', function() {
+        $(this).parent().parent().find('.active').removeClass('active');
+        $(this).parent().addClass('active');
+    });
+});
 var failedNote;
 function closeNoty() {
     if (failedNote) {

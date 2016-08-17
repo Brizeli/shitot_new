@@ -45,6 +45,7 @@ $(function () {
         $('select', $('.searchrow')).val('All').trigger('change');
         $('#namesearch').val('').trigger('keyup');
     });
+
 });
 function fillSearch() {
     $("#certificates, .professions, .qualifications, #cities, #target")
@@ -108,6 +109,8 @@ function initTable() {
             html: true
         });
     });
+    $('.nav').find('.active').removeClass('active');
+    $('.nav a[href="doctors"]').parent().addClass('active');
 }
 function updateTable() {
     $.get("rest/doctors", function (data) {

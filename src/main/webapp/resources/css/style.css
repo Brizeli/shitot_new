@@ -45,6 +45,7 @@ a {
 
 .navbar-brand {
     padding: 0;
+    padding-right: 30px;
 }
 
 .error, .message {

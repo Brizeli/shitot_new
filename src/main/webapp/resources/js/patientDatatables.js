@@ -1,4 +1,3 @@
-
 var table;
 $(function () {
     table = $('#dataTable').DataTable({
@@ -10,7 +9,7 @@ $(function () {
         paging: false,
         columns: [
             {
-                data:"name"
+                data: "name"
             },
             {
                 "width": "10%",
@@ -23,9 +22,9 @@ $(function () {
             },
             {
                 "width": "30%",
-             "defaultContent": "",
-             "render": renderButton
-             }
+                "defaultContent": "",
+                "render": renderButton
+            }
             /*{
              "defaultContent": "",
              "render": {}
@@ -36,19 +35,21 @@ $(function () {
              }*/
         ],
         ordering: false,
-        initComplete: updateTable
+        initComplete: function(){
+            $('.nav').find('.active').removeClass('active');
+            $('.nav a[href="patients"]').parent().addClass('active');
+        }
     });
+    $("#namesearch").on('keyup', function () {
+        table.columns(0).search(this.value).draw();
+    });
+    $("#telsearch").on('keyup', function () {
+        table.columns(2).search(this.value).draw();
+    });
+});
 
-});
-$("#namesearch").on('keyup', function () {
-    table.columns(0).search(this.value).draw();
-});
-$("#telsearch").on('keyup', function () {
-    table.columns(2).search(this.value).draw();
-});
-function updateTableByData(data) {
-    table.clear().rows.add(data).draw();
-}
 function updateTable() {
-    $.get("rest/patients/", updateTableByData)
+    $.get("rest/patients", function (data) {
+        table.clear().rows.add(data).draw()
+    });
 }

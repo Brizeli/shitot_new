@@ -126,7 +126,6 @@ $(".addSpec").popover({
         }
     });
     $('input', $("#addSpecForm")).on('keyup', function (e) {
-        console.log(e);
         if (e.keyCode == 13) {
             var value = $('input', $('#addSpecForm')).val();
             if (value.trim() != '') {

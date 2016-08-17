@@ -18,14 +18,12 @@ function renderAppointmentProblems(data, type, appointment) {
         res += problems[i].name;
         if (i < problems.length - 1) res += ', ';
     }
-    ;
     res += '<br><strong>Symptoms: </strong>';
     var symptoms = appointment.symptoms;
     for (var i = 0; i < symptoms.length; i++) {
         res += symptoms[i].name;
         if (i < symptoms.length - 1) res += ', ';
     }
-    ;
     return res;
 }
 function renderPatientInfo() {
