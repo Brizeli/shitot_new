@@ -1,5 +1,7 @@
 var editAppointmentForm = $('#appointmentDetailsForm');
-$(document).ready(renderPatientInfo);
+$(function () {
+    renderPatientInfo();
+});
 function renderAppointmentInfo(data, type, appointment) {
     var res = '<a class="btn btn-xs btn-success" onclick="editAppointment(' + appointment.id + ')" title="Edit">Edit</a> ';
     res += '<a class="btn btn-xs btn-danger" onclick="deleteAppointment(' + appointment.id + ')" title="Delete">Delete</a>';
@@ -9,82 +11,69 @@ function renderAppointmentInfo(data, type, appointment) {
     res += '<br>Payment Date:' + appointment.paymentDate;
     return res;
 }
-function renderAppointmentProblems(data, type, appointment){
-    var res ='<strong>Problems: </strong>';
-    var problems=appointment.problems;
+function renderAppointmentProblems(data, type, appointment) {
+    var res = '<strong>Problems: </strong>';
+    var problems = appointment.problems;
     for (var i = 0; i < problems.length; i++) {
-        res +=  problems[i].name;
+        res += problems[i].name;
         if (i < problems.length - 1) res += ', ';
-    };
-    res+='<br><strong>Symptoms: </strong>';
-    var symptoms=appointment.symptoms;
+    }
+    ;
+    res += '<br><strong>Symptoms: </strong>';
+    var symptoms = appointment.symptoms;
     for (var i = 0; i < symptoms.length; i++) {
-        res +=  symptoms[i].name;
+        res += symptoms[i].name;
         if (i < symptoms.length - 1) res += ', ';
-    };
+    }
+    ;
     return res;
 }
-function renderPatientInfo(){
-    var patientId=$('#patientId').val();
-    var res1="";
-    $.get("rest/patients/"+patientId, function (patient) {
-        res1+=patient.name+' (Age: '+patient.age+', Tel: '+patient.telNumber+')';
-        $('#patient1').html(res1);
+function renderPatientInfo() {
+    var patientId = $('#patientId').val();
+    $.get("rest/patients/" + patientId, function (patient) {
+        $('#patient1').text(patient.name + ' (Age: ' + patient.age + ', Tel: ' + patient.telNumber + ')');
     });
 
 }
 function renderAppointmentDoctors(data, type, appointment) {
-    var res ='';
-    if(appointment.doctor){
-        res+='<strong>Doctor: </strong>'+renderDoctorInfo(appointment.doctor);
-        res += '<br><a class="btn btn-xs btn-success" onclick="changeDoctor(' + appointment.id + ',\'change\',\'Doctor\')">Change</a> ';
-        res += '<a class="btn btn-xs btn-danger" onclick="changeDoctor(' + appointment.id+ ',\'remove\',\'Doctor\')">Remove</a><br>  ';
-    }else{
-        res+="<strong>Doctor: </strong>";
-        res += '<a class="btn btn-xs btn-primary" onclick="changeDoctor(' + appointment.id+ ',\'add\',\'Doctor\')">Add</a><br> ';
+    var res = '';
+    if (appointment.doctor) {
+        res += '<strong>Doctor: </strong>' + renderDoctorInfo(appointment.doctor);
+        res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">Change</a> ';
+        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',false)">Remove</a><br>  ';
+    } else {
+        res += "<strong>Doctor: </strong>";
+        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">Add</a><br> ';
 
     }
-    if(appointment.alternativeDoctor){
-        res+="<strong>Another Doctor: </strong>"+renderDoctorInfo(appointment.alternativeDoctor);
-        res += '<br><a class="btn btn-xs btn-success" onclick="changeDoctor(' + appointment.id + ',\'change\',\'AltDoctor\')">Change</a> ';
-        res += '<a class="btn btn-xs btn-danger" onclick="changeDoctor(' + appointment.id+ ',\'remove\',\'AltDoctor\')">Remove</a> ';
-    }else{
-        res+="<strong>Another Doctor: </strong>";
-        res += '<a class="btn btn-xs btn-primary" onclick="changeDoctor(' + appointment.id+ ',\'add\',\'AltDoctor\')">Add</a> ';
+    if (appointment.alternativeDoctor) {
+        res += "<strong>Another Doctor: </strong>" + renderDoctorInfo(appointment.alternativeDoctor);
+        res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Change</a> ';
+        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',true)">Remove</a> ';
+    } else {
+        res += "<strong>Another Doctor: </strong>";
+        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Add</a> ';
     }
     return res;
 }
 
 function renderDoctorInfo(doctorA) {
-        var result = doctorA.fullName + '<br>' +
-            '<a href="mailto:' + doctorA.email + '">' + doctorA.email + '</a><br>' +
-            'Tel: ' + doctorA.telNumber + '<br>';
-        if (doctorA.telHome) result += 'Home tel: ' + doctorA.telHome + '<br>';
-        if (doctorA.homeAddress) result += 'Home address: ' + doctorA.homeAddress;
-        return result;
+    var result = doctorA.fullName + '<br>' +
+        '<a href="mailto:' + doctorA.email + '">' + doctorA.email + '</a><br>' +
+        'Tel: ' + doctorA.telNumber + '<br>';
+    if (doctorA.telHome) result += 'Home tel: ' + doctorA.telHome + '<br>';
+    if (doctorA.homeAddress) result += 'Home address: ' + doctorA.homeAddress;
+    return result;
 }
-function changeDoctor(id,type,doctorAlt){
-    //window.location.href='patients/appointment/'+patienId;
-    if(type=="remove") {
-        $.ajax({
-            url: "rest/patients/appointment/"+doctorAlt+"/" + id + "/",
-            type: 'DELETE',
-            success: function () {
-                updateTable();
-                successNoty('Deleted');
-            }
-        });
-    }else{
-        $.ajax({
-            url: "patients/appointment/doctorList/params/"+id+"/"+doctorAlt+"/",
-            type: 'POST',
-            success: function(){
-                window.location.href='patients/appointment/doctorList';
-            }
-        });
-
-
-    }
+function removeDoctor(id, doctorAlt) {
+    $.ajax({
+        url: "rest/appointments/" + id + "/" + doctorAlt,
+        type: 'DELETE',
+        success: function () {
+            updateTable();
+            successNoty('Deleted');
+        }
+    });
 }
 
 function addAppointment() {

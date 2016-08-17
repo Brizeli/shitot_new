@@ -23,7 +23,7 @@ public class Appointment extends BaseEntity {
     public static final String BY_DOCTOR_AND_ALT = "Appointment.getByDoctorAndAlt";
     public static final String BY_PATIENT = "Appointment.getByPatient";
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Patient patient;
     private LocalDate applyDate;
     private LocalDate appointmentDate;

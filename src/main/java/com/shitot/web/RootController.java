@@ -1,6 +1,7 @@
 package com.shitot.web;
 
 import com.shitot.model.User;
+import com.shitot.service.PatientService;
 import com.shitot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,11 @@ public class RootController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PatientService patientService;
+
+    private static Integer appointmentId;
+    private static String doctorAlt;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root(Model model) {
@@ -50,8 +56,24 @@ public class RootController {
     }
 
     @RequestMapping(value = "/doctors", method = RequestMethod.GET)
-    public String doctorList(Model model) {
+    public String doctorList(Model model, boolean doctorAlt, Integer appointmentId) {
+        model.addAttribute("appointmentId", appointmentId);
+        model.addAttribute("doctorAlt", doctorAlt);
         model.addAttribute("page", "doctorListDataTable");
+        model.addAttribute("loggedUser", getLoggedUserName());
+        return "index";
+    }
+
+    @RequestMapping(value = "/patients", method = RequestMethod.GET)
+    public String patientList(Model model) {
+        model.addAttribute("page", "patientListDataTable");
+        model.addAttribute("loggedUser", getLoggedUserName());
+        return "index";
+    }
+    @RequestMapping(value = "/appointments",method = RequestMethod.GET)
+    public String appointmentList(Model model, @RequestParam int id){
+        model.addAttribute("patientId",id);
+        model.addAttribute("page","appointmentListDataTable");
         model.addAttribute("loggedUser", getLoggedUserName());
         return "index";
     }

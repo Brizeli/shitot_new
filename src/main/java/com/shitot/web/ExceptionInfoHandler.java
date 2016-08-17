@@ -17,7 +17,7 @@ import java.util.Arrays;
 @ControllerAdvice(annotations = RestController.class)
 public class ExceptionInfoHandler {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND)  //404
     @ExceptionHandler(NotFoundException.class)
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE)

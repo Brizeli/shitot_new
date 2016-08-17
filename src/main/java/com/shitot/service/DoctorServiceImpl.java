@@ -39,10 +39,7 @@ public class DoctorServiceImpl implements DoctorService {
     public Doctor save(DoctorTo doctorTo) {
         Doctor doctor = repository.save(JsonUtil.createNewFromTo(doctorTo));
         Integer id = doctor.getId();
-        repository.setSpecialties(id, doctorTo.getSpecialty1(), doctorTo.getSpecialty2());
-        repository.setQualifications(id, doctorTo.getQualifications());
-        repository.setTargetAudiences(id, doctorTo.getTargetAudiences());
-        repository.setCertificate(id, doctorTo.getCertificate());
+        setRegalias(doctorTo, id);
         return doctor;
     }
 
@@ -52,6 +49,10 @@ public class DoctorServiceImpl implements DoctorService {
         Integer id = doctorTo.getId();
         Doctor doctor = get(id);
         repository.save(JsonUtil.updateFromTo(doctor, doctorTo));
+        setRegalias(doctorTo, id);
+    }
+
+    private void setRegalias(DoctorTo doctorTo, Integer id) {
         repository.setSpecialties(id, doctorTo.getSpecialty1(), doctorTo.getSpecialty2());
         repository.setQualifications(id, doctorTo.getQualifications());
         repository.setTargetAudiences(id, doctorTo.getTargetAudiences());

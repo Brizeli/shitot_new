@@ -17,8 +17,7 @@ public class JsonUtilAppointmentPatient {
     }
 
     public static Patient createNewFromTo(PatientTo patientTo) {
-        Patient patient = new Patient(patientTo.getName(),patientTo.getAge(),patientTo.getTelNumber());
-        return patient;
+        return new Patient(patientTo.getName(),patientTo.getAge(),patientTo.getTelNumber());
     }
 
 }

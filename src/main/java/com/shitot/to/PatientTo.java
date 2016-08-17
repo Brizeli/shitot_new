@@ -5,8 +5,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 /**
  * Created by Igor on 10-Aug-16.
  */
-public class  PatientTo {
+public class PatientTo {
+
     private Integer id;
+
+    @NotEmpty
+    private String name;
+    private int age;
+    @NotEmpty
+    private String telNumber;
+
+    public PatientTo() {
+    }
 
     public int getId() {
         return id;
@@ -15,13 +25,10 @@ public class  PatientTo {
     public void setId(int id) {
         this.id = id;
     }
+
     public boolean isNew() {
         return id == null;
     }
-    @NotEmpty
-    private String name;
-    private int age;
-    private String telNumber;
 
     public String getName() {
         return name;

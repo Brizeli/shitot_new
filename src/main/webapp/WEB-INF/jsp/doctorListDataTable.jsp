@@ -5,6 +5,8 @@
     <h3>Doctors
         <a class="btn btn-sm btn-info" id="addDoctor" onclick="addDoctor()">New doctor</a>
     </h3>
+    <input type="hidden" value="${doctorAlt}" id="doctorAlt">
+    <input type="hidden" value="${appointmentId}" id="appointmentId">
     <div class="view-box">
         <div class="row searchrow">
             <div class="col-sm-11">

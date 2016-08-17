@@ -26,7 +26,7 @@ public interface ClinicService {
 
     void setClinic(Integer id, String name, String city, String address, int doctorId);
 
-    Clinic update(Clinic clinic, Integer doctorId);
+    void update(Clinic clinic, Integer doctorId);
 
     void setSlots(int clinicId, List<Slot> slots);
 }

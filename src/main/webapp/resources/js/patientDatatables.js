@@ -3,24 +3,22 @@ var table;
 $(function () {
     table = $('#dataTable').DataTable({
         ajax: {
-            url: "rest/patients/",
+            url: "rest/patients",
             dataSrc: ""
         },
         dom: "lrtip",
         paging: false,
-        // scrollY: 400,
         columns: [
             {
-                "defaultContent": "",
                 data:"name"
             },
             {
-                "width": "10%","defaultContent": "",
-                data: "age"
+                "width": "10%",
+                data: "age",
+                searching: false
             },
             {
                 "width": "20%",
-                "defaultContent": "",
                 data: "telNumber"
             },
             {

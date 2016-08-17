@@ -3,7 +3,7 @@ var table;
 $(function () {
     table = $('#dataTableA').DataTable({
         ajax: {
-            url: "rest/patients/appointment/"+$('#patientId').val(),
+            url: "rest/appointments/all/"+$('#patientId').val(),
             dataSrc: ""
         },
         dom: "lrtip",
@@ -32,6 +32,6 @@ function updateTableByData(data) {
     table.clear().rows.add(data).draw();
 }
 function updateTable() {
-    $.get("rest/patients/appointment/"+$('#patientId').val(), updateTableByData)
+    $.get("rest/appointments/all/"+$('#patientId').val(), updateTableByData)
 }
 

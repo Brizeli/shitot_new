@@ -1,4 +1,3 @@
-
 var editPatientForm = $('#patientDetailsForm');
 var editPatientWindow = $('#editPatient');
 
@@ -32,23 +31,19 @@ var editPatientWindow = $('#editPatient');
 //    }
 //    return "";
 //}
-function renderButton(data, type, patient){
-    var result="";
+function renderButton(data, type, patient) {
+    var result = "";
     result += '<a class="btn btn-xs btn-primary" onclick="editPatient(' + patient.id + ');">Edit</a> ';
-    result += '<a class="btn btn-xs btn-danger" onclick="deletePatient(' + patient.id+ ');">Delete</a> ';
-    result += '<a class="btn btn-xs btn-success" onclick="AppointmentWindow('+patient.id+');">Appointments</a>';
+    result += '<a class="btn btn-xs btn-danger" onclick="deletePatient(' + patient.id + ');">Delete</a> ';
+    result += '<a class="btn btn-xs btn-success" href="appointments?id=' + patient.id + '">Appointments</a>';
     return result;
-
-}
-function AppointmentWindow(patienId){
-    window.location.href='patients/appointment/'+patienId;
 
 }
 function renderCreateAppointment(data, type, doctor) {
     return "";
 }
 function addPatient() {
-    $(":input",editPatientForm).val("");
+    $(":input", editPatientForm).val("");
     $(".title", editPatientWindow).text("Add new patient");
     $('#id').val(null);
     $('#editPatient').modal({backdrop: 'static'});
@@ -62,9 +57,8 @@ function editPatient(id) {
         $('#editPatient').modal({backdrop: 'static'});
     })
 }
-function showAppointments(patientId){
-
-    $(location).href="patients/appointment/"+patientId;
+function showAppointments(patientId) {
+    $(location).href = "patients/appointment/" + patientId;
 }
 editPatientForm.submit(function () {
     $.post("rest/patients", editPatientForm.serialize(), function () {
@@ -74,9 +68,9 @@ editPatientForm.submit(function () {
     });
     return false;
 });
-function deletePatient(patientId){
+function deletePatient(patientId) {
     $.ajax({
-        url: "rest/patients/" + patientId + "/" ,
+        url: "rest/patients/" + patientId + "/",
         type: 'DELETE',
         success: function () {
             updateTable();

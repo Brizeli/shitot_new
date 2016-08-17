@@ -1,32 +1,25 @@
 package com.shitot.service;
 
 import com.shitot.model.*;
-import com.shitot.repository.AppointmentPatientRepository;
-import com.shitot.to.DoctorTo;
+import com.shitot.repository.AppointmentRepository;
 import com.shitot.to.PatientTo;
-import com.shitot.utils.JsonUtil;
 import com.shitot.utils.JsonUtilAppointmentPatient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
+@Service
 @Transactional(readOnly = true)
-public class AppointmentPatientServiceImpl implements AppointmentPatientService {
+public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
-    AppointmentPatientRepository repository;
+    private AppointmentRepository repository;
 
     @Override
     public Appointment save(Appointment appointment) {
         return repository.save(appointment);
-    }
-
-    @Override
-    public Patient save(Patient patient) {
-        return repository.save(patient);
     }
 
     @Override
@@ -65,18 +58,8 @@ public class AppointmentPatientServiceImpl implements AppointmentPatientService 
     }
 
     @Override
-    public List<Patient> getAllPatients() {
-        return repository.getAllPatients();
-    }
-
-    @Override
     public Appointment get(int id) {
         return repository.get(id);
-    }
-
-    @Override
-    public Patient getPatient(int id) {
-        return repository.getPatient(id);
     }
 
     @Override
@@ -89,12 +72,6 @@ public class AppointmentPatientServiceImpl implements AppointmentPatientService 
     @Transactional
     public void setSymptoms(int id, String... symptoms) {
         repository.setSymptoms(id, symptoms);
-    }
-
-    @Transactional
-    @Override
-    public void deletePatient(int id) {
-        repository.deletePatient(id);
     }
 
     @Override
@@ -111,16 +88,8 @@ public class AppointmentPatientServiceImpl implements AppointmentPatientService 
 
     @Override
     @Transactional
-    public void setAltDoctor(int id, int altDoctorId){
-        repository.setAltDoctor( id,  altDoctorId);
-    }
-
-    @Override
-    @Transactional
-    public Patient save(PatientTo patientTo) {
-        Patient patient = repository.save(JsonUtilAppointmentPatient.createNewFromTo(patientTo));
-        Integer id = patient.getId();
-        return patient;
+    public void setAltDoctor(int id, int altDoctorId) {
+        repository.setAltDoctor(id, altDoctorId);
     }
 
     @Override
@@ -142,13 +111,4 @@ public class AppointmentPatientServiceImpl implements AppointmentPatientService 
     public void setAltDoctorToAppointment(int appointmentId, int doctorId) {
         repository.setAltDoctorToAppointment(appointmentId, doctorId);
     }
-
-    @Override
-    @Transactional
-    public void update(PatientTo patientTo) {
-        Integer id = patientTo.getId();
-        Patient patient = getPatient(id);
-        repository.save(JsonUtilAppointmentPatient.updateFromTo(patient, patientTo));
-    }
-
 }

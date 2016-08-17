@@ -1,11 +1,15 @@
-package com.shitot.repository;
+package com.shitot.service;
 
-import com.shitot.model.*;
+import com.shitot.model.Appointment;
+import com.shitot.model.Patient;
+import com.shitot.model.Problem;
+import com.shitot.model.Symptom;
+import com.shitot.to.PatientTo;
 
 import java.util.List;
 
+public interface AppointmentService {
 
-public interface AppointmentPatientRepository {
     Appointment save(Appointment appointment);
 
     List<Problem> getAllProblems();
@@ -13,36 +17,30 @@ public interface AppointmentPatientRepository {
     List<Symptom> getAllSymptoms();
 
     List<Appointment> getAllByDoctor(int id);
+
     List<Appointment> getAllByAltDoctor(int id);
+
     List<Appointment> getAllByDoctorAndAlt(int id);
 
-    List<Appointment> getAllByPatient(int id);
+    List<Appointment> getAll(int patientId);
 
     List<Appointment> getAll();
-//    List getJPQL(String s);
-
-    List<Patient> getAllPatients();
 
     Appointment get(int id);
-    Patient getPatient(int id);
 
-    void setProblems(int id,String... problems);
+    void setProblems(int id, String... problems);
 
-    void setSymptoms(int id,String... symptoms);
+    void setSymptoms(int id, String... symptoms);
 
     void setPatient(int id, int patientId);
 
     void setDoctor(int id, int doctorId);
+
     void setAltDoctor(int id, int altDoctorId);
 
+    void removeDoctor(int appointmentId);
 
-    void deletePatient(int id);
-
-    Patient save(Patient patient);
-
-    Appointment removeDoctor(int appointmentId);
-
-    Appointment removeAltDoctor(int appointmentId);
+    void removeAltDoctor(int appointmentId);
 
     void setDoctorToAppointment(int appointmentId, int doctorId);
 

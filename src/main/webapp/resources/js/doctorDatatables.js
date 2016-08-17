@@ -11,11 +11,11 @@ $(function () {
         dom: "lrtip",
         paging: false,
         columnDefs: [
-            {"width": "25%", "targets": [0, 2]}
+            {"width": "20%", "targets": [0, 2]}
         ],
         columns: [
             {
-                "width": "20",
+                // "width": "25%",
                 "defaultContent": "",
                 "render": renderDoctorInfo
             },
@@ -24,7 +24,7 @@ $(function () {
                 "render": renderSpecialization
             },
             {
-                "width": "20%",
+                // "width": "25%",
                 "defaultContent": "",
                 "render": renderClinics
             }

@@ -34,11 +34,10 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
-    public Clinic update(Clinic clinic, Integer doctorId) {
+    public void update(Clinic clinic, Integer doctorId) {
         Clinic saved = repository.save(clinic, doctorId);
         if (saved == null)
             throw new NotFoundException("Not found clinic with id=" + clinic.getId());
-        return saved;
     }
 
     @Override

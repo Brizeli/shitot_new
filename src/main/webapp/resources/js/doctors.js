@@ -11,6 +11,7 @@ function renderDoctorInfo(data, type, doctor) {
             'Tel: ' + doctor.telNumber + '<br>';
         if (doctor.telHome) result += 'Home tel: ' + doctor.telHome + '<br>';
         if (doctor.homeAddress) result += 'Home address: ' + doctor.homeAddress;
+        if ($('#appointmentId').val() != '') result += '<br><a class="btn btn-xs btn-info" onclick="chooseDoctor(' + doctor.id + ');">Choose</a>';
         return result;
     }
     if (type == 'filter') {
@@ -98,6 +99,17 @@ function editDoctor(id) {
         editDoctorWindow.modal({backdrop: "static"});
     })
 }
+function chooseDoctor(doctorId) {
+    var appointmentId = $('#appointmentId').val();
+    var doctorAlt = $('#doctorAlt').val();
+    $.ajax({
+        url: 'rest/appointments/' + appointmentId + '/' + doctorAlt + '/' + doctorId,
+        type: 'POST',
+        success: function () {
+            history.back();
+        }
+    });
+}
 $(".addSpec").popover({
     html: true,
     trigger: 'manual',
@@ -107,6 +119,23 @@ $(".addSpec").popover({
     }
 }).click(function () {
     $(this).popover('toggle');
+    editDoctorForm.on('keyup keypress',function (e) {
+        if (e.keyCode==13){
+            e.preventDefault();
+            return false;
+        }
+    });
+    $('input', $("#addSpecForm")).on('keyup', function (e) {
+        console.log(e);
+        if (e.keyCode == 13) {
+            var value = $('input', $('#addSpecForm')).val();
+            if (value.trim() != '') {
+                $(this).parentsUntil('.form-group').parent().find('select').first().append($('<option selected>').text(value));
+                $('#target, #quals').multiselect('rebuild');
+                $(".addSpec").popover('hide');
+            }
+        }
+    });
     $('a', $("#addSpecForm")).click(function () {
         var value = $('input', $('#addSpecForm')).val();
         if (value.trim() != '') {
