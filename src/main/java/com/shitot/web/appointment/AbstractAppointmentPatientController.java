@@ -7,7 +7,6 @@ import com.shitot.service.AppointmentPatientService;
 import com.shitot.service.DoctorService;
 import com.shitot.to.PatientTo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -18,8 +17,8 @@ public class AbstractAppointmentPatientController {
     AppointmentPatientService service;
     @Autowired
     DoctorService serviceDoctor;
-    protected Integer appointmentId;
-    protected String doctorAlt;
+    protected static Integer appointmentId;
+    protected static String doctorAlt;
 
     protected Appointment create(Appointment appointment){
         appointment.setId(null);

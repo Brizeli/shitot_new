@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
-import javax.transaction.Transaction;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,9 +26,7 @@ public class AppointmentPatientRepositoryImpl implements AppointmentPatientRepos
             em.persist(appointment);
             return appointment;
         } else {
-            Appointment a = em.merge(appointment);
-            em.flush();
-            return a;
+            return em.merge(appointment);
         }
     }
 

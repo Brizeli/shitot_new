@@ -54,6 +54,8 @@
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:4.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:4.1.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-taglibs:4.1.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-acl:4.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-servlet-api:8.0.33" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-jdbc:8.0.33" level="project" />
@@ -93,5 +95,7 @@
     <orderEntry type="library" name="Maven: org.webjars.bower:noty:2.3.8" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:datatables:1.10.12" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:jquery-ui:1.12.0" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:bootstrap-multiselect:0.9.13" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:x-editable-bootstrap3:1.5.1-1" level="project" />
   </component>
 </module>
