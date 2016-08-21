@@ -4,7 +4,6 @@
     <h3>Patients
         <a class="btn btn-sm btn-info" id="addPatient" onclick="addPatient()">New patient</a>
     </h3>
-
     <div class="view-box">
         <div class="row">
             <div class="col-sm-6">
@@ -23,7 +22,6 @@
                 <th>Age</th>
                 <th>Telephone</th>
                 <th></th>
-                <%--<th>Create appointment</th>--%>
             </tr>
             </thead>
         </table>

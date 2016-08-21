@@ -32,15 +32,11 @@ public interface AppointmentRepository {
 
     void setPatient(int id, int patientId);
 
-    void setDoctor(int id, int doctorId);
+    void setDoctor(Appointment id, int doctorId);
 
-    void setAltDoctor(int id, int altDoctorId);
-    //?
-    void setDoctorToAppointment(int appointmentId, int doctorId);
-    //?
-    void setAltDoctorToAppointment(int appointmentId, int doctorId);
+    void setAltDoctor(Appointment id, int altDoctorId);
 
-    Appointment removeDoctor(int appointmentId);
+    boolean removeDoctor(int appointmentId);
 
-    Appointment removeAltDoctor(int appointmentId);
+    boolean removeAltDoctor(int appointmentId);
 }

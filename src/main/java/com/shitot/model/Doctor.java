@@ -1,5 +1,6 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -51,6 +52,12 @@ public class Doctor extends UserDoctor {
 
     @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private Set<Clinic> clinics;
+
+//    @OneToMany(mappedBy = "doctor")
+//    private Set<Appointment> appointments;
+//    @OneToMany(mappedBy = "alternativeDoctor")
+//    private Set<Appointment> appointmentsAlt;
+
 
     public Doctor() {
     }
@@ -195,4 +202,21 @@ public class Doctor extends UserDoctor {
                    ", role='" + role + '\'' +
                    '}';
     }
+
+//
+//    public Set<Appointment> getAppointments() {
+//        return appointments;
+//    }
+//
+//    public void setAppointments(Set<Appointment> appointments) {
+//        this.appointments = appointments;
+//    }
+//
+//    public Set<Appointment> getAppointmentsAlt() {
+//        return appointmentsAlt;
+//    }
+//
+//    public void setAppointmentsAlt(Set<Appointment> appointmentsAlt) {
+//        this.appointmentsAlt = appointmentsAlt;
+//    }
 }

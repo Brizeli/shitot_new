@@ -1,5 +1,6 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -25,8 +26,11 @@ public class Appointment extends BaseEntity {
 
     @ManyToOne
     private Patient patient;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate applyDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate appointmentDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate paymentDate;
     private String paymentAmount;
 //    private Currency paymentAmount;

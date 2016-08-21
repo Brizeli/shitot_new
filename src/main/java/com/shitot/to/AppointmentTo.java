@@ -1,34 +1,34 @@
 package com.shitot.to;
 
-import com.shitot.model.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class AppointmentTo extends BaseEntity {
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+
+public class AppointmentTo {
     private Integer id;
+    @NotNull
     private Integer patientId;
-    @DateTimeFormat
-    private String applyDate;
-    @DateTimeFormat
-    private String appointmentDate;
-    @DateTimeFormat
-    private String paymentDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate applyDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate appointmentDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate paymentDate;
+
     private String paymentAmount;
     private String checkNumber;
     private String description;
     private String[] problems;
     private String[] symptoms;
-    private int doctorId;
-    private int alternativeDoctorId;
 
     public AppointmentTo() {
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
 
-    @Override
     public void setId(Integer id) {
         this.id = id;
     }
@@ -41,27 +41,27 @@ public class AppointmentTo extends BaseEntity {
         this.patientId = patientId;
     }
 
-    public String getApplyDate() {
+    public LocalDate getApplyDate() {
         return applyDate;
     }
 
-    public void setApplyDate(String applyDate) {
+    public void setApplyDate(LocalDate applyDate) {
         this.applyDate = applyDate;
     }
 
-    public String getAppointmentDate() {
+    public LocalDate getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(String appointmentDate) {
+    public void setAppointmentDate(LocalDate appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 
-    public String getPaymentDate() {
+    public LocalDate getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(String paymentDate) {
+    public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
 
@@ -105,19 +105,7 @@ public class AppointmentTo extends BaseEntity {
         this.symptoms = symptoms;
     }
 
-    public int getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public int getAlternativeDoctorId() {
-        return alternativeDoctorId;
-    }
-
-    public void setAlternativeDoctorId(int alternativeDoctorId) {
-        this.alternativeDoctorId = alternativeDoctorId;
+    public boolean isNew() {
+        return id == null;
     }
 }

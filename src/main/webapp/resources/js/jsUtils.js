@@ -4,12 +4,6 @@
 $(document).ajaxError(function (event, jqXHR, options, jsExc) {
     failNoty(event, jqXHR, options, jsExc);
 });
-$(function () {
-    $('.nav li a').on('click', function() {
-        $(this).parent().parent().find('.active').removeClass('active');
-        $(this).parent().addClass('active');
-    });
-});
 var failedNote;
 function closeNoty() {
     if (failedNote) {
@@ -26,7 +20,7 @@ function failNoty(event, jqXHR, options, jsExc) {
         text: 'Failed: ' + jqXHR.statusText + '<br>' + errorInfo.cause + '<br>' + errorInfo.details.join('<br>'),
         type: 'error',
         layout: 'center',
-        timeout: 2000
+        // timeout: 2000
     });
 }
 function successNoty(text) {

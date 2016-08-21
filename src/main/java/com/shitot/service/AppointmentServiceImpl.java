@@ -2,8 +2,9 @@ package com.shitot.service;
 
 import com.shitot.model.*;
 import com.shitot.repository.AppointmentRepository;
-import com.shitot.to.PatientTo;
-import com.shitot.utils.JsonUtilAppointmentPatient;
+import com.shitot.to.AppointmentTo;
+import com.shitot.utils.JsonUtil;
+import com.shitot.utils.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,15 +12,33 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private AppointmentRepository repository;
 
     @Override
-    public Appointment save(Appointment appointment) {
-        return repository.save(appointment);
+    @Transactional
+    public Appointment save(AppointmentTo appointmentTo) {
+        Appointment appointment = repository.save(JsonUtil.createNewFromTo(appointmentTo));
+        Integer id = appointment.getId();
+        setProblemsSymptomsPatient(appointmentTo, id);
+        return appointment;
+    }
+
+    @Override
+    @Transactional
+    public void update(AppointmentTo appointmentTo) {
+        Integer id = appointmentTo.getId();
+        Appointment appointment = get(id);
+        repository.save(JsonUtil.updateFromTo(appointment, appointmentTo));
+        setProblemsSymptomsPatient(appointmentTo, id);
+    }
+
+    private void setProblemsSymptomsPatient(AppointmentTo appointmentTo, Integer id) {
+        repository.setPatient(id, appointmentTo.getPatientId());
+        repository.setProblems(id, appointmentTo.getProblems());
+        repository.setSymptoms(id, appointmentTo.getSymptoms());
     }
 
     @Override
@@ -64,51 +83,29 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional
-    public void setProblems(int id, String... problems) {
-        repository.setProblems(id, problems);
-    }
-
-    @Override
-    @Transactional
-    public void setSymptoms(int id, String... symptoms) {
-        repository.setSymptoms(id, symptoms);
-    }
-
-    @Override
-    @Transactional
-    public void setPatient(int id, int patientId) {
-        repository.setPatient(id, patientId);
-    }
-
-    @Override
-    @Transactional
     public void setDoctor(int id, int doctorId) {
-        repository.setDoctor(id, doctorId);
+        Appointment appointment = get(id);
+        if (appointment == null) throw new NotFoundException("Not found appointment with id " + id);
+        repository.setDoctor(appointment, doctorId);
     }
 
     @Override
     @Transactional
     public void setAltDoctor(int id, int altDoctorId) {
-        repository.setAltDoctor(id, altDoctorId);
+        Appointment appointment = get(id);
+        if (appointment == null) throw new NotFoundException("Not found appointment with id " + id);
+        repository.setAltDoctor(appointment, altDoctorId);
     }
 
     @Override
-    public void removeDoctor(int appointmentId) {
-        repository.removeDoctor(appointmentId);
+    @Transactional
+    public void removeDoctor(int id) {
+        if (!repository.removeDoctor(id)) throw new NotFoundException("Not found appointment with id " + id);
     }
 
     @Override
-    public void removeAltDoctor(int appointmentId) {
-        repository.removeAltDoctor(appointmentId);
-    }
-
-    @Override
-    public void setDoctorToAppointment(int appointmentId, int doctorId) {
-        repository.setDoctorToAppointment(appointmentId, doctorId);
-    }
-
-    @Override
-    public void setAltDoctorToAppointment(int appointmentId, int doctorId) {
-        repository.setAltDoctorToAppointment(appointmentId, doctorId);
+    @Transactional
+    public void removeAltDoctor(int id) {
+        if (!repository.removeAltDoctor(id)) throw new NotFoundException("Not found appointment with id " + id);
     }
 }

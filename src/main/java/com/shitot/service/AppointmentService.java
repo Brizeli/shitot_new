@@ -1,16 +1,15 @@
 package com.shitot.service;
 
 import com.shitot.model.Appointment;
-import com.shitot.model.Patient;
 import com.shitot.model.Problem;
 import com.shitot.model.Symptom;
-import com.shitot.to.PatientTo;
+import com.shitot.to.AppointmentTo;
 
 import java.util.List;
 
 public interface AppointmentService {
 
-    Appointment save(Appointment appointment);
+    Appointment save(AppointmentTo appointment);
 
     List<Problem> getAllProblems();
 
@@ -28,12 +27,6 @@ public interface AppointmentService {
 
     Appointment get(int id);
 
-    void setProblems(int id, String... problems);
-
-    void setSymptoms(int id, String... symptoms);
-
-    void setPatient(int id, int patientId);
-
     void setDoctor(int id, int doctorId);
 
     void setAltDoctor(int id, int altDoctorId);
@@ -42,7 +35,5 @@ public interface AppointmentService {
 
     void removeAltDoctor(int appointmentId);
 
-    void setDoctorToAppointment(int appointmentId, int doctorId);
-
-    void setAltDoctorToAppointment(int appointmentId, int doctorId);
+    void update(AppointmentTo appointmentTo);
 }

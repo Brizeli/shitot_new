@@ -1,7 +1,9 @@
 package com.shitot.utils;
 
+import com.shitot.model.Appointment;
 import com.shitot.model.Clinic;
 import com.shitot.model.Doctor;
+import com.shitot.to.AppointmentTo;
 import com.shitot.to.DoctorTo;
 
 /**
@@ -30,4 +32,19 @@ public class JsonUtil {
         return doctor;
     }
 
+    public static Appointment createNewFromTo(AppointmentTo appointmentTo) {
+        return new Appointment(appointmentTo.getApplyDate(), appointmentTo.getAppointmentDate(),
+                                                     appointmentTo.getPaymentDate(), appointmentTo.getPaymentAmount(),
+                                                     appointmentTo.getCheckNumber(), appointmentTo.getDescription());
+    }
+
+    public static Appointment updateFromTo(Appointment appointment, AppointmentTo appointmentTo) {
+        appointment.setApplyDate(appointmentTo.getApplyDate());
+        appointment.setAppointmentDate(appointmentTo.getAppointmentDate());
+        appointment.setPaymentDate(appointmentTo.getPaymentDate());
+        appointment.setPaymentAmount(appointmentTo.getPaymentAmount());
+        appointment.setCheckNumber(appointmentTo.getCheckNumber());
+        appointment.setDescription(appointmentTo.getDescription());
+        return appointment;
+    }
 }

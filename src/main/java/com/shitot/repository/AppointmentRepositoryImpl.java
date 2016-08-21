@@ -6,16 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class AppointmentRepositoryImpl implements AppointmentRepository {
 
-    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    @PersistenceContext//(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override
@@ -59,11 +58,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                  .setParameter("id", id)
                  .getResultList();
     }
-//    public List<Appointment> getAllByDoctorAndAlt(int id) {
-//        List<Appointment> l = getAllByDoctor(id);
-//        l.addAll(getAllByAltDoctor(id));
-//        return l;
-//    }
 
     @Override
     public List<Appointment> getAllByPatient(int id) {
@@ -76,10 +70,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     public List<Appointment> getAll() {
         return em.createNamedQuery(Appointment.ALL_SORTED, Appointment.class).getResultList();
     }
-//    @Override
-//    public List getJPQL(String s) {
-//        return   em.createQuery(s).getResultList();
-//    }
 
     @Override
     public Appointment get(int id) {
@@ -122,48 +112,34 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         em.find(Appointment.class, id).setPatient(em.find(Patient.class, patientId));
     }
 
-    @Override
-    @Transactional
-    public void setDoctor(int id, int doctorId) {
-//        if (em.find(Doctor.class,doctorId)==null)return;
-        em.find(Appointment.class, id).setDoctor(em.find(Doctor.class, doctorId));
-    }
-
-    @Override
-    @Transactional
-    public void setAltDoctor(int id, int altDoctorId) {
-        em.find(Appointment.class, id).setDoctor(em.find(Doctor.class, altDoctorId));
-    }
-
 
     @Transactional
     @Override
-    public Appointment removeDoctor(int appointmentId) {
+    public boolean removeDoctor(int appointmentId) {
         Appointment a = em.find(Appointment.class, appointmentId);
+        if (a==null) return false;
         a.setDoctor(null);
-        return save(a);
+        return true;
     }
 
     @Transactional
     @Override
-    public Appointment removeAltDoctor(int appointmentId) {
+    public boolean removeAltDoctor(int appointmentId) {
         Appointment a = em.find(Appointment.class, appointmentId);
+        if (a==null) return false;
         a.setAlternativeDoctor(null);
-        return save(a);
+        return true;
     }
 
     @Override
     @Transactional
-    public void setDoctorToAppointment(int appointmentId, int doctorId) {
-        Appointment a = em.find(Appointment.class, appointmentId);
-        a.setDoctor(em.find(Doctor.class, doctorId));
+    public void setDoctor(Appointment ap, int doctorId) {
+        ap.setDoctor(em.getReference(Doctor.class, doctorId));
     }
 
     @Override
-    public void setAltDoctorToAppointment(int appointmentId, int doctorId) {
-        Appointment a = em.find(Appointment.class, appointmentId);
-        Doctor d = em.find(Doctor.class, doctorId);
-        a.setAlternativeDoctor(d);
-        save(a);
+    @Transactional
+    public void setAltDoctor(Appointment app, int doctorId) {
+        app.setAlternativeDoctor(em.getReference(Doctor.class, doctorId));
     }
 }
