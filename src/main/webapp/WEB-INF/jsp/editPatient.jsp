@@ -6,8 +6,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title title"></h2>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="post" id="patientDetailsForm">
+            <form class="form-horizontal editForm" method="post">
+                <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="name">Patient name:</label>
@@ -27,16 +27,14 @@
                             <input class="form-control" type="text" name="telNumber" id="telNumber" required>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                            </div>
-                        </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import java.util.List;
 
 /**
@@ -31,10 +30,11 @@ public class PatientRepositoryImpl implements PatientRepository {
 
     @Override
     @Transactional
-    public void delete(int id) {
+    public boolean delete(int id) {
         Patient p = em.find(Patient.class, id);
-        if (p != null)
-            em.remove(p);
+        if (p == null) return false;
+        em.remove(p);
+        return true;
     }
 
     @Transactional

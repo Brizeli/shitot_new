@@ -40,6 +40,6 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void delete(int id) {
-        repository.delete(id);
+        if (!repository.delete(id)) throw new NotFoundException("Not found patient with id=" + id);
     }
 }

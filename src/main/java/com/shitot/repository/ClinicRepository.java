@@ -20,8 +20,7 @@ public interface ClinicRepository {
     boolean setSlots(int clinicId, List<Slot> slots);
 
 
-
-
+    /////////////////////////////////
     List<Slot> getSlotsByClinic(int clinicId);
 
     Slot getSlotByDayClinic(int dayOfWeek, int clinicId);
@@ -31,5 +30,4 @@ public interface ClinicRepository {
     void deleteSlot(int dayOfWeek, int clinicId);
 
     void setClinic(Integer id, String name, String city, String address, int doctorId);
-
 }

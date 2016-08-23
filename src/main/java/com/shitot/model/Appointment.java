@@ -36,8 +36,8 @@ public class Appointment extends BaseEntity {
 //    private Currency paymentAmount;
     private String checkNumber;
     private String description;
-//    @ManyToOne
-//    private User user;
+    @ManyToOne
+    private User user;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Problem> problems;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -115,13 +115,13 @@ public class Appointment extends BaseEntity {
         this.description = description;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
+    public User getUser() {
+        return user;
+    }
 
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Set<Problem> getProblems() {
         return problems;

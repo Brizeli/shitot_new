@@ -12,7 +12,7 @@ public interface PatientRepository {
 
     Patient get(int id);
 
-    void delete(int id);
+    boolean delete(int id);
 
     Patient save(Patient patient);
 }

@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="webjars/datatables/1.10.12/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="webjars/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
     <link rel="stylesheet" href="webjars/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.css">
-    <%--<link href="webjars/x-editable-bootstrap3/1.5.1/css/bootstrap-editable.css" rel="stylesheet">--%>
     <link rel="stylesheet" href="resources/css/style.css">
     <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
@@ -22,7 +21,4 @@
     <script type="text/javascript" src="webjars/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.he.min.js"></script>
-    <%--<script type="text/javascript" src="webjars/datetimepicker/2.4.7/build/jquery.datetimepicker.full.min.js"></script>--%>
-    <%--<script src="webjars/x-editable-bootstrap3/1.5.1/js/bootstrap-editable.js"></script>--%>
-    <script type="text/javascript" src="resources/js/jsUtils.js"></script>
 </head>

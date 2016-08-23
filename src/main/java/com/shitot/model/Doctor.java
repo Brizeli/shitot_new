@@ -50,7 +50,7 @@ public class Doctor extends UserDoctor {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<TargetAudience> targetAudiences;
 
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "doctor", fetch = FetchType.EAGER)
     private Set<Clinic> clinics;
 
 //    @OneToMany(mappedBy = "doctor")

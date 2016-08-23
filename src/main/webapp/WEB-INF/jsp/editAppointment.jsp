@@ -6,12 +6,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title title"></h3>
             </div>
-            <form class="form-horizontal" method="post" id="appointmentDetailsForm">
+            <form class="form-horizontal editForm" method="post">
                 <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
                     <input id="patientId" hidden="hidden" name="patientId" value="${patientId}"/>
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-6" style="border-right: 1px solid grey">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="applyDate">Apply date:</label>
                                 <div class="col-xs-8">
@@ -43,14 +43,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-6" style="border-left: 1px solid grey">
+                        <div class="col-xs-6">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="problems">Problems:</label>
                                 <div class="col-xs-8">
                                     <select class="form-control" name="problems" id="problems" multiple="multiple"></select>
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
-                                    <a class="btn btn-xs btn-default addSpec">Add problem</a>
+                                    <a class="addSpec">Add problem</a>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -59,12 +59,11 @@
                                     <select class="form-control" name="symptoms" id="symptoms" multiple="multiple"></select>
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
-                                    <a class="btn btn-xs btn-default addSpec">Add symptom</a>
+                                    <a class="addSpec">Add symptom</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-xs-12" style="padding-top: 15px">
                             <div class="form-group">
@@ -77,24 +76,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                            </div>
+                    <div class="col-xs-12">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-    </div>
-</div>
-<div class="hide" id="addspec">
-    <div class="input-group" id="addSpecForm">
-        <input class="form-control" type="text">
-        <span class="input-group-btn">
-            <a class="btn btn-primary">Add</a>
-        </span>
     </div>
 </div>

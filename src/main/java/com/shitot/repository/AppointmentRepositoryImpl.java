@@ -1,6 +1,8 @@
 package com.shitot.repository;
 
 import com.shitot.model.*;
+import com.shitot.utils.UserUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,10 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     @Transactional
     public Appointment save(Appointment appointment) {
         if (appointment.isNew()) {
+            User user = em.createNamedQuery(User.GET_BY_LOGIN, User.class)
+                                .setParameter("login", UserUtils.getLoggedUserName())
+                                .getSingleResult();
+            appointment.setUser(user);
             em.persist(appointment);
             return appointment;
         } else {
@@ -130,7 +136,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         a.setAlternativeDoctor(null);
         return true;
     }
-
+    
     @Override
     @Transactional
     public void setDoctor(Appointment ap, int doctorId) {

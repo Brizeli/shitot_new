@@ -5,11 +5,11 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title title"></h2>
+                <a class="btn btn-xs btn-danger" id="deleteDoctor">Delete</a>
             </div>
-            <form class="form-horizontal" method="post" id="editDoctorForm">
+            <form class="form-horizontal editForm" method="post">
                 <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
-
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
@@ -55,17 +55,13 @@
                                     <label class="control-label col-xs-12">Professions:</label>
                                 </div>
                                 <div class="col-xs-4">
-                                    <select class="form-control professions" type="text" name="specialty1">
-                                        <option></option>
-                                    </select>
+                                    <select class="form-control professions" type="text" name="specialty1"></select>
                                 </div>
                                 <div class="col-xs-4">
-                                    <select class="form-control professions" type="text" name="specialty2">
-                                        <option></option>
-                                    </select>
+                                    <select class="form-control professions" type="text" name="specialty2"></select>
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
-                                    <a class="btn btn-xs btn-default addSpec">Add profession</a>
+                                    <a class="addSpec">Add profession</a>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -74,7 +70,7 @@
                                     <select class="form-control" name="targetAudiences" id="target" multiple="multiple"></select>
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
-                                    <a class="btn btn-xs btn-default addSpec">Add target audience</a>
+                                    <a class="addSpec">Add target audience</a>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -84,18 +80,16 @@
                                             multiple="multiple"></select>
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
-                                    <a class="btn btn-xs btn-default addSpec">Add qualification</a>
+                                    <a class="addSpec">Add qualification</a>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4">Certificate:</label>
                                 <div class="col-xs-8">
-                                    <select class="form-control" name="certificate" id="certificates">
-                                        <option></option>
-                                    </select>
+                                    <select class="form-control" name="certificate" id="certificates"></select>
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
-                                    <a class="btn btn-xs btn-default addSpec">Add certificate</a>
+                                    <a class="addSpec">Add certificate</a>
                                 </div>
                             </div>
                         </div>
@@ -119,36 +113,26 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="form-group">
-                        <div class="col-xs-8">
-                            <div class="row" id="sec">
-                                <label class="control-label col-xs-2" for="login">Login:</label>
-                                <div class="col-xs-2">
-                                    <input class="form-control" type="text" name="login" id="login" required>
-                                </div>
-                                <label class="control-label col-xs-2" for="password">Password:</label>
-                                <div class="col-xs-2">
-                                    <input class="form-control" type="text" name="password" id="password" required>
-                                </div>
+                    <div class="col-xs-8">
+                        <div class="row" id="sec">
+                            <label class="control-label col-xs-3" for="login">Login:</label>
+                            <div class="col-xs-3">
+                                <input class="form-control" type="text" name="login" id="login" required>
+                            </div>
+                            <label class="control-label col-xs-2" for="password">Password:</label>
+                            <div class="col-xs-3">
+                                <input class="form-control" type="text" name="password" id="password" required>
                             </div>
                         </div>
-                        <div class="col-xs-4">
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                            </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-    </div>
-</div>
-<div class="hide" id="addspec">
-    <div class="input-group" id="addSpecForm">
-        <input class="form-control" type="text">
-        <span class="input-group-btn">
-            <a class="btn btn-primary">Add</a>
-        </span>
     </div>
 </div>

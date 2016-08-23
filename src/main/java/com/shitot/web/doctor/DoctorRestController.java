@@ -4,6 +4,7 @@ import com.shitot.model.*;
 import com.shitot.service.DoctorService;
 import com.shitot.to.DoctorTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,10 +34,18 @@ public class DoctorRestController {
     @RequestMapping(method = RequestMethod.POST)
     public void createOrUpdate(@Valid DoctorTo doctorTo) {
         if (doctorTo.isNew()) {
-            service.save(doctorTo);
+            try {
+                service.save(doctorTo);
+            } catch (DataIntegrityViolationException e) {
+                throw new DataIntegrityViolationException("Doctor with this login already exists");
+            }
         } else service.update(doctorTo);
     }
 
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public void delete(@PathVariable int id){
+        service.delete(id);
+    }
     @RequestMapping(value = "/certs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Certificate> getAllCertificates() {
         return service.getAllCertificates();

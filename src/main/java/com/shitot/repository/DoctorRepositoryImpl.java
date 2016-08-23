@@ -139,15 +139,24 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
     @Override
     public List<String> getAllCities() {
-        return em.createNamedQuery(Clinic.ALL_CITIES_SORTED,String.class)
-            .getResultList();
+        return em.createNamedQuery(Clinic.ALL_CITIES_SORTED, String.class)
+                 .getResultList();
     }
 
     @Override
     public List<Doctor> getByCity(String city) {
         if (city.isEmpty() || city.equalsIgnoreCase("all")) return getAll();
-        return em.createNamedQuery(Doctor.BY_CITY,Doctor.class)
-            .setParameter("city",city)
-            .getResultList();
+        return em.createNamedQuery(Doctor.BY_CITY, Doctor.class)
+                 .setParameter("city", city)
+                 .getResultList();
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(int id) {
+        Doctor d = em.find(Doctor.class, id);
+        if (d == null) return false;
+        em.remove(d);
+        return true;
     }
 }

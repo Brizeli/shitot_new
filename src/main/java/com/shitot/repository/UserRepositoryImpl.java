@@ -18,15 +18,15 @@ public class UserRepositoryImpl implements UserRepository {
     @PersistenceContext
     private EntityManager em;
 
-    @Override
-    public User login(User user) {
-        User result = em.createNamedQuery(User.GET_BY_LOGIN, User.class)
-                        .setParameter("login", user.getLogin())
-                        .getSingleResult();
-        if (user.getPassword().equals(result.getPassword()))
-            return result;
-        return null;
-    }
+//    @Override
+//    public User login(User user) {
+//        User result = em.createNamedQuery(User.GET_BY_LOGIN, User.class)
+//                        .setParameter("login", user.getLogin())
+//                        .getSingleResult();
+//        if (user.getPassword().equals(result.getPassword()))
+//            return result;
+//        return null;
+//    }
 
     @Override
     @Transactional

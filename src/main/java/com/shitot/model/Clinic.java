@@ -26,7 +26,7 @@ public class Clinic extends BaseEntity {
     private String city;
     @NotEmpty
     private String address;
-    @OneToMany(mappedBy = "clinic", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "clinic", fetch = FetchType.EAGER)
     @OrderBy("dayOfWeek")
     private Set<Slot> slots;
 

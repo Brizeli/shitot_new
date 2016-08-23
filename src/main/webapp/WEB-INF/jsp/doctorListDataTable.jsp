@@ -1,6 +1,4 @@
-<%@ page import="org.springframework.util.StringUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
     <h3>Doctors
         <a class="btn btn-sm btn-info" id="addDoctor" onclick="addDoctor()">New doctor</a>
@@ -45,7 +43,6 @@
                     <th>Info</th>
                     <th>Specializations</th>
                     <th>Clinics</th>
-                    <%--<th>Create appointment</th>--%>
                 </tr>
                 </thead>
             </table>

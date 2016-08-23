@@ -35,4 +35,6 @@ public interface DoctorService {
     List<String> getAllCities();
 
     List<Doctor> getByCity(String city);
+
+    void delete(int id);
 }

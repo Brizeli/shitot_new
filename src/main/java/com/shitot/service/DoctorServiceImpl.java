@@ -4,6 +4,7 @@ import com.shitot.model.*;
 import com.shitot.repository.DoctorRepository;
 import com.shitot.to.DoctorTo;
 import com.shitot.utils.JsonUtil;
+import com.shitot.utils.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +48,6 @@ public class DoctorServiceImpl implements DoctorService {
     @Transactional
     public void update(DoctorTo doctorTo) {
         Integer id = doctorTo.getId();
-        Doctor doctor = get(id);
-        repository.save(JsonUtil.updateFromTo(doctor, doctorTo));
         setRegalias(doctorTo, id);
     }
 
@@ -82,6 +81,11 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Doctor> getByCity(String city) {
         return repository.getByCity(city);
+    }
+
+    @Override
+    public void delete(int id) {
+        if (!repository.delete(id)) throw new NotFoundException("Not found doctor with id="+id);
     }
 
     @Override

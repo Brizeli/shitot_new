@@ -6,8 +6,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title title"></h2>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="post" id="clinicDetailsForm">
+            <form class="form-horizontal" method="post" id="clinicDetailsForm">
+                <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
                     <input type="text" hidden="hidden" name="doctorId" id="doctorId">
                     <div class="form-group">
@@ -28,16 +28,14 @@
                             <input class="form-control" type="text" name="address" id="address" required>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                            </div>
-                        </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

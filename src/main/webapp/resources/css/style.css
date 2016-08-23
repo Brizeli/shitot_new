@@ -5,6 +5,12 @@
     }
 }
 
+.dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 table#dataTable {
     table-layout: fixed;
     word-wrap: break-word;
@@ -65,4 +71,8 @@ a {
     color: #2f9635;
     background-color: #c6fbc2;
     border: 1px solid #9feba6;
+}
+
+form {
+    margin-bottom: 0;
 }

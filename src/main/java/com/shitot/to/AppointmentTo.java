@@ -19,8 +19,8 @@ public class AppointmentTo {
     private String paymentAmount;
     private String checkNumber;
     private String description;
-    private String[] problems;
-    private String[] symptoms;
+    private String[] problems = {};
+    private String[] symptoms = {};
 
     public AppointmentTo() {
     }

@@ -3,8 +3,8 @@ package com.shitot.web;
 import com.shitot.model.User;
 import com.shitot.service.PatientService;
 import com.shitot.service.UserService;
+import com.shitot.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +26,11 @@ public class RootController {
     private static String doctorAlt;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String root(Model model) {
-        model.addAttribute("loggedUser", getLoggedUserName());
+    public static String root(Model model) {
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         model.addAttribute("page", "userHomePage");
         return "index";
     }
-
-    private String getLoggedUserName() {return SecurityContextHolder.getContext().getAuthentication().getName();}
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model,
@@ -50,31 +48,31 @@ public class RootController {
         if (newUser != null) {
             model.addAttribute("message", "Registered");
         } else model.addAttribute("message", "User exists!");
-        model.addAttribute("loggedUser", getLoggedUserName());
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         model.addAttribute("page", "login");
         return "index";
     }
 
     @RequestMapping(value = "/doctors", method = RequestMethod.GET)
-    public String doctorList(Model model, boolean doctorAlt, Integer appointmentId) {
+    public static String doctorList(Model model, boolean doctorAlt, Integer appointmentId) {
         model.addAttribute("appointmentId", appointmentId);
         model.addAttribute("doctorAlt", doctorAlt);
         model.addAttribute("page", "doctorListDataTable");
-        model.addAttribute("loggedUser", getLoggedUserName());
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
 
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
-    public String patientList(Model model) {
+    public static String patientList(Model model) {
         model.addAttribute("page", "patientListDataTable");
-        model.addAttribute("loggedUser", getLoggedUserName());
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
     @RequestMapping(value = "/appointments",method = RequestMethod.GET)
-    public String appointmentList(Model model, @RequestParam int id){
+    public static String appointmentList(Model model, @RequestParam int id){
         model.addAttribute("patientId",id);
         model.addAttribute("page","appointmentListDataTable");
-        model.addAttribute("loggedUser", getLoggedUserName());
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
 }

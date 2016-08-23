@@ -45,45 +45,39 @@ $(function () {
         $('select', $('.searchrow')).val('All').trigger('change');
         $('#namesearch').val('').trigger('keyup');
     });
-
 });
 function fillSearch() {
-    $("#certificates, .professions, .qualifications, #cities, #target")
-        .empty();
-    $(".professions, .qualifications, #cities", $('.searchrow'))
+    $('#certificates, .professions, .qualifications, #cities, #target').empty();
+    $('.professions, .qualifications, #cities', $('.searchrow'))
         .append($('<option>').text('All'));
-    $("#certificates, .professions", editDoctorForm)
+    $('#certificates, .professions', editForm)
         .append($('<option>'));
-    $.get("rest/doctors/certs", function (certs) {
+    $.get(doctorsRestUrl + '/certs', function (certs) {
         $.each(certs, function (key, val) {
-            $("#certificates").append($('<option>').text(val.name));
-        })
+            $('#certificates').append($('<option>').text(val.name));
+        });
     });
-    $.get("rest/doctors/specs", function (specs) {
+    $.get(doctorsRestUrl + '/specs', function (specs) {
         $.each(specs, function (key, val) {
-            $(".professions").append($('<option>').text(val.name));
-        })
+            $('.professions').append($('<option>').text(val.name));
+        });
     });
-    $.get("rest/doctors/quals", function (quals) {
+    $.get(doctorsRestUrl + '/quals', function (quals) {
         $.each(quals, function (key, val) {
-            $(".qualifications").append($('<option>').text(val.name));
+            $('.qualifications').append($('<option>').text(val.name));
         });
-        $("#quals").multiselect({
-            allSelectedText: false
-        });
+        $('#quals').multiselect();
     });
-    $.get("rest/doctors/targets", function (targets) {
+    $.get(doctorsRestUrl + '/targets', function (targets) {
         $.each(targets, function (key, val) {
-            $("#target").append($('<option>').text(val.name))
+            $('#target').append($('<option>').text(val.name))
         });
-        $("#target").multiselect({
-            allSelectedText: false
-        });
+        $('#target').multiselect();
     });
-    $.get("rest/clinics/cities", function (cities) {
+    $.get(clinicsRestUrl + '/cities', function (cities) {
         $.each(cities, function (key, val) {
-            $("#cities").append($('<option>').text(val));
-        })
+            $('#cities').append($('<option>').text(val));
+        });
     });
 }
 function initTable() {
@@ -97,9 +91,14 @@ function initTable() {
                 var res = '<table>';
                 for (var i = 0; i < daysOfWeek.length; i++) {
                     res += '<tr><td>' + daysOfWeek[i] + ': </td><td>';
+                    var intervals = 'Not set';
                     $.each(slots, function (ind, slot) {
-                        if (slot.dayOfWeek == i) res += slot.intervals;
+                        if (slot.dayOfWeek == i) {
+                            var intls = slot.intervals.trim();
+                            if (intls != '') intervals = intls;
+                        }
                     });
+                    res += intervals;
                     res += '</td></tr>';
                 }
                 res += '</table>';
@@ -113,7 +112,7 @@ function initTable() {
     $('.nav a[href="doctors"]').parent().addClass('active');
 }
 function updateTable() {
-    $.get("rest/doctors", function (data) {
+    $.get(doctorsRestUrl, function (data) {
         table.clear().rows.add(data).draw();
     });
     fillSearch();
