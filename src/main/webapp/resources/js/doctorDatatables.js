@@ -64,13 +64,13 @@ function fillSearch() {
         $.each(quals, function (key, val) {
             $('.qualifications').append($('<option>').text(val.name));
         });
-        $('#quals').multiselect();
+        $('#quals').multiselect({maxHeight:300});
     });
     $.get(doctorsRestUrl + '/targets', function (targets) {
         $.each(targets, function (key, val) {
             $('#target').append($('<option>').text(val.name))
         });
-        $('#target').multiselect();
+        $('#target').multiselect({maxHeight:300});
     });
     $.get(clinicsRestUrl + '/cities', function (cities) {
         $.each(cities, function (key, val) {

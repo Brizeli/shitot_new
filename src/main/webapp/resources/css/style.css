@@ -5,12 +5,6 @@
     }
 }
 
-.dropdown-menu {
-    max-height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 table#dataTable {
     table-layout: fixed;
     word-wrap: break-word;
@@ -18,21 +12,6 @@ table#dataTable {
 
 body {
     font-family: Arial, serif;
-}
-
-dl {
-    margin-bottom: 5px;
-}
-
-dt {
-    display: inline-block;
-    width: 250px;
-}
-
-dd {
-    display: inline-block;
-    margin-left: 8px;
-    vertical-align: top;
 }
 
 .doctorInfo {

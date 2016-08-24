@@ -56,13 +56,13 @@ function fillOptions() {
         $.each(symptoms, function (key, val) {
             $('#symptoms').append($('<option>').text(val.name));
         });
-        $('#symptoms').multiselect();
+        $('#symptoms').multiselect({maxHeight:300});
     });
     $.get(appointmentsRestUrl + '/problems', function (problems) {
         $.each(problems, function (key, val) {
             $('#problems').append($('<option>').text(val.name));
         });
-        $('#problems').multiselect();
+        $('#problems').multiselect({maxHeight:300});
     });
 }
 function updateTable() {
