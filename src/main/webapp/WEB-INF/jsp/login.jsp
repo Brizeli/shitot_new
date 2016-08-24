@@ -4,20 +4,20 @@
 <div class="container">
     <br>
     <form class="form-horizontal" action="spring_security_check" method="post">
-        <div class="form-group">
+        <div class="form-group row">
             <label class="control-label col-xs-2">Login:</label>
-            <div class="col-xs-10">
+            <div class="col-xs-2">
                 <input class="form-control" type="text" name="username">
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label class="control-label col-xs-2">Password:</label>
-            <div class="col-xs-10">
+            <div class="col-xs-2">
                 <input class="form-control" type="password" name="password">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-10">
+            <div class="col-xs-offset-2 col-xs-2">
                 <button class="btn btn-primary" type="submit">Log In</button>
             </div>
         </div>
