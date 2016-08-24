@@ -48,9 +48,7 @@ $('.addSpec').popover({
         }
     });
     $('input', $('#addSpecForm')).on('keyup', function (e) {
-        if (e.keyCode == 13) {
-            addSpec(this);
-        }
+        if (e.keyCode == 13) addSpec(this);
     });
     $('a', $('#addSpecForm')).click(function () {
         addSpec(this)

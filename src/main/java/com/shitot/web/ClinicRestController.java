@@ -1,4 +1,4 @@
-package com.shitot.web.clinic;
+package com.shitot.web;
 
 import com.shitot.model.Clinic;
 import com.shitot.model.Slot;

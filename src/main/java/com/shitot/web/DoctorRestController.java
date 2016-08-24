@@ -1,8 +1,9 @@
-package com.shitot.web.doctor;
+package com.shitot.web;
 
 import com.shitot.model.*;
 import com.shitot.service.DoctorService;
 import com.shitot.to.DoctorTo;
+import com.shitot.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
@@ -42,10 +43,11 @@ public class DoctorRestController {
         } else service.update(doctorTo);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public void delete(@PathVariable int id){
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable int id) {
         service.delete(id);
     }
+
     @RequestMapping(value = "/certs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Certificate> getAllCertificates() {
         return service.getAllCertificates();

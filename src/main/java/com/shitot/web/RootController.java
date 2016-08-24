@@ -17,14 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class RootController {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PatientService patientService;
-
-    private static Integer appointmentId;
-    private static String doctorAlt;
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public static String root(Model model) {
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
@@ -42,19 +34,8 @@ public class RootController {
         return "index";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUser(@RequestParam String newlogin, @RequestParam String newpassword, Model model) {
-        User newUser = userService.register(new User(newlogin, newpassword));
-        if (newUser != null) {
-            model.addAttribute("message", "Registered");
-        } else model.addAttribute("message", "User exists!");
-        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
-        model.addAttribute("page", "login");
-        return "index";
-    }
-
     @RequestMapping(value = "/doctors", method = RequestMethod.GET)
-    public static String doctorList(Model model, boolean doctorAlt, Integer appointmentId) {
+    public String doctorList(Model model, boolean doctorAlt, Integer appointmentId) {
         model.addAttribute("appointmentId", appointmentId);
         model.addAttribute("doctorAlt", doctorAlt);
         model.addAttribute("page", "doctorListDataTable");
@@ -63,15 +44,21 @@ public class RootController {
     }
 
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
-    public static String patientList(Model model) {
+    public String patientList(Model model) {
         model.addAttribute("page", "patientListDataTable");
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
     @RequestMapping(value = "/appointments",method = RequestMethod.GET)
-    public static String appointmentList(Model model, @RequestParam int id){
+    public String appointmentList(Model model, @RequestParam int id){
         model.addAttribute("patientId",id);
         model.addAttribute("page","appointmentListDataTable");
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
+        return "index";
+    }
+    @RequestMapping(value = "/users",method = RequestMethod.GET)
+    public String userList(Model model){
+        model.addAttribute("page","userListDataTable");
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }

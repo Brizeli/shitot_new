@@ -125,7 +125,7 @@ function selectDoctor(doctorId) {
     var appointmentId = $('#appointmentId').val();
     var doctorAlt = $('#doctorAlt').val();
     $.ajax({
-        url: appointmentsRestUrl + '/' + appointmentId + '/' + doctorAlt + '/' + doctorId,
+        url: appointmentsRestUrl + '/' + appointmentId + '/' + doctorId + '/' + doctorAlt,
         type: 'POST',
         success: function () {
             history.back();

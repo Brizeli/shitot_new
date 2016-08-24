@@ -17,7 +17,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
     private EntityManager em;
-
 //    @Override
 //    public User login(User user) {
 //        User result = em.createNamedQuery(User.GET_BY_LOGIN, User.class)
@@ -30,14 +29,29 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     @Transactional
-    public User register(User user) {
-        List<User> result = em.createNamedQuery(User.GET_BY_LOGIN, User.class)
-                              .setParameter("login", user.getLogin())
-                              .getResultList();
-        if (result.size() == 0) {
+    public User save(User user) {
+        if (user.isNew()) {
             em.persist(user);
             return user;
-        }
-        return null;
+        } else return em.merge(user);
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(int id) {
+        User user = em.find(User.class, id);
+        if (user == null) return false;
+        em.remove(user);
+        return true;
+    }
+
+    @Override
+    public List<User> getAll() {
+        return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
+    }
+
+    @Override
+    public User get(int id) {
+        return em.find(User.class, id);
     }
 }

@@ -21,21 +21,21 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Transactional
     public Appointment save(AppointmentTo appointmentTo) {
         Appointment appointment = repository.save(JsonUtil.createNewFromTo(appointmentTo));
-        Integer id = appointment.getId();
-        setProblemsSymptomsPatient(appointmentTo, id);
+        setProblemsSymptomsPatient(appointment.getId(), appointmentTo);
         return appointment;
     }
 
     @Override
     @Transactional
     public void update(AppointmentTo appointmentTo) {
-        Integer id = appointmentTo.getId();
+        int id = appointmentTo.getId();
         Appointment appointment = get(id);
         repository.save(JsonUtil.updateFromTo(appointment, appointmentTo));
-        setProblemsSymptomsPatient(appointmentTo, id);
+        setProblemsSymptomsPatient(id, appointmentTo);
     }
 
-    private void setProblemsSymptomsPatient(AppointmentTo appointmentTo, Integer id) {
+
+    private void setProblemsSymptomsPatient(Integer id, AppointmentTo appointmentTo) {
         repository.setPatient(id, appointmentTo.getPatientId());
         repository.setProblems(id, appointmentTo.getProblems());
         repository.setSymptoms(id, appointmentTo.getSymptoms());
@@ -83,29 +83,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional
-    public void setDoctor(int id, int doctorId) {
+    public void setDoctor(int id, int doctorId, boolean alt) {
         Appointment appointment = get(id);
         if (appointment == null) throw new NotFoundException("Not found appointment with id " + id);
-        repository.setDoctor(appointment, doctorId);
+        repository.setDoctor(appointment, doctorId, alt);
     }
 
     @Override
-    @Transactional
-    public void setAltDoctor(int id, int altDoctorId) {
-        Appointment appointment = get(id);
-        if (appointment == null) throw new NotFoundException("Not found appointment with id " + id);
-        repository.setAltDoctor(appointment, altDoctorId);
-    }
-
-    @Override
-    @Transactional
-    public void removeDoctor(int id) {
-        if (!repository.removeDoctor(id)) throw new NotFoundException("Not found appointment with id " + id);
-    }
-
-    @Override
-    @Transactional
-    public void removeAltDoctor(int id) {
-        if (!repository.removeAltDoctor(id)) throw new NotFoundException("Not found appointment with id " + id);
+    public void removeDoctor(int id, boolean alt) {
+        if (!repository.removeDoctor(id, alt)) throw new NotFoundException("Not found appointment with id " + id);
     }
 }

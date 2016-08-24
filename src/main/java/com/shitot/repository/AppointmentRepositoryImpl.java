@@ -24,8 +24,8 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     public Appointment save(Appointment appointment) {
         if (appointment.isNew()) {
             User user = em.createNamedQuery(User.GET_BY_LOGIN, User.class)
-                                .setParameter("login", UserUtils.getLoggedUserName())
-                                .getSingleResult();
+                          .setParameter("login", UserUtils.getLoggedUserName())
+                          .getSingleResult();
             appointment.setUser(user);
             em.persist(appointment);
             return appointment;
@@ -118,34 +118,21 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         em.find(Appointment.class, id).setPatient(em.find(Patient.class, patientId));
     }
 
-
-    @Transactional
     @Override
-    public boolean removeDoctor(int appointmentId) {
-        Appointment a = em.find(Appointment.class, appointmentId);
-        if (a==null) return false;
-        a.setDoctor(null);
+    @Transactional
+    public boolean removeDoctor(int id, boolean alt) {
+        Appointment appointment = em.find(Appointment.class, id);
+        if (appointment == null) return false;
+        if (alt) appointment.setAlternativeDoctor(null);
+        else appointment.setDoctor(null);
         return true;
     }
 
-    @Transactional
-    @Override
-    public boolean removeAltDoctor(int appointmentId) {
-        Appointment a = em.find(Appointment.class, appointmentId);
-        if (a==null) return false;
-        a.setAlternativeDoctor(null);
-        return true;
-    }
-    
     @Override
     @Transactional
-    public void setDoctor(Appointment ap, int doctorId) {
-        ap.setDoctor(em.getReference(Doctor.class, doctorId));
-    }
-
-    @Override
-    @Transactional
-    public void setAltDoctor(Appointment app, int doctorId) {
-        app.setAlternativeDoctor(em.getReference(Doctor.class, doctorId));
+    public void setDoctor(Appointment appointment, int doctorId, boolean alt) {
+        Doctor doctor = em.getReference(Doctor.class, doctorId);
+        if (alt) appointment.setAlternativeDoctor(doctor);
+        else appointment.setDoctor(doctor);
     }
 }

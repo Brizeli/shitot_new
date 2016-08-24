@@ -1,4 +1,4 @@
-package com.shitot.web.patient;
+package com.shitot.web;
 
 import com.shitot.model.Patient;
 import com.shitot.service.PatientService;

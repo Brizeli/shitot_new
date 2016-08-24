@@ -13,20 +13,20 @@ $(function () {
         paging: false,
         columns: [
             {
-                'defaultContent': '',
-                'render': function (data, type, row) {
+                defaultContent: '',
+                render: function (data, type, row) {
                     return renderAppointmentInfo(row);
                 }
             },
             {
-                'defaultContent': '',
-                'render': function (data, type, row) {
+                defaultContent: '',
+                render: function (data, type, row) {
                     return renderAppointmentProblems(row);
                 }
             },
             {
-                'defaultContent': '',
-                'render': function (data, type, row) {
+                defaultContent: '',
+                render: function (data, type, row) {
                     return renderAppointmentDoctors(row);
                 }
             }
@@ -51,7 +51,7 @@ $(function () {
     });
 });
 function fillOptions() {
-    $('select').empty();
+    $('select').empty()
     $.get(appointmentsRestUrl + '/symptoms', function (symptoms) {
         $.each(symptoms, function (key, val) {
             $('#symptoms').append($('<option>').text(val.name));

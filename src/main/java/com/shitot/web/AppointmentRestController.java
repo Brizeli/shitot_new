@@ -1,4 +1,4 @@
-package com.shitot.web.appointment;
+package com.shitot.web;
 
 import com.shitot.model.Appointment;
 import com.shitot.model.Problem;
@@ -45,19 +45,14 @@ public class AppointmentRestController {
         return service.get(id);
     }
 
-    @RequestMapping(value = "/{id}/{doctorAlt}", method = RequestMethod.DELETE)
-    public void removeDoctor(@PathVariable("id") int appointmentId, @PathVariable boolean doctorAlt) {
-        if (!doctorAlt) service.removeDoctor(appointmentId);
-        else service.removeAltDoctor(appointmentId);
+    @RequestMapping(value = "/{id}/{alt}", method = RequestMethod.DELETE)
+    public void removeDoctor(@PathVariable int id, @PathVariable boolean alt) {
+        service.removeDoctor(id,alt);
     }
 
-    @RequestMapping(value = "/{appId}/{docAlt}/{doctorId}", method = RequestMethod.POST)
-    public void changeDoctor(@PathVariable int doctorId, @PathVariable int appId, @PathVariable boolean docAlt) {
-        if (!docAlt) {
-            service.setDoctor(appId, doctorId);
-        } else {
-            service.setAltDoctor(appId, doctorId);
-        }
+    @RequestMapping(value = "/{id}/{doctorId}/{alt}", method = RequestMethod.POST)
+    public void changeDoctor(@PathVariable int id, @PathVariable int doctorId, @PathVariable boolean alt) {
+        service.setDoctor(id, doctorId, alt);
     }
 
     @RequestMapping(method = RequestMethod.POST)

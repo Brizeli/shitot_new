@@ -27,13 +27,9 @@ public interface AppointmentService {
 
     Appointment get(int id);
 
-    void setDoctor(int id, int doctorId);
-
-    void setAltDoctor(int id, int altDoctorId);
-
-    void removeDoctor(int appointmentId);
-
-    void removeAltDoctor(int appointmentId);
-
     void update(AppointmentTo appointmentTo);
+
+    void setDoctor(int id, int doctorId, boolean alt);
+
+    void removeDoctor(int id, boolean alt);
 }

@@ -90,6 +90,7 @@
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
                                     <a class="addSpec">Add certificate</a>
+                                    <input type="file" name="certFile">
                                 </div>
                             </div>
                         </div>

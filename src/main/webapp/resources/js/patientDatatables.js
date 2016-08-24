@@ -15,18 +15,15 @@ $(function () {
                 data: 'name'
             },
             {
-                // "width": "10%",
                 data: 'age',
                 searching: false
             },
             {
-                // "width": "20%",
                 data: 'telNumber'
             },
             {
-                // "width": "30%",
-                'defaultContent': '',
-                'render': function (data, type, row) {
+                defaultContent: '',
+                render: function (data, type, row) {
                     return renderButtons(row);
                 }
             }
@@ -80,12 +77,13 @@ editForm.submit(function () {
     return false;
 });
 function deletePatient(patientId) {
-    $.ajax({
-        url: patientsRestUrl + '/' + patientId,
-        type: 'DELETE',
-        success: function () {
-            updateTable();
-            successNoty('Deleted');
-        }
-    });
+    if (confirm('Are you sure?'))
+        $.ajax({
+            url: patientsRestUrl + '/' + patientId,
+            type: 'DELETE',
+            success: function () {
+                updateTable();
+                successNoty('Deleted');
+            }
+        });
 }

@@ -1,5 +1,6 @@
 package com.shitot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Access;
@@ -19,6 +20,7 @@ public abstract class UserDoctor extends BaseEntity {
     protected String login;
     @Column(nullable = false)
     @NotEmpty
+    @JsonIgnore
     protected String password;
     protected boolean enabled = true;
     protected String role;

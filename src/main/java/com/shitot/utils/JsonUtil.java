@@ -6,6 +6,9 @@ import com.shitot.model.Doctor;
 import com.shitot.to.AppointmentTo;
 import com.shitot.to.DoctorTo;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Created by Next on 29.07.2016.
  */
@@ -25,11 +28,10 @@ public class JsonUtil {
     }
 
     public static Doctor createNewFromTo(DoctorTo doctorTo) {
-        Doctor doctor = new Doctor(doctorTo.getFullName(), doctorTo.getLogin(), doctorTo.getPassword(),
+        return new Doctor(doctorTo.getFullName(), doctorTo.getLogin(), doctorTo.getPassword(),
                                       doctorTo.getEmail(), doctorTo.getTelNumber(), doctorTo.getTelHome(),
                                       doctorTo.getHomeAddress(), doctorTo.getLections(), doctorTo.getPreferential(),
                                       doctorTo.getComments());
-        return doctor;
     }
 
     public static Appointment createNewFromTo(AppointmentTo appointmentTo) {

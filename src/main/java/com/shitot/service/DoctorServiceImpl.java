@@ -31,27 +31,23 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<TargetAudience> getAllTargetAudiences() {
-        return repository.getAllTargetAudiences();
-    }
-
-    @Override
     @Transactional
     public Doctor save(DoctorTo doctorTo) {
         Doctor doctor = repository.save(JsonUtil.createNewFromTo(doctorTo));
-        Integer id = doctor.getId();
-        setRegalias(doctorTo, id);
+        setRegalias(doctor.getId(), doctorTo);
         return doctor;
     }
 
     @Override
     @Transactional
     public void update(DoctorTo doctorTo) {
-        Integer id = doctorTo.getId();
-        setRegalias(doctorTo, id);
+        int id = doctorTo.getId();
+        Doctor doctor = get(id);
+        repository.save(JsonUtil.updateFromTo(doctor, doctorTo));
+        setRegalias(id, doctorTo);
     }
 
-    private void setRegalias(DoctorTo doctorTo, Integer id) {
+    private void setRegalias(Integer id, DoctorTo doctorTo) {
         repository.setSpecialties(id, doctorTo.getSpecialty1(), doctorTo.getSpecialty2());
         repository.setQualifications(id, doctorTo.getQualifications());
         repository.setTargetAudiences(id, doctorTo.getTargetAudiences());
@@ -69,8 +65,13 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Qualification> getAllQualifications() {
-        return repository.getAllQualifications();
+    public List<Doctor> getByCity(String city) {
+        return repository.getByCity(city);
+    }
+
+    @Override
+    public void delete(int id) {
+        if (!repository.delete(id)) throw new NotFoundException("Not found doctor with id=" + id);
     }
 
     @Override
@@ -79,13 +80,8 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Doctor> getByCity(String city) {
-        return repository.getByCity(city);
-    }
-
-    @Override
-    public void delete(int id) {
-        if (!repository.delete(id)) throw new NotFoundException("Not found doctor with id="+id);
+    public List<Qualification> getAllQualifications() {
+        return repository.getAllQualifications();
     }
 
     @Override
@@ -101,5 +97,10 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Qualification> getAllExperiences() {
         return repository.getAllQualifications();
+    }
+
+    @Override
+    public List<TargetAudience> getAllTargetAudiences() {
+        return repository.getAllTargetAudiences();
     }
 }

@@ -5,40 +5,38 @@ var table;
 $(function () {
     table = $('#dataTable').DataTable({
         ajax: {
-            url: "rest/doctors",
-            dataSrc: ""
+            url: 'rest/doctors',
+            dataSrc: ''
         },
-        dom: "lrtip",
+        dom: 'lrtip',
         paging: false,
         columnDefs: [
-            {"width": "20%", "targets": [0, 2]}
+            {width: '20%', targets: [0, 2]}
         ],
         columns: [
             {
-                // "width": "25%",
-                "defaultContent": "",
-                "render": renderDoctorInfo
+                defaultContent: '',
+                render: renderDoctorInfo
             },
             {
-                "defaultContent": "",
-                "render": renderSpecialization
+                defaultContent: '',
+                render: renderSpecialization
             },
             {
-                // "width": "25%",
-                "defaultContent": "",
-                "render": renderClinics
+                defaultContent: '',
+                render: renderClinics
             }
         ],
         ordering: false,
         initComplete: initTable
     });
-    $("#namesearch").on('keyup', function () {
+    $('#namesearch').on('keyup', function () {
         table.columns(0).search(this.value).draw();
     });
-    $("#professions, #qualifications").on('change', function () {
+    $('#professions, #qualifications').on('change', function () {
         table.columns(1).search(this.value == 'All' ? '' : this.value).draw();
     });
-    $("#cities").on('change', function () {
+    $('#cities').on('change', function () {
         table.columns(2).search(this.value == 'All' ? '' : this.value).draw();
     });
     $('#clearsearch').click(function () {
@@ -98,8 +96,7 @@ function initTable() {
                             if (intls != '') intervals = intls;
                         }
                     });
-                    res += intervals;
-                    res += '</td></tr>';
+                    res += intervals + '</td></tr>';
                 }
                 res += '</table>';
                 return res;
