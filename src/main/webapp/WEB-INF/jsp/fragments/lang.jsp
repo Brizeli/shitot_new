@@ -19,6 +19,6 @@
             else pars = nLang;
             url = uri + '?' + pars;
         }
-        window.location.href = url;// + (url[1] ? '&' + url[1] : '');
+        window.location.href = url;
     }
 </script>

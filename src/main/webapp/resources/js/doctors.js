@@ -9,13 +9,13 @@ function renderDoctorInfo(data, type, doctor) {
     var display = '<h2><a onclick="editDoctor(' + doctor.id + ')" title="Edit">' + doctor.fullName + '</a></h2>';
     display += '<a href="mailto:' + doctor.email + '">' + doctor.email + '</a><br>';
     if (doctor.telNumber)
-        display += 'Tel: ' + doctor.telNumber + '<br>';
+        display += i18n['doctors.tel'] + ' ' + doctor.telNumber + '<br>';
     if (doctor.telHome)
-        display += 'Home tel: ' + doctor.telHome + '<br>';
+        display += i18n['doctors.hometel'] + ' ' + doctor.telHome + '<br>';
     if (doctor.homeAddress)
-        display += 'Home address: ' + doctor.homeAddress;
+        display += i18n['doctors.address'] + ' ' + doctor.homeAddress;
     if ($('#appointmentId').val() != '')
-        display += '<br><a class="btn btn-xs btn-info" onclick="selectDoctor(' + doctor.id + ');">Select</a>';
+        display += '<br><a class="btn btn-xs btn-info" onclick="selectDoctor(' + doctor.id + ');">'+i18n['doctors.buttons.select']+'</a>';
     if (type == 'display')
         return display;
     if (type == 'filter')
@@ -24,17 +24,17 @@ function renderDoctorInfo(data, type, doctor) {
 }
 function renderSpecialization(data, type, doctor) {
     var filter = '';
-    var display = '<strong>Certificate: </strong>';
+    var display = '<strong>'+i18n['doctors.certificate']+': </strong>';
     if (doctor.certificate)
         display += doctor.certificate.name;
-    display += '<br><strong>Profession: </strong>';
+    display += '<br><strong>'+i18n['doctors.profession']+': </strong>';
     var specialties = doctor.specialties;
     for (var i = 0; i < specialties.length; i++) {
         display += '<a onclick="getBySpecialty(\'' + specialties[i].name + '\')">' + specialties[i].name + '</a>';
         if (i < specialties.length - 1) display += ', ';
         filter += specialties[i].name + ' ';
     }
-    display += '<br><strong>Qualifications: </strong>';
+    display += '<br><strong>'+i18n['doctors.qualification']+': </strong>';
     var qualifications = doctor.qualifications;
     for (i = 0; i < qualifications.length; i++) {
         display += '<a onclick="getByQualification(\'' + qualifications[i].name + '\')">' + qualifications[i].name + '</a>';
@@ -42,17 +42,17 @@ function renderSpecialization(data, type, doctor) {
         filter += qualifications[i].name;
     }
     if (doctor.preferential)
-        display += '<br><strong>Prefers: </strong>' + doctor.preferential;
+        display += '<br><strong>'+i18n['doctors.prefers']+': </strong>' + doctor.preferential;
     if (doctor.lections)
-        display += '<br><strong>Reads lections: </strong>' + doctor.lections;
-    display += '<br><strong>Target audience: </strong>';
+        display += '<br><strong>'+i18n['doctors.lections']+': </strong>' + doctor.lections;
+    display += '<br><strong>'+i18n['doctors.target']+': </strong>';
     var target = doctor.targetAudiences;
     for (i = 0; i < target.length; i++) {
         display += target[i].name;
         if (i < target.length - 1) display += ', ';
     }
     if (doctor.comments)
-        display += '<br><strong>Comments: </strong>' + doctor.comments;
+        display += '<br><strong>'+i18n['doctors.comments']+': </strong>' + doctor.comments;
     if (type == 'display')
         return display;
     if (type == 'filter')

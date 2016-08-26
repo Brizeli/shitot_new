@@ -4,23 +4,22 @@
 var clinicsRestUrl = 'rest/clinics';
 var editClinicWindow = $('#editClinic');
 var editClinicForm = $('#clinicDetailsForm');
-var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 function renderClinics(data, type, doctor) {
     var clinics = doctor.clinics;
     var result = '';
     var filter = '';
     for (var i = 0; i < clinics.length; i++) {
         result += i + 1 + '. ' + ((clinics[i].name != '') ? '<strong>' + clinics[i].name + '</strong>' : '') + '<br>';
-        result += '<strong>City: </strong>' + '<a onclick="getByCity(\'' + clinics[i].city + '\')">' + clinics[i].city + '</a><br>';
-        result += '<strong>Address: </strong>' + clinics[i].address + '<br>';
-        result += '<a class="btn btn-xs btn-primary" onclick="editClinic(' + clinics[i].id + ',' + doctor.id + ',\'' + doctor.fullName + '\');">Edit</a> ';
-        result += '<a tabindex="0" class="btn btn-xs btn-success" data-slots=\'' + JSON.stringify(clinics[i].slots) + '\'>Schedule</a> ';
-        result += '<a class="btn btn-xs btn-danger" onclick="deleteClinic(' + clinics[i].id + ',' + doctor.id + ');">Delete</a>';
+        result += '<strong>'+i18n['clinics.city']+': </strong>' + '<a onclick="getByCity(\'' + clinics[i].city + '\')">' + clinics[i].city + '</a><br>';
+        result += '<strong>'+i18n['clinics.address']+': </strong>' + clinics[i].address + '<br>';
+        result += '<a class="btn btn-xs btn-primary" onclick="editClinic(' + clinics[i].id + ',' + doctor.id + ',\'' + doctor.fullName + '\');">'+i18n['common.edit']+'</a> ';
+        result += '<a tabindex="0" class="btn btn-xs btn-success" data-slots=\'' + JSON.stringify(clinics[i].slots) + '\'>'+i18n['clinics.buttons.schedule']+'</a> ';
+        result += '<a class="btn btn-xs btn-danger" onclick="deleteClinic(' + clinics[i].id + ',' + doctor.id + ');">'+i18n['common.delete']+'</a>';
         if (i < clinics.length) result += '<br><br>';
         filter += clinics[i].city + ' ';
     }
     if (clinics.length < 2)
-        result += '<a class="btn btn-sm btn-default" onclick="addClinic(' + doctor.id + ',\'' + doctor.fullName + '\');">Add clinic</a>';
+        result += '<a class="btn btn-sm btn-default" onclick="addClinic(' + doctor.id + ',\'' + doctor.fullName + '\');">'+i18n['clinics.buttons.add']+'</a>';
     if (type == 'display')
         return result;
     if (type == 'filter')

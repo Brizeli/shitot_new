@@ -64,13 +64,13 @@ function fillSearch() {
         $.each(quals, function (key, val) {
             $('.qualifications').append($('<option>').text(val.name));
         });
-        $('#quals').multiselect({maxHeight:300});
+        $('#quals').multiselect({maxHeight: 300});
     });
     $.get(doctorsRestUrl + '/targets', function (targets) {
         $.each(targets, function (key, val) {
             $('#target').append($('<option>').text(val.name))
         });
-        $('#target').multiselect({maxHeight:300});
+        $('#target').multiselect({maxHeight: 300});
     });
     $.get(clinicsRestUrl + '/cities', function (cities) {
         $.each(cities, function (key, val) {
@@ -80,15 +80,20 @@ function fillSearch() {
 }
 function initTable() {
     fillSearch();
+    var daysOfWeek = {
+        'en': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        'iw': ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת']
+    };
     $('[data-slots]').each(function () {
+        var lng = $('html').attr('lang');
         $(this).popover({
             title: 'Open hours',
             trigger: 'focus',
             content: function () {
                 var slots = $(this).data('slots');
                 var res = '<table>';
-                for (var i = 0; i < daysOfWeek.length; i++) {
-                    res += '<tr><td>' + daysOfWeek[i] + ': </td><td>';
+                for (var i = 0; i < daysOfWeek[lng].length; i++) {
+                    res += '<tr><td>' + daysOfWeek[lng][i] + ': </td><td>';
                     var intervals = 'Not set';
                     $.each(slots, function (ind, slot) {
                         if (slot.dayOfWeek == i) {
@@ -101,7 +106,7 @@ function initTable() {
                 res += '</table>';
                 return res;
             },
-            placement: 'left',
+            placement: lng == 'en' ? 'left' : 'right',
             html: true
         });
     });

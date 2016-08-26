@@ -33,10 +33,10 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
-          p:cacheSeconds="60"
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
           p:defaultEncoding="UTF-8"
-          p:basenames="locale/app"
+          p:cacheSeconds="60"
+          p:basenames="classpath:locale/app"
           p:fallbackToSystemLocale="false"/>
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"

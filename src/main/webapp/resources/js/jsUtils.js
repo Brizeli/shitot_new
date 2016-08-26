@@ -2,7 +2,6 @@
  * Created by Next on 02.08.2016.
  */
 $(function () {
-    // var lang = $(location)[0].href.split('?')[1].split('&')[0].split('=')[1];
     var lang = $('html').attr('lang');
     if (lang === 'iw') {
         $('#bsrtltag').attr('href','https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css');

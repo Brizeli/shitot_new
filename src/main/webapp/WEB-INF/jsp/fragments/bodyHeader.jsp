@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <header>
     <div class="row">
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -10,17 +11,16 @@
                     </a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="doctors">Doctors</a></li>
-                    <li><a href="patients">Patients</a></li>
+                    <li><a href="doctors"><spring:message code="app.doctors"/></a></li>
+                    <li><a href="patients"><spring:message code="app.patients"/></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <%--<ul class="nav navbar-nav navbar-left">--%>
-                    <li><a href="users">Users</a></li>
-                    <li class="navbar-text">Logged as ${loggedUser}</li>
+                    <li><a href="users"><spring:message code="app.users"/> </a></li>
                     <sec:authorize access="isAuthenticated()">
-                        <li class=""><a href="logout">logout</a></li>
+                        <li class="navbar-text">Logged as ${loggedUser}</li>
+                        <li class=""><a href="logout"><spring:message code="app.logout"/> </a></li>
                     </sec:authorize>
-                        <jsp:include page="lang.jsp"/>
+                    <jsp:include page="lang.jsp"/>
                 </ul>
             </div>
         </nav>

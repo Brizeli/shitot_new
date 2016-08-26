@@ -8,9 +8,9 @@
     <title><spring:message code="app.title"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <c:set var="url">${pageContext.request.requestURL}</c:set>
-    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link id="bsrtltag" rel="stylesheet">
+    <link rel="stylesheet" id="bsrtltag">
     <link rel="stylesheet" href="webjars/datatables/1.10.12/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="webjars/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
     <link rel="stylesheet" href="webjars/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.css">
@@ -23,4 +23,6 @@
     <script type="text/javascript" src="webjars/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.he.min.js"></script>
+    <script type="text/javascript" src="resources/js/jsUtils.js"></script>
+    <script type="text/javascript"><jsp:include page="i18n.jsp"/></script>
 </head>

@@ -10,4 +10,3 @@
         </span>
     </div>
 </div>
-<script type="text/javascript" src="resources/js/jsUtils.js"></script>
