@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="modal fade" id="editDoctorWindow">
     <div class="modal-dialog modal-xl">
@@ -7,7 +8,7 @@
                 <h2 class="modal-title title"></h2>
                 <a class="btn btn-xs btn-danger" id="deleteDoctor">Delete</a>
             </div>
-            <form class="form-horizontal editForm" method="post">
+            <form class="form-horizontal editForm" enctype="multipart/form-data" method="post">
                 <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
                     <div class="row">
@@ -90,7 +91,7 @@
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
                                     <a class="addSpec">Add certificate</a>
-                                    <input type="file" name="certFile">
+                                    <input type="file" name="file">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +123,7 @@
                             </div>
                             <label class="control-label col-xs-2" for="password">Password:</label>
                             <div class="col-xs-3">
-                                <input class="form-control" type="text" name="password" id="password" required>
+                                <input class="form-control" type="text" name="password" id="password">
                             </div>
                         </div>
                     </div>

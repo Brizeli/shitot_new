@@ -133,6 +133,7 @@ function selectDoctor(doctorId) {
     });
 }
 editForm.submit(function () {
+    var formData = new FormData(editForm);
     $.post(doctorsRestUrl, editForm.serialize(), function () {
         editDoctorWindow.modal('hide');
         updateTable();

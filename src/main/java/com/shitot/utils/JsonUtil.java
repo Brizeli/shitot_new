@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class JsonUtil {
     public static Doctor updateFromTo(Doctor doctor, DoctorTo doctorTo) {
         doctor.setFullName(doctorTo.getFullName());
-        doctor.setLogin(doctorTo.getLogin());
-        doctor.setPassword(doctorTo.getPassword());
+//        doctor.setLogin(doctorTo.getLogin());
+//        doctor.setPassword(doctorTo.getPassword());
         doctor.setEmail(doctorTo.getEmail());
         doctor.setTelNumber(doctorTo.getTelNumber());
         doctor.setTelHome(doctorTo.getTelHome());

@@ -1,7 +1,6 @@
 package com.shitot.service;
 
 import com.shitot.model.Patient;
-import com.shitot.to.PatientTo;
 
 import java.util.List;
 

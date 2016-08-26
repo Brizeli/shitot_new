@@ -2,13 +2,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <head>
-    <title>Shitot</title>
+    <title><spring:message code="app.title"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <c:set var="url">${pageContext.request.requestURL}</c:set>
     <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
     <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link id="bsrtltag" rel="stylesheet">
     <link rel="stylesheet" href="webjars/datatables/1.10.12/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="webjars/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
     <link rel="stylesheet" href="webjars/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.css">

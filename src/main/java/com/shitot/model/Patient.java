@@ -23,7 +23,7 @@ public class Patient extends BaseEntity {
     private String telNumber;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "patient",cascade = {CascadeType.ALL})
+    @OneToMany (mappedBy = "patient",cascade = CascadeType.REMOVE)
     private Set<Appointment> appointments;
 
     public Set<Appointment> getAppointments() {
