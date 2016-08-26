@@ -87,7 +87,7 @@ function initTable() {
     $('[data-slots]').each(function () {
         var lng = $('html').attr('lang');
         $(this).popover({
-            title: 'Open hours',
+            title: lng=='en'?'Open hours':'שעות קבלה',
             trigger: 'focus',
             content: function () {
                 var slots = $(this).data('slots');

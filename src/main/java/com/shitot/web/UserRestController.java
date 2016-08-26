@@ -3,6 +3,8 @@ package com.shitot.web;
 import com.shitot.model.User;
 import com.shitot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -20,17 +22,21 @@ public class UserRestController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAllUsers() {
         return service.getAll();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void register(@RequestParam String newlogin, @RequestParam String newpassword, Model model) {
+    public void register(@RequestParam String newlogin, @RequestParam String newpassword) {
         try {
             service.register(new User(newlogin, newpassword));
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("User with this login already exists");
+            throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicate_user", null,
+                LocaleContextHolder.getLocale()));
         }
     }
 
@@ -40,7 +46,7 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public void enabled(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {
+    public void enabled(@PathVariable int id, @RequestParam boolean enabled) {
         service.enable(id, enabled);
     }
 }

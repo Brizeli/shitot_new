@@ -55,15 +55,16 @@ function updateTable() {
 }
 function renderAppointments(user) {
     // return '<a class="btn btn-xs btn-success" href="appointments?id=' + user.id + '">Appointments</a>';
-    return '<a class="btn btn-xs btn-success">Appointments</a>';
+    return '<a class="btn btn-xs btn-success">' + i18n['patients.appointments'] + '</a>';
 }
 function renderButtons(user) {
     var result = '';
     // result += '<a class="btn btn-xs btn-primary" onclick="editUser(' + user.id + ');">Edit</a> ';
-    result += '<a class="btn btn-xs btn-danger" onclick="deleteUser(' + user.id + ');">Delete</a> ';
+    result += '<a class="btn btn-xs btn-danger" onclick="deleteUser(' + user.id + ');">' + i18n['common.delete'] + '</a> ';
     return result;
 }
 function addUser() {
+    $(':input', editForm).val('');
     editUserWindow.modal({backdrop: 'static'});
 }
 function enable(chkbox, id) {
@@ -91,7 +92,7 @@ editForm.submit(function () {
     $.post(usersRestUrl, editForm.serialize(), function () {
         editUserWindow.modal('hide');
         updateTable();
-        successNoty('Saved');
+        successNoty(i18n['app.saved']);
     });
     return false;
 });
@@ -102,7 +103,7 @@ function deleteUser(id) {
             type: 'DELETE',
             success: function () {
                 updateTable();
-                successNoty('Deleted');
+                successNoty(i18n['app.deleted']);
             }
         });
 }

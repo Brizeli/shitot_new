@@ -9,11 +9,11 @@ function renderDoctorInfo(data, type, doctor) {
     var display = '<h2><a onclick="editDoctor(' + doctor.id + ')" title="Edit">' + doctor.fullName + '</a></h2>';
     display += '<a href="mailto:' + doctor.email + '">' + doctor.email + '</a><br>';
     if (doctor.telNumber)
-        display += i18n['doctors.tel'] + ' ' + doctor.telNumber + '<br>';
+        display += i18n['doctors.tel'] + ': ' + doctor.telNumber + '<br>';
     if (doctor.telHome)
-        display += i18n['doctors.hometel'] + ' ' + doctor.telHome + '<br>';
+        display += i18n['doctors.hometel'] + ': ' + doctor.telHome + '<br>';
     if (doctor.homeAddress)
-        display += i18n['doctors.address'] + ' ' + doctor.homeAddress;
+        display += i18n['doctors.address'] + ': ' + doctor.homeAddress;
     if ($('#appointmentId').val() != '')
         display += '<br><a class="btn btn-xs btn-info" onclick="selectDoctor(' + doctor.id + ');">'+i18n['doctors.buttons.select']+'</a>';
     if (type == 'display')
@@ -63,10 +63,11 @@ function addDoctor() {
     $(':text', editForm).val('');
     $('option', editForm).removeAttr('selected').prop('selected', false);
     $('[multiple]').multiselect('refresh');
-    $('.title', editDoctorWindow).text("Add new doctor");
+    $('.title', editDoctorWindow).text(i18n['doctors.add']);
     $('textarea', editForm).val('');
     $('#id').val(null);
     $('.popover').popover('hide');
+    $('input',$('#sec')).attr('required');
     $('#sec').show();
     $('.modal-header a').hide();
     editDoctorWindow.modal({backdrop: 'static'});
@@ -75,6 +76,7 @@ function editDoctor(id) {
     $.get(doctorsRestUrl + '/' + id, function (doctor) {
         $('option', editForm).removeAttr('selected').prop('selected', false);
         $('[multiple]').multiselect('refresh');
+        $('[required]',$('#sec')).removeAttr('required');
         $('#sec').hide();
         $.each(doctor, function (key, val) {
             switch (key) {
@@ -101,7 +103,7 @@ function editDoctor(id) {
                     $('[name=\'' + key + '\']', editForm).val(val);
             }
         });
-        $('.title', editDoctorWindow).text('Edit doctor');
+        $('.title', editDoctorWindow).text(i18n['doctors.edit']);
         $('#addSpec').popover('hide');
         editDoctorWindow.modal({backdrop: 'static'});
         $('#deleteDoctor').click(function () {
@@ -117,7 +119,7 @@ function deleteDoctor(id) {
             success: function () {
                 updateTable();
                 editDoctorWindow.modal('hide');
-                successNoty('Deleted');
+                successNoty(i18n['app.deleted']);
             }
         });
 }
@@ -137,7 +139,7 @@ editForm.submit(function () {
     $.post(doctorsRestUrl, editForm.serialize(), function () {
         editDoctorWindow.modal('hide');
         updateTable();
-        successNoty('Saved');
+        successNoty(i18n['app.saved']);
     });
     return false;
 });

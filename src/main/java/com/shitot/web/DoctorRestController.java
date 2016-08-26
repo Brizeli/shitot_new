@@ -5,6 +5,8 @@ import com.shitot.service.DoctorService;
 import com.shitot.to.DoctorTo;
 import com.shitot.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,9 @@ public class DoctorRestController {
     @Autowired
     DoctorService service;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getAll() {
         return service.getAll();
@@ -38,7 +43,8 @@ public class DoctorRestController {
             try {
                 service.save(doctorTo);
             } catch (DataIntegrityViolationException e) {
-                throw new DataIntegrityViolationException("Doctor with this login already exists");
+                throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicate_doctor", null,
+                    LocaleContextHolder.getLocale()));
             }
         } else service.update(doctorTo);
     }

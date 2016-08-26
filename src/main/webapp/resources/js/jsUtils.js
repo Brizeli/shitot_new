@@ -7,6 +7,7 @@ $(function () {
         $('#bsrtltag').attr('href','https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css');
         $('html').attr('dir', 'rtl');
         $('ul.navbar-right').removeClass('navbar-right').addClass('navbar-left');
+        $('.pull-right').removeClass('pull-right').addClass('pull-left');
     }
 });
 $(document).ajaxError(function (event, jqXHR, options, jsExc) {
