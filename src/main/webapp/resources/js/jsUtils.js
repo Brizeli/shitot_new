@@ -4,8 +4,9 @@
 $(function () {
     var lang = $('html').attr('lang');
     if (lang === 'iw') {
-        $('#bsrtltag').attr('href','https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css');
+        $('#bsrtltag').attr('href','//cdn.rawgit.com/morteza/bootstrap-rtl/v3.3.4/dist/css/bootstrap-rtl.min.css');
         $('html').attr('dir', 'rtl');
+        $('.dropdown-menu').css({right: 'auto', left: '0'});
         $('ul.navbar-right').removeClass('navbar-right').addClass('navbar-left');
         $('.pull-right').removeClass('pull-right').addClass('pull-left');
     }
