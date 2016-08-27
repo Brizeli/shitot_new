@@ -56,13 +56,13 @@ function fillOptions() {
         $.each(symptoms, function (key, val) {
             $('#symptoms').append($('<option>').text(val.name));
         });
-        $('#symptoms').multiselect({maxHeight:300});
+        $('#symptoms').multiselect({maxHeight: 300});
     });
     $.get(appointmentsRestUrl + '/problems', function (problems) {
         $.each(problems, function (key, val) {
             $('#problems').append($('<option>').text(val.name));
         });
-        $('#problems').multiselect({maxHeight:300});
+        $('#problems').multiselect({maxHeight: 300});
     });
 }
 function updateTable() {
@@ -97,25 +97,25 @@ function renderAppointmentProblems(appointment) {
     return res;
 }
 function renderAppointmentDoctors(appointment) {
-    var res = '';
+    var res = '<div class="col-xs-6">';
     if (appointment.doctor) {
         res += '<strong>Doctor: </strong>' + renderDoctorInfo(appointment.doctor);
         res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">Change</a> ';
-        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',false)">Remove</a><br>  ';
+        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',false)">Remove</a><br>';
     } else {
         res += "<strong>Doctor: </strong>";
-        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">Add</a><br> ';
-
+        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">Add</a><br>';
     }
+    res += '</div><div class="col-xs-6">';
     if (appointment.alternativeDoctor) {
-        res += "<strong>Another Doctor: </strong>" + renderDoctorInfo(appointment.alternativeDoctor);
+        res += '<strong>Another Doctor: </strong>' + renderDoctorInfo(appointment.alternativeDoctor);
         res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Change</a> ';
         res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',true)">Remove</a> ';
     } else {
         res += "<strong>Another Doctor: </strong>";
-        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Add</a> ';
+        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Add</a>';
     }
-    return res;
+    return res += '</div>';
 }
 function renderDoctorInfo(doctor) {
     var result = doctor.fullName + '<br>' +
