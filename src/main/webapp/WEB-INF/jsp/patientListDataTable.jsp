@@ -14,7 +14,7 @@
                 <input class="form-control" type="text" id="telsearch">
             </div>
         </div>
-        <table class="table table-striped display" style="width: 100%" id="dataTable">
+        <table class="table table-striped display" id="dataTable">
             <thead>
             <tr>
                 <th>Name</th>

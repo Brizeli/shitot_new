@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="row">
-            <table class="table table-striped display" style="width: 100%;" id="dataTable">
+            <table class="table table-striped display" id="dataTable">
                 <thead>
                 <tr>
                     <th><spring:message code="doctors.info"/> </th>

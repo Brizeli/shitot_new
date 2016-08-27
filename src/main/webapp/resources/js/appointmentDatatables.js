@@ -4,7 +4,7 @@ var appointmentsRestUrl = 'rest/appointments';
 var patientsRestUrl = 'rest/patients';
 var table;
 $(function () {
-    table = $('#dataTableA').DataTable({
+    table = $('#dataTable').DataTable({
         ajax: {
             url: appointmentsRestUrl + '/all/' + $('#patientId').val(),
             dataSrc: ''
@@ -51,7 +51,7 @@ $(function () {
     });
 });
 function fillOptions() {
-    $('select').empty()
+    $('select').empty();
     $.get(appointmentsRestUrl + '/symptoms', function (symptoms) {
         $.each(symptoms, function (key, val) {
             $('#symptoms').append($('<option>').text(val.name));
@@ -115,7 +115,7 @@ function renderAppointmentDoctors(appointment) {
         res += "<strong>Another Doctor: </strong>";
         res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Add</a>';
     }
-    return res += '</div>';
+    return res + '</div>';
 }
 function renderDoctorInfo(doctor) {
     var result = doctor.fullName + '<br>' +

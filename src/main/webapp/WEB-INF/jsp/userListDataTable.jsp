@@ -5,7 +5,7 @@
         <a class="btn btn-sm btn-info" id="addUser" onclick="addUser()"><spring:message code="users.register"/></a>
     </h3>
     <div class="view-box">
-        <table class="table table-striped display" style="width: 100%" id="dataTable">
+        <table class="table table-striped display" id="dataTable">
             <thead>
             <tr>
                 <th><spring:message code="app.login"/> </th>

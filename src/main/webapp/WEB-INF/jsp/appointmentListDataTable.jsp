@@ -5,7 +5,7 @@
     </h3>
     <h3>Patient: <span id="patient1"></span></h3>
     <div class="view-box">
-        <table class="table table-striped display" id="dataTableA">
+        <table class="table table-striped display" id="dataTable">
             <thead>
             <tr>
                 <th>Info</th>
