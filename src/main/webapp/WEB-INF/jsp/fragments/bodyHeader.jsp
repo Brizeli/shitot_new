@@ -17,7 +17,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="users"><spring:message code="app.users"/> </a></li>
                     <sec:authorize access="isAuthenticated()">
-                        <li class="navbar-text">Logged as ${loggedUser}</li>
+                        <li class="navbar-text"><spring:message code="app.logged"/> ${loggedUser}</li>
                         <li class=""><a href="logout"><spring:message code="app.logout"/> </a></li>
                     </sec:authorize>
                     <jsp:include page="lang.jsp"/>

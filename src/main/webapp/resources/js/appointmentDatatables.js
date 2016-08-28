@@ -4,7 +4,7 @@ var appointmentsRestUrl = 'rest/appointments';
 var patientsRestUrl = 'rest/patients';
 var table;
 $(function () {
-    table = $('#dataTable').DataTable({
+    table = $('#dataTableA').DataTable({
         ajax: {
             url: appointmentsRestUrl + '/all/' + $('#patientId').val(),
             dataSrc: ''
@@ -34,7 +34,7 @@ $(function () {
         ordering: false,
         initComplete: function () {
             $.get(patientsRestUrl + '/' + $('#patientId').val(), function (patient) {
-                $('#patient1').text(patient.name + ' (Age: ' + patient.age + ', Tel: ' + patient.telNumber + ')');
+                $('#patient1').text(patient.name + ' ('+i18n['patient.age']+': ' + patient.age + ', '+i18n['patient.tel']+': ' + patient.telNumber + ')');
             });
             $('.datepicker').datepicker({
                 format: 'dd/mm/yyyy',
@@ -51,18 +51,18 @@ $(function () {
     });
 });
 function fillOptions() {
-    $('select').empty();
+    $('select').empty()
     $.get(appointmentsRestUrl + '/symptoms', function (symptoms) {
         $.each(symptoms, function (key, val) {
             $('#symptoms').append($('<option>').text(val.name));
         });
-        $('#symptoms').multiselect({maxHeight: 300});
+        $('#symptoms').multiselect({maxHeight:300});
     });
     $.get(appointmentsRestUrl + '/problems', function (problems) {
         $.each(problems, function (key, val) {
             $('#problems').append($('<option>').text(val.name));
         });
-        $('#problems').multiselect({maxHeight: 300});
+        $('#problems').multiselect({maxHeight:300});
     });
 }
 function updateTable() {
@@ -72,23 +72,23 @@ function updateTable() {
     fillOptions();
 }
 function renderAppointmentInfo(appointment) {
-    var res = '<a class="btn btn-xs btn-success" onclick="editAppointment(' + appointment.id + ')" title="Edit">Edit</a> ';
-    res += '<a class="btn btn-xs btn-danger" onclick="deleteAppointment(' + appointment.id + ')" title="Delete">Delete</a>';
-    res += '<br>Appointment Date: ' + (appointment.appointmentDate ? appointment.appointmentDate : '');
-    res += '<br>Apply Date: ' + (appointment.applyDate ? appointment.applyDate : '');
-    res += '<br>Payment amount: ' + appointment.paymentAmount;
-    res += '<br>Payment Date: ' + (appointment.paymentDate ? appointment.paymentDate : '');
-    res += '<br>Cheque number: ' + appointment.checkNumber;
+    var res = '<a class="btn btn-xs btn-success" onclick="editAppointment(' + appointment.id + ')" title="Edit">'+i18n['app.buttons.edit']+'</a> ';
+    res += '<a class="btn btn-xs btn-danger" onclick="deleteAppointment(' + appointment.id + ')" title="Delete">'+i18n['app.buttons.delete']+'</a>';
+    res += '<br>'+i18n['apo.apoDate']+': ' + (appointment.appointmentDate ? appointment.appointmentDate : '');
+    res += '<br>'+i18n['apo.applyDate']+': ' + (appointment.applyDate ? appointment.applyDate : '');
+    res += '<br>'+i18n['apo.payAmount']+': ' + appointment.paymentAmount;
+    res += '<br>'+i18n['apo.payDate']+': ' + (appointment.paymentDate ? appointment.paymentDate : '');
+    res += '<br>'+i18n['apo.cheque']+': ' + appointment.checkNumber;
     return res;
 }
 function renderAppointmentProblems(appointment) {
-    var res = '<strong>Problems: </strong>';
+    var res = '<strong>'+i18n['apo.problems']+': </strong>';
     var problems = appointment.problems;
     for (var i = 0; i < problems.length; i++) {
         res += problems[i].name;
         if (i < problems.length - 1) res += ', ';
     }
-    res += '<br><strong>Symptoms: </strong>';
+    res += '<br><strong>'+i18n['apo.symptoms']+': </strong>';
     var symptoms = appointment.symptoms;
     for (var i = 0; i < symptoms.length; i++) {
         res += symptoms[i].name;
@@ -97,32 +97,35 @@ function renderAppointmentProblems(appointment) {
     return res;
 }
 function renderAppointmentDoctors(appointment) {
-    var res = '<div class="col-xs-6">';
+    var res = '';
+    res+='<div  class="col-xs-6">';
     if (appointment.doctor) {
-        res += '<strong>Doctor: </strong>' + renderDoctorInfo(appointment.doctor);
-        res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">Change</a> ';
-        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',false)">Remove</a><br>';
+        res += '<strong>'+i18n['doctor.doctor']+': </strong>' + renderDoctorInfo(appointment.doctor);
+        res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">'+i18n['app.buttons.change']+'</a> ';
+        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',false)">'+i18n['app.buttons.delete']+'</a><br>  ';
     } else {
-        res += "<strong>Doctor: </strong>";
-        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">Add</a><br>';
+        res += '<strong>'+i18n['doctor.doctor']+': </strong>';
+        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=false&appointmentId=' + appointment.id + '">'+i18n['app.buttons.add']+'</a><br> ';
+
     }
-    res += '</div><div class="col-xs-6">';
+    res+='</div><div  class="col-xs-6">';
     if (appointment.alternativeDoctor) {
-        res += '<strong>Another Doctor: </strong>' + renderDoctorInfo(appointment.alternativeDoctor);
-        res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Change</a> ';
-        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',true)">Remove</a> ';
+        res += '<strong>'+i18n['doctor.altdoctor']+': </strong>' + renderDoctorInfo(appointment.alternativeDoctor);
+        res += '<br><a class="btn btn-xs btn-success" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">'+i18n['app.buttons.change']+'</a> ';
+        res += '<a class="btn btn-xs btn-danger" onclick="removeDoctor(' + appointment.id + ',true)">'+i18n['app.buttons.delete']+'</a> ';
     } else {
-        res += "<strong>Another Doctor: </strong>";
-        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">Add</a>';
+        res += '<strong>'+i18n['doctor.altdoctor']+': </strong>';
+        res += '<a class="btn btn-xs btn-primary" href="doctors?doctorAlt=true&appointmentId=' + appointment.id + '">'+i18n['app.buttons.add']+'</a> ';
     }
-    return res + '</div>';
+    res+='</div>';
+    return res;
 }
 function renderDoctorInfo(doctor) {
     var result = doctor.fullName + '<br>' +
         '<a href="mailto:' + doctor.email + '">' + doctor.email + '</a><br>' +
-        'Tel: ' + doctor.telNumber + '<br>';
-    if (doctor.telHome) result += 'Home tel: ' + doctor.telHome + '<br>';
-    if (doctor.homeAddress) result += 'Home address: ' + doctor.homeAddress;
+        i18n['doctors.tel']+': ' + doctor.telNumber + '<br>';
+    if (doctor.telHome) result += i18n['doctors.hometel']+': ' + doctor.telHome + '<br>';
+    if (doctor.homeAddress) result += i18n['doctors.address']+': ' + doctor.homeAddress;
     return result;
 }
 function removeDoctor(id, doctorAlt) {
@@ -136,7 +139,7 @@ function removeDoctor(id, doctorAlt) {
     });
 }
 function addAppointment(patientId) {
-    $('.title', editAppointmentWindow).text('Add appointment for: ' + $('#patient1').text());
+    $('.title', editAppointmentWindow).text(i18n['apo.addapofor']+': ' + $('#patient1').text());
     $(':text', editForm).val('');
     $('#patientId').val(patientId);
     $('#applyDate').datepicker('update', new Date());

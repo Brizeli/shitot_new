@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<p>
-    Logged in
-</p>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<div class="container">
+    <spring:message code="app.loggedin"/>
+</div>

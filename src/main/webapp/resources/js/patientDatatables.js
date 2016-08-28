@@ -48,14 +48,14 @@ function updateTable() {
 }
 function renderButtons(patient) {
     var result = '';
-    result += '<a class="btn btn-xs btn-primary" onclick="editPatient(' + patient.id + ');">Edit</a> ';
-    result += '<a class="btn btn-xs btn-danger" onclick="deletePatient(' + patient.id + ');">Delete</a> ';
-    result += '<a class="btn btn-xs btn-success" href="appointments?id=' + patient.id + '">Appointments</a>';
+    result += '<a class="btn btn-xs btn-primary" onclick="editPatient(' + patient.id + ');">'+i18n['app.buttons.edit']+'</a> ';
+    result += '<a class="btn btn-xs btn-danger" onclick="deletePatient(' + patient.id + ');">'+i18n['app.buttons.delete']+'</a> ';
+    result += '<a class="btn btn-xs btn-success" href="appointments?id=' + patient.id + '">'+i18n['app.buttons.appointments']+'</a>';
     return result;
 }
 function addPatient() {
     $(':input', editForm).val('');
-    $('.title', editPatientWindow).text('Add new patient');
+    $('.title', editPatientWindow).text(i18n['patient.addnew']);
     $('#id').val(null);
     $('#editPatient').modal({backdrop: 'static'});
 }
@@ -64,7 +64,7 @@ function editPatient(id) {
         $.each(patient, function (key, val) {
             editForm.find('[name=\'' + key + '\']').val(val);
         });
-        $('.title', editPatientWindow).text('Edit patient');
+        $('.title', editPatientWindow).text(i18n['patient.edit']);
         editPatientWindow.modal({backdrop: 'static'});
     })
 }
