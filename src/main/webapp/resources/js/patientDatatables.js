@@ -72,7 +72,7 @@ editForm.submit(function () {
     $.post(patientsRestUrl, editForm.serialize(), function () {
         editPatientWindow.modal('hide');
         updateTable();
-        successNoty('Saved');
+        successNoty(i18n['app.saved']);
     });
     return false;
 });
@@ -83,7 +83,7 @@ function deletePatient(patientId) {
             type: 'DELETE',
             success: function () {
                 updateTable();
-                successNoty('Deleted');
+                successNoty(i18n['app.deleted']);
             }
         });
 }

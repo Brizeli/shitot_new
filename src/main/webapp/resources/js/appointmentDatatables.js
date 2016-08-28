@@ -134,7 +134,7 @@ function removeDoctor(id, doctorAlt) {
         type: 'DELETE',
         success: function () {
             updateTable();
-            successNoty('Deleted');
+            successNoty(i18n['app.deleted']);
         }
     });
 }
@@ -181,7 +181,7 @@ editForm.submit(function () {
     $.post(appointmentsRestUrl, editForm.serialize(), function () {
         editAppointmentWindow.modal('hide');
         updateTable();
-        successNoty('Saved');
+        successNoty(i18n['app.saved']);
     });
     return false;
 });
