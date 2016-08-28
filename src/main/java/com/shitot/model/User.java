@@ -12,7 +12,7 @@ import javax.persistence.NamedQuery;
  */
 @NamedQueries({
                   @NamedQuery(name = User.GET_BY_LOGIN, query = "select u from users u where u.login=:login"),
-                  @NamedQuery(name = User.ALL_SORTED, query = "select u from users u order by u.login")
+                  @NamedQuery(name = User.ALL_SORTED, query = "select u from users u order by LOWER(u.login)")
 })
 @Entity(name = "users")
 public class User extends UserDoctor {

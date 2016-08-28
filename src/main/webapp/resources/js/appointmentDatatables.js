@@ -4,7 +4,7 @@ var appointmentsRestUrl = 'rest/appointments';
 var patientsRestUrl = 'rest/patients';
 var table;
 $(function () {
-    table = $('#dataTableA').DataTable({
+    table = $('#dataTable').DataTable({
         ajax: {
             url: appointmentsRestUrl + '/all/' + $('#patientId').val(),
             dataSrc: ''

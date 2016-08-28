@@ -14,17 +14,18 @@
 
     <tx:annotation-driven/>
 
+    <context:property-placeholder location="classpath:db/mysql.properties" system-properties-mode="OVERRIDE"/>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
           p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://localhost/shitot_new"
-          p:username="root"
-          p:password="">
-    <property name="connectionProperties">
-        <props>
-            <prop key="useUnicode">yes</prop>
-            <prop key="characterEncoding">utf8</prop>
-        </props>
-    </property>
+          p:url="${database.url}"
+          p:username="${database.username}"
+          p:password="${database.password}">
+        <property name="connectionProperties">
+            <props>
+                <prop key="useUnicode">yes</prop>
+                <prop key="characterEncoding">utf8</prop>
+            </props>
+        </property>
     </bean>
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
@@ -34,16 +35,16 @@
           p:packagesToScan="com.shitot.model">
         <property name="jpaPropertyMap">
             <map>
-                <entry key="hibernate.format_sql" value="false"/>
-                <entry key="hibernate.use_sql_comments" value="false"/>
-                <entry key="hibernate.hbm2ddl.auto" value="update"/>
+                <entry key="hibernate.format_sql" value="${hibernate.format_sql}"/>
+                <entry key="hibernate.use_sql_comments" value="${hibernate.use_sql_comments}"/>
+                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}"/>
                 <entry key="hibernate.cache.use_second_level_cache" value="true"/>
                 <entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             </map>
         </property>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                  p:showSql="true">
+                  p:showSql="${jpa.show_sql}">
             </bean>
         </property>
     </bean>

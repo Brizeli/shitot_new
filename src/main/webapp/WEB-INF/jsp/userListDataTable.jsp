@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="container">
+<div class="container-fluid">
     <h3><spring:message code="app.users"/>
         <a class="btn btn-sm btn-info" id="addUser" onclick="addUser()"><spring:message code="users.register"/></a>
     </h3>

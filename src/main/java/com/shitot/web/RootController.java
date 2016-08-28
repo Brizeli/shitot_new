@@ -49,16 +49,18 @@ public class RootController {
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
-    @RequestMapping(value = "/appointments",method = RequestMethod.GET)
-    public String appointmentList(Model model, @RequestParam int id){
-        model.addAttribute("patientId",id);
-        model.addAttribute("page","appointmentListDataTable");
+
+    @RequestMapping(value = "/appointments", method = RequestMethod.GET)
+    public String appointmentList(Model model, @RequestParam int id) {
+        model.addAttribute("patientId", id);
+        model.addAttribute("page", "appointmentListDataTable");
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
-    @RequestMapping(value = "/users",method = RequestMethod.GET)
-    public String userList(Model model){
-        model.addAttribute("page","userListDataTable");
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String userList(Model model) {
+        model.addAttribute("page", "userListDataTable");
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }

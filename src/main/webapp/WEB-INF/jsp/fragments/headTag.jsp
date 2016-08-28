@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="webjars/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
     <link rel="stylesheet" href="webjars/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.css">
     <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="shortcut icon" href="resources/images/fav.png">
     <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
     <script type="text/javascript" src="webjars/jquery-ui/1.12.0/jquery-ui.js"></script>

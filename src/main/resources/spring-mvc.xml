@@ -13,7 +13,7 @@
 
     <mvc:resources location="/resources/" mapping="/resources/**"/>
 
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
 
     <bean class="com.shitot.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
