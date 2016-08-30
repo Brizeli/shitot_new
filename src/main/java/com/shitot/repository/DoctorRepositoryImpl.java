@@ -61,7 +61,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
 
     @Override
     @Transactional
-    public void setCertificate(int id, String certificateName) {
+    public void setCertificate(int id, String certificateName, byte[] file) {
         Certificate certificate = null;
         if (!certificateName.isEmpty()) {
             certificate = em.find(Certificate.class, certificateName);
@@ -69,6 +69,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
                 certificate = new Certificate(certificateName);
                 em.persist(certificate);
             }
+            certificate.setFile(file);
         }
         em.find(Doctor.class, id).setCertificate(certificate);
     }

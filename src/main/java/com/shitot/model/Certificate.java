@@ -1,9 +1,6 @@
 package com.shitot.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
 /**
  * Created by Next on 20.07.2016.
@@ -14,10 +11,10 @@ import javax.persistence.NamedQuery;
 @Entity(name = "certificates")
 public class Certificate extends NamedEntity {
 
-    @Column(length = 1000)
-    private String description;
-
     public static final String ALL_SORTED = "Certificate.getAllSorted";
+
+    @Lob
+    private byte[] file;
 
     public Certificate() {
     }
@@ -26,11 +23,11 @@ public class Certificate extends NamedEntity {
         super(name);
     }
 
-    public String getDescription() {
-        return description;
+    public byte[] getFile() {
+        return file;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 }

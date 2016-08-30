@@ -2,6 +2,7 @@
  * Created by Next on 02.08.2016.
  */
 var table;
+var lng = $('html').attr('lang');
 $(function () {
     table = $('#dataTable').DataTable({
         ajax: {
@@ -30,13 +31,13 @@ $(function () {
         ordering: false,
         initComplete: initTable
     });
-    $('#namesearch').on('keyup', function () {
+    $('#namesearch').keyup(function () {
         table.columns(0).search(this.value).draw();
     });
-    $('#professions, #qualifications').on('change', function () {
+    $('#professions, #qualifications').change(function () {
         table.columns(1).search(this.value == 'All' ? '' : this.value).draw();
     });
-    $('#cities').on('change', function () {
+    $('#cities').change(function () {
         table.columns(2).search(this.value == 'All' ? '' : this.value).draw();
     });
     $('#clearsearch').click(function () {
@@ -78,44 +79,92 @@ function fillSearch() {
         });
     });
 }
+function initPopovers() {
+    $('[data-slots]').popover({
+        title: lng == 'en' ? 'Open hours' : 'שעות קבלה',
+        trigger: 'focus',
+        content: function () {
+            var daysOfWeek = {
+                'en': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                'iw': ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת']
+            };
+            var slots = $(this).data('slots');
+            var res = '<table>';
+            for (var i = 0; i < daysOfWeek[lng].length; i++) {
+                res += '<tr><td>' + daysOfWeek[lng][i] + ': </td><td>';
+                var intervals = 'Not set';
+                $.each(slots, function (ind, slot) {
+                    if (slot.dayOfWeek == i) {
+                        var intls = slot.intervals.trim();
+                        if (intls != '') intervals = intls;
+                    }
+                });
+                res += intervals + '</td></tr>';
+            }
+            res += '</table>';
+            return res;
+        },
+        placement: lng == 'en' ? 'left' : 'right',
+        html: true
+    });
+    $('[data-toggle="popover"]').popover({
+        trigger: 'focus',
+        content: function () {
+            var s = atob($(this).data('file'));
+            // console.log(s);
+            return '<img src="' + s + '" width="500px">';
+        },
+        html: true,
+        container: 'body'
+    });
+    $('#file').change(function () {
+        var reader = new FileReader();
+        reader.onload = function () {
+            $('[name="file"]').val(this.result);
+        };
+        reader.readAsDataURL(this.files[0]);
+    });
+    $('.addSpec').popover({
+        html: true,
+        trigger: 'manual',
+        placement: 'bottom',
+        content: function () {
+            return $('#addspec').html();
+        }
+    }).click(function () {
+        $(this).popover('toggle');
+        $('.editForm').on('keyup keypress', function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        $('input', $('#addSpecForm')).on('keyup', function (e) {
+            if (e.keyCode == 13) addSpec(this);
+        });
+        $('a', $('#addSpecForm')).click(function () {
+            addSpec(this)
+        });
+        function addSpec(el) {
+            var value = $('input', $('#addSpecForm')).val();
+            if (value.trim() != '') {
+                $(el).parentsUntil('.form-group').parent().find('select').first().append($('<option selected>').text(value));
+                $('[multiple]').multiselect('rebuild');
+                $('.addSpec').popover('hide');
+            }
+        }
+    });
+}
 function initTable() {
     fillSearch();
-    var daysOfWeek = {
-        'en': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        'iw': ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת']
-    };
-    $('[data-slots]').each(function () {
-        var lng = $('html').attr('lang');
-        $(this).popover({
-            title: lng=='en'?'Open hours':'שעות קבלה',
-            trigger: 'focus',
-            content: function () {
-                var slots = $(this).data('slots');
-                var res = '<table>';
-                for (var i = 0; i < daysOfWeek[lng].length; i++) {
-                    res += '<tr><td>' + daysOfWeek[lng][i] + ': </td><td>';
-                    var intervals = 'Not set';
-                    $.each(slots, function (ind, slot) {
-                        if (slot.dayOfWeek == i) {
-                            var intls = slot.intervals.trim();
-                            if (intls != '') intervals = intls;
-                        }
-                    });
-                    res += intervals + '</td></tr>';
-                }
-                res += '</table>';
-                return res;
-            },
-            placement: lng == 'en' ? 'left' : 'right',
-            html: true
-        });
-    });
+    initPopovers();
     $('.nav').find('.active').removeClass('active');
     $('.nav a[href="doctors"]').parent().addClass('active');
 }
 function updateTable() {
     $.get(doctorsRestUrl, function (data) {
         table.clear().rows.add(data).draw();
+        initPopovers();
+        fillSearch();
     });
-    fillSearch();
 }

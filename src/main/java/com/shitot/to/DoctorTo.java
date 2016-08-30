@@ -2,7 +2,6 @@ package com.shitot.to;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Size;
 
@@ -36,7 +35,7 @@ public class DoctorTo {
 
     private String certificate="";
 
-    private MultipartFile file;
+    private byte[] file;
 
     public DoctorTo() {
     }
@@ -174,11 +173,11 @@ public class DoctorTo {
         this.certificate = certificate;
     }
 
-    public MultipartFile getFile() {
+    public byte[] getFile() {
         return file;
     }
 
-    public void setFile(MultipartFile file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
 }

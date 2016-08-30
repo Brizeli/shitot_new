@@ -22,7 +22,7 @@ public interface DoctorRepository {
 
     List<TargetAudience> getAllTargetAudiences();
 
-    void setCertificate(int id, String certificateName);
+    void setCertificate(int id, String certificateName, byte[] file);
 
     void setTargetAudiences(Integer id, String... audienceNames);
 

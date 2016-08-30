@@ -29,7 +29,8 @@ public class DoctorRestController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Doctor> getAll() {
-        return service.getAll();
+        List<Doctor> all = service.getAll();
+        return all;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

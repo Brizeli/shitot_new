@@ -51,7 +51,7 @@ public class DoctorServiceImpl implements DoctorService {
         repository.setSpecialties(id, doctorTo.getSpecialty1(), doctorTo.getSpecialty2());
         repository.setQualifications(id, doctorTo.getQualifications());
         repository.setTargetAudiences(id, doctorTo.getTargetAudiences());
-        repository.setCertificate(id, doctorTo.getCertificate());
+        repository.setCertificate(id, doctorTo.getCertificate(), doctorTo.getFile());
     }
 
     @Override

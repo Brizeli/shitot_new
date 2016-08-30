@@ -41,7 +41,7 @@ public class Doctor extends UserDoctor {
     @Column(length = 1000)
     private String comments;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private Certificate certificate;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Qualification> qualifications;

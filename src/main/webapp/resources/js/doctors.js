@@ -15,7 +15,7 @@ function renderDoctorInfo(data, type, doctor) {
     if (doctor.homeAddress)
         display += i18n['doctors.address'] + ': ' + doctor.homeAddress;
     if ($('#appointmentId').val() != '')
-        display += '<br><a class="btn btn-xs btn-info" onclick="selectDoctor(' + doctor.id + ');">'+i18n['doctors.buttons.select']+'</a>';
+        display += '<br><a class="btn btn-xs btn-info" onclick="selectDoctor(' + doctor.id + ');">' + i18n['doctors.buttons.select'] + '</a>';
     if (type == 'display')
         return display;
     if (type == 'filter')
@@ -24,17 +24,19 @@ function renderDoctorInfo(data, type, doctor) {
 }
 function renderSpecialization(data, type, doctor) {
     var filter = '';
-    var display = '<strong>'+i18n['doctors.certificate']+': </strong>';
-    if (doctor.certificate)
-        display += doctor.certificate.name;
-    display += '<br><strong>'+i18n['doctors.profession']+': </strong>';
+    var display = '<strong>' + i18n['doctors.certificate'] + ': </strong>';
+    if (doctor.certificate){
+        // console.log(doctor.certificate.file);
+        display += '<a tabindex="0" data-toggle="popover" data-file="' + doctor.certificate.file + '">' + doctor.certificate.name + '</a>';
+    }
+    display += '<br><strong>' + i18n['doctors.profession'] + ': </strong>';
     var specialties = doctor.specialties;
     for (var i = 0; i < specialties.length; i++) {
         display += '<a onclick="getBySpecialty(\'' + specialties[i].name + '\')">' + specialties[i].name + '</a>';
         if (i < specialties.length - 1) display += ', ';
         filter += specialties[i].name + ' ';
     }
-    display += '<br><strong>'+i18n['doctors.qualification']+': </strong>';
+    display += '<br><strong>' + i18n['doctors.qualification'] + ': </strong>';
     var qualifications = doctor.qualifications;
     for (i = 0; i < qualifications.length; i++) {
         display += '<a onclick="getByQualification(\'' + qualifications[i].name + '\')">' + qualifications[i].name + '</a>';
@@ -42,17 +44,17 @@ function renderSpecialization(data, type, doctor) {
         filter += qualifications[i].name;
     }
     if (doctor.preferential)
-        display += '<br><strong>'+i18n['doctors.prefers']+': </strong>' + doctor.preferential;
+        display += '<br><strong>' + i18n['doctors.prefers'] + ': </strong>' + doctor.preferential;
     if (doctor.lections)
-        display += '<br><strong>'+i18n['doctors.lections']+': </strong>' + doctor.lections;
-    display += '<br><strong>'+i18n['doctors.target']+': </strong>';
+        display += '<br><strong>' + i18n['doctors.lections'] + ': </strong>' + doctor.lections;
+    display += '<br><strong>' + i18n['doctors.target'] + ': </strong>';
     var target = doctor.targetAudiences;
     for (i = 0; i < target.length; i++) {
         display += target[i].name;
         if (i < target.length - 1) display += ', ';
     }
     if (doctor.comments)
-        display += '<br><strong>'+i18n['doctors.comments']+': </strong>' + doctor.comments;
+        display += '<br><strong>' + i18n['doctors.comments'] + ': </strong>' + doctor.comments;
     if (type == 'display')
         return display;
     if (type == 'filter')
@@ -67,7 +69,7 @@ function addDoctor() {
     $('textarea', editForm).val('');
     $('#id').val(null);
     $('.popover').popover('hide');
-    $('input',$('#sec')).attr('required');
+    $('input', $('#sec')).attr('required');
     $('#sec').show();
     $('.modal-header a').hide();
     editDoctorWindow.modal({backdrop: 'static'});
@@ -76,7 +78,7 @@ function editDoctor(id) {
     $.get(doctorsRestUrl + '/' + id, function (doctor) {
         $('option', editForm).removeAttr('selected').prop('selected', false);
         $('[multiple]').multiselect('refresh');
-        $('[required]',$('#sec')).removeAttr('required');
+        $('[required]', $('#sec')).removeAttr('required');
         $('#sec').hide();
         $.each(doctor, function (key, val) {
             switch (key) {
@@ -135,7 +137,6 @@ function selectDoctor(doctorId) {
     });
 }
 editForm.submit(function () {
-    var formData = new FormData(editForm);
     $.post(doctorsRestUrl, editForm.serialize(), function () {
         editDoctorWindow.modal('hide');
         updateTable();
