@@ -44,42 +44,39 @@ $(function () {
         $('select', $('.searchrow')).val('All').trigger('change');
         $('#namesearch').val('').trigger('keyup');
     });
+
+    $('.addSpec').popover({
+        html: true,
+        trigger: 'manual',
+        placement: 'bottom',
+        content: function () {
+            return $('#addspec').html();
+        }
+    }).click(function () {
+        $(this).popover('toggle');
+        $('.editForm').on('keyup keypress', function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        $('input', $('#addSpecForm')).on('keyup', function (e) {
+            if (e.keyCode == 13) addSpec(this);
+        });
+        $('a', $('#addSpecForm')).click(function () {
+            addSpec(this)
+        });
+        function addSpec(el) {
+            var value = $('input', $('#addSpecForm')).val();
+            if (value.trim() != '') {
+                $(el).parentsUntil('.form-group').parent().find('select').first().append($('<option selected>').text(value));
+                $('[multiple]').multiselect('rebuild');
+                $('.addSpec').popover('hide');
+            }
+        }
+    });
 });
-function fillSearch() {
-    $('#certificates, .professions, .qualifications, #cities, #target').empty();
-    $('.professions, .qualifications, #cities', $('.searchrow'))
-        .append($('<option>').text('All'));
-    $('#certificates, .professions', editForm)
-        .append($('<option>'));
-    $.get(doctorsRestUrl + '/certs', function (certs) {
-        $.each(certs, function (key, val) {
-            $('#certificates').append($('<option>').text(val.name));
-        });
-    });
-    $.get(doctorsRestUrl + '/specs', function (specs) {
-        $.each(specs, function (key, val) {
-            $('.professions').append($('<option>').text(val.name));
-        });
-    });
-    $.get(doctorsRestUrl + '/quals', function (quals) {
-        $.each(quals, function (key, val) {
-            $('.qualifications').append($('<option>').text(val.name));
-        });
-        $('#quals').multiselect({maxHeight: 300});
-    });
-    $.get(doctorsRestUrl + '/targets', function (targets) {
-        $.each(targets, function (key, val) {
-            $('#target').append($('<option>').text(val.name))
-        });
-        $('#target').multiselect({maxHeight: 300});
-    });
-    $.get(clinicsRestUrl + '/cities', function (cities) {
-        $.each(cities, function (key, val) {
-            $('#cities').append($('<option>').text(val));
-        });
-    });
-}
-function initPopovers() {
+function popovers() {
     $('[data-slots]').popover({
         title: lng == 'en' ? 'Open hours' : 'שעות קבלה',
         trigger: 'focus',
@@ -124,47 +121,51 @@ function initPopovers() {
         };
         reader.readAsDataURL(this.files[0]);
     });
-    $('.addSpec').popover({
-        html: true,
-        trigger: 'manual',
-        placement: 'bottom',
-        content: function () {
-            return $('#addspec').html();
-        }
-    }).click(function () {
-        $(this).popover('toggle');
-        $('.editForm').on('keyup keypress', function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                return false;
-            }
+}
+function fillSearch() {
+    $('#certificates, .professions, .qualifications, #cities, #target').empty();
+    $('.professions, .qualifications, #cities', $('.searchrow'))
+        .append($('<option>').text('All'));
+    $('#certificates, .professions', editForm)
+        .append($('<option>'));
+    $.get(doctorsRestUrl + '/certs', function (certs) {
+        $.each(certs, function (key, val) {
+            $('#certificates').append($('<option>').text(val.name));
         });
-        $('input', $('#addSpecForm')).on('keyup', function (e) {
-            if (e.keyCode == 13) addSpec(this);
+    });
+    $.get(doctorsRestUrl + '/specs', function (specs) {
+        $.each(specs, function (key, val) {
+            $('.professions').append($('<option>').text(val.name));
         });
-        $('a', $('#addSpecForm')).click(function () {
-            addSpec(this)
+    });
+    $.get(doctorsRestUrl + '/quals', function (quals) {
+        $.each(quals, function (key, val) {
+            $('.qualifications').append($('<option>').text(val.name));
         });
-        function addSpec(el) {
-            var value = $('input', $('#addSpecForm')).val();
-            if (value.trim() != '') {
-                $(el).parentsUntil('.form-group').parent().find('select').first().append($('<option selected>').text(value));
-                $('[multiple]').multiselect('rebuild');
-                $('.addSpec').popover('hide');
-            }
-        }
+        $('#quals').multiselect({maxHeight: 300});
+    });
+    $.get(doctorsRestUrl + '/targets', function (targets) {
+        $.each(targets, function (key, val) {
+            $('#target').append($('<option>').text(val.name))
+        });
+        $('#target').multiselect({maxHeight: 300});
+    });
+    $.get(clinicsRestUrl + '/cities', function (cities) {
+        $.each(cities, function (key, val) {
+            $('#cities').append($('<option>').text(val));
+        });
     });
 }
 function initTable() {
     fillSearch();
-    initPopovers();
+    popovers();
     $('.nav').find('.active').removeClass('active');
     $('.nav a[href="doctors"]').parent().addClass('active');
 }
 function updateTable() {
     $.get(doctorsRestUrl, function (data) {
         table.clear().rows.add(data).draw();
-        initPopovers();
         fillSearch();
+        popovers();
     });
 }
