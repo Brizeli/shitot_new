@@ -26,7 +26,6 @@ function renderSpecialization(data, type, doctor) {
     var filter = '';
     var display = '<strong>' + i18n['doctors.certificate'] + ': </strong>';
     if (doctor.certificate){
-        // console.log(doctor.certificate.file);
         display += '<a tabindex="0" data-toggle="popover" data-file="' + doctor.certificate.file + '">' + doctor.certificate.name + '</a>';
     }
     display += '<br><strong>' + i18n['doctors.profession'] + ': </strong>';
@@ -100,11 +99,13 @@ function editDoctor(id) {
                     break;
                 case 'certificate':
                     $('[name=\'' + key + '\']', editForm).val(val.name);
+                    $('[name="file"]').val(atob(val.file));
                     break;
                 default:
                     $('[name=\'' + key + '\']', editForm).val(val);
             }
         });
+        $('#file').val('');
         $('.title', editDoctorWindow).text(i18n['doctors.edit']);
         $('#addSpec').popover('hide');
         editDoctorWindow.modal({backdrop: 'static'});

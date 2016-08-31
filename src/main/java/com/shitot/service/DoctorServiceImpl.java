@@ -75,6 +75,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public Doctor getWithCertificate(int id) {
+        return repository.getWithCertificate(id);
+    }
+
+    @Override
     public List<String> getAllCities() {
         return repository.getAllCities();
     }

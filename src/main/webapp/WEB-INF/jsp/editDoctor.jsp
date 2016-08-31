@@ -92,8 +92,8 @@
                                 </div>
                                 <div class="col-xs-8 col-xs-offset-4">
                                     <a class="addSpec"><spring:message code="doctors.addcertificate"/></a>
-                                    <input type="file" id="file" accept="image/*">
                                     <input class="hide" type="text" name="file">
+                                    <input type="file" id="file" accept="image/*">
                                 </div>
                             </div>
                         </div>

@@ -37,4 +37,6 @@ public interface DoctorService {
     List<Doctor> getByCity(String city);
 
     void delete(int id);
+
+    Doctor getWithCertificate(int id);
 }

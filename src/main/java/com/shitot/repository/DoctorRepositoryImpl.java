@@ -1,6 +1,7 @@
 package com.shitot.repository;
 
 import com.shitot.model.*;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -159,5 +160,13 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         if (d == null) return false;
         em.remove(d);
         return true;
+    }
+
+    @Override
+    public Doctor getWithCertificate(int id) {
+        List<Doctor> doctors = em.createNamedQuery(Doctor.GET_WITH_CERTIFICATE, Doctor.class)
+                                 .setParameter("id", id)
+                                 .getResultList();
+        return DataAccessUtils.singleResult(doctors);
     }
 }

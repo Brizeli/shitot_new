@@ -34,8 +34,8 @@ public class DoctorRestController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Doctor get(@PathVariable int id) {
-        return service.get(id);
+    public Doctor getWithCertificate(@PathVariable int id) {
+        return service.getWithCertificate(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)

@@ -39,4 +39,6 @@ public interface DoctorRepository {
     List<Doctor> getByCity(String city);
 
     boolean delete(int id);
+
+    Doctor getWithCertificate(int id);
 }
