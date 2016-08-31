@@ -1,6 +1,5 @@
 package com.shitot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -11,7 +10,8 @@ import java.util.*;
  * Created by Next on 12.07.2016.
  */
 @NamedQueries({
-                  @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d order by d.fullName"),
+                  @NamedQuery(name = Doctor.ALL_SORTED, query = "select d from doctors d left join fetch d.certificate c " +
+                                                                    "left join fetch d.clinics cl order by lower(d.fullName)"),
                   @NamedQuery(name = Doctor.BY_SPECIALTY, query = "select d from doctors d join d.specialties s where s.name=:specialty order by d.fullName"),
                   @NamedQuery(name = Doctor.BY_QUALIFICATION, query = "select d from doctors d join d.qualifications s where s.name=:qualification order by d.fullName"),
                   @NamedQuery(name = Doctor.BY_CITY, query = "select d from doctors d join d.clinics c where c.city=:city order by d.fullName")
@@ -20,9 +20,9 @@ import java.util.*;
 public class Doctor extends UserDoctor {
 
     public static final String ALL_SORTED = "Doctor.getAllSorted";
-    public static final String BY_SPECIALTY = "Doctor.getBySpecialty";
-    public static final String BY_QUALIFICATION = "Doctor.getByQualification";
-    public static final String BY_CITY = "Doctor.getByCity";
+    public static final String BY_SPECIALTY = "Doctor.getBySpecialty";          //redundant
+    public static final String BY_QUALIFICATION = "Doctor.getByQualification";  //redundant
+    public static final String BY_CITY = "Doctor.getByCity";                    //redundant
 
     @NotEmpty
     private String fullName;
@@ -41,7 +41,7 @@ public class Doctor extends UserDoctor {
     @Column(length = 1000)
     private String comments;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Certificate certificate;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Qualification> qualifications;
@@ -50,9 +50,8 @@ public class Doctor extends UserDoctor {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<TargetAudience> targetAudiences;
 
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "doctor", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "doctor")
     private Set<Clinic> clinics;
-
 //    @OneToMany(mappedBy = "doctor")
 //    private Set<Appointment> appointments;
 //    @OneToMany(mappedBy = "alternativeDoctor")
@@ -202,7 +201,6 @@ public class Doctor extends UserDoctor {
                    ", role='" + role + '\'' +
                    '}';
     }
-
 //
 //    public Set<Appointment> getAppointments() {
 //        return appointments;

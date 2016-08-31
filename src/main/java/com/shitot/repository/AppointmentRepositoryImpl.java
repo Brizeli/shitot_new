@@ -2,12 +2,12 @@ package com.shitot.repository;
 
 import com.shitot.model.*;
 import com.shitot.utils.UserUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -126,6 +126,15 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         if (alt) appointment.setAlternativeDoctor(null);
         else appointment.setDoctor(null);
         return true;
+    }
+
+    @Override
+    public List<Appointment> getAllByAltDoctorBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Appointment.BY_DOCTOR_BETWEEN_DATES)
+                 .setParameter("id", doctorId)
+                 .setParameter("statDate", startDate)
+                 .setParameter("endDate", endDate)
+                 .getResultList();
     }
 
     @Override

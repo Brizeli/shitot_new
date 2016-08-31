@@ -1,21 +1,26 @@
 package com.shitot.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
+
 @NamedQueries({
-        @NamedQuery(name = Appointment.ALL_SORTED, query = "select a from appointments a order by a.applyDate desc"),
-        @NamedQuery(name = Appointment.BY_DOCTOR, query = "select a from appointments a join a.doctor d where d.id=:id order by a.applyDate desc"),
-        @NamedQuery(name = Appointment.BY_ALTDOCTOR, query = "select a from appointments a join a.alternativeDoctor d where d.id=:id order by a.applyDate desc"),
-        @NamedQuery(name = Appointment.BY_PATIENT, query = "select a from appointments a join a.patient d where d.id=:id order by a.applyDate desc"),
-        @NamedQuery(name = Appointment.BY_DOCTOR_AND_ALT, query = "select distinct a from appointments a where a.id in " +
-                "(select a1.id from appointments a1 join a1.alternativeDoctor d where d.id=:id ) or a.id in " +
-                "(select a2.id from appointments a2 join a2.doctor d1 where d1.id=:id ) order by a.applyDate desc")
+                  @NamedQuery(name = Appointment.ALL_SORTED, query = "select a from appointments a order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.BY_PATIENT, query = "select a from appointments a left join fetch a.doctor d " +
+                                        "left join fetch a.alternativeDoctor ad where a.patient.id=:id order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.BY_DOCTOR, query = "select a from appointments a where a.doctor.id=:id " +
+                                        "order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.BY_ALTDOCTOR, query = "select a from appointments a where a.alternativeDoctor.id=:id " +
+                                        "order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.BY_DOCTOR_AND_ALT, query = "select distinct a from appointments a where a.id in " +
+                                        "(select a1.id from appointments a1 where a1.alternativeDoctor.id=:id ) or a.id in " +
+                                        "(select a2.id from appointments a2 where a2.doctor.id=:id ) order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.BY_DOCTOR_BETWEEN_DATES, query = "select a from appointments a where a.doctor.id=:id and " +
+                                        "a.applyDate between :startDate and :endDate order by a.applyDate desc")
 })
-@Entity(name="appointments")
+@Entity(name = "appointments")
 public class Appointment extends BaseEntity {
 
     public static final String ALL_SORTED = "Appointment.getAllSorted";
@@ -23,6 +28,7 @@ public class Appointment extends BaseEntity {
     public static final String BY_ALTDOCTOR = "Appointment.getByAltDoctor";
     public static final String BY_DOCTOR_AND_ALT = "Appointment.getByDoctorAndAlt";
     public static final String BY_PATIENT = "Appointment.getByPatient";
+    public static final String BY_DOCTOR_BETWEEN_DATES = "Appointment.getByDoctorBetweenDates";
 
     @ManyToOne
     private Patient patient;
@@ -33,7 +39,6 @@ public class Appointment extends BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate paymentDate;
     private String paymentAmount;
-//    private Currency paymentAmount;
     private String checkNumber;
     private String description;
     @ManyToOne
@@ -41,16 +46,17 @@ public class Appointment extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Problem> problems;
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Symptom>symptoms;
-    @ManyToOne
+    private Set<Symptom> symptoms;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Doctor doctor;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Doctor alternativeDoctor;
 
     public Appointment() {
     }
 
-    public Appointment(LocalDate applyDate, LocalDate appointmentDate, LocalDate paymentDate, String paymentAmount, String checkNumber, String description) {
+    public Appointment(LocalDate applyDate, LocalDate appointmentDate, LocalDate paymentDate, String paymentAmount,
+                       String checkNumber, String description) {
         this.applyDate = applyDate;
         this.appointmentDate = appointmentDate;
         this.paymentDate = paymentDate;
@@ -158,17 +164,17 @@ public class Appointment extends BaseEntity {
     @Override
     public String toString() {
         return "Appointment{" +
-                "patient=" + patient +
-                ", applyDate=" + applyDate +
-                ", appointmentDate=" + appointmentDate +
-                ", paymentDate=" + paymentDate +
-                ", paymentAmount='" + paymentAmount + '\'' +
-                ", checkNumber='" + checkNumber + '\'' +
-                ", description='" + description + '\'' +
-                ", problems=" + problems +
-                ", symptoms=" + symptoms +
-                ", doctor=" + doctor +
-                ", alternativeDoctor=" + alternativeDoctor +
-                '}';
+                   "patient=" + patient +
+                   ", applyDate=" + applyDate +
+                   ", appointmentDate=" + appointmentDate +
+                   ", paymentDate=" + paymentDate +
+                   ", paymentAmount='" + paymentAmount + '\'' +
+                   ", checkNumber='" + checkNumber + '\'' +
+                   ", description='" + description + '\'' +
+                   ", problems=" + problems +
+                   ", symptoms=" + symptoms +
+                   ", doctor=" + doctor +
+                   ", alternativeDoctor=" + alternativeDoctor +
+                   '}';
     }
 }

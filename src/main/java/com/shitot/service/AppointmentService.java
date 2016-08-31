@@ -5,6 +5,7 @@ import com.shitot.model.Problem;
 import com.shitot.model.Symptom;
 import com.shitot.to.AppointmentTo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AppointmentService {
@@ -32,4 +33,8 @@ public interface AppointmentService {
     void setDoctor(int id, int doctorId, boolean alt);
 
     void removeDoctor(int id, boolean alt);
+
+    List<Appointment> getByDoctorId(int doctorId);
+    
+    List<Appointment> getByDoctorIdBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate);
 }

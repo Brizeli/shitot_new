@@ -6,13 +6,12 @@ import com.shitot.model.Symptom;
 import com.shitot.service.AppointmentService;
 import com.shitot.to.AppointmentTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -23,9 +22,22 @@ public class AppointmentRestController {
     @Autowired
     AppointmentService service;
 
-    @RequestMapping(value = "/all/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Appointment> getAppointments(@PathVariable("id") int patientId) {
+    @RequestMapping(value = "/all/patient-{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Appointment> getByPatientId(@PathVariable("id") int patientId) {
         return service.getAll(patientId);
+    }
+
+    @RequestMapping(value = "/all/doctor-{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Appointment> getByDoctorId(@PathVariable("id") int doctorId) {
+        return service.getByDoctorId(doctorId);
+    }
+
+    @RequestMapping(value = "/all/doctor-{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Appointment> getByDoctorIdBetweenDates(@PathVariable("id") int doctorId,
+                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return service.getByDoctorIdBetweenDates(doctorId, startDate != null ? startDate : LocalDate.of(1, 1, 1),
+            endDate != null ? endDate : LocalDate.of(3000, 1, 1));
     }
 
     @RequestMapping(value = "/symptoms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,11 +59,11 @@ public class AppointmentRestController {
 
     @RequestMapping(value = "/{id}/{alt}", method = RequestMethod.DELETE)
     public void removeDoctor(@PathVariable int id, @PathVariable boolean alt) {
-        service.removeDoctor(id,alt);
+        service.removeDoctor(id, alt);
     }
 
     @RequestMapping(value = "/{id}/{doctorId}/{alt}", method = RequestMethod.POST)
-    public void changeDoctor(@PathVariable int id, @PathVariable int doctorId, @PathVariable boolean alt) {
+    public void setDoctor(@PathVariable int id, @PathVariable int doctorId, @PathVariable boolean alt) {
         service.setDoctor(id, doctorId, alt);
     }
 

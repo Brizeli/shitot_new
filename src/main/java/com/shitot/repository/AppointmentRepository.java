@@ -2,6 +2,7 @@ package com.shitot.repository;
 
 import com.shitot.model.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -34,4 +35,6 @@ public interface AppointmentRepository {
     void setDoctor(Appointment appointment, int doctorId, boolean alt);
 
     boolean removeDoctor(int id, boolean alt);
+
+    List<Appointment> getAllByAltDoctorBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate);
 }

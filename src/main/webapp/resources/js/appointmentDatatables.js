@@ -6,7 +6,7 @@ var table;
 $(function () {
     table = $('#dataTable').DataTable({
         ajax: {
-            url: appointmentsRestUrl + '/all/' + $('#patientId').val(),
+            url: appointmentsRestUrl + '/all/patient-' + $('#patientId').val(),
             dataSrc: ''
         },
         dom: 'lrtip',
@@ -66,7 +66,7 @@ function fillOptions() {
     });
 }
 function updateTable() {
-    $.get(appointmentsRestUrl + '/all/' + $('#patientId').val(), function (data) {
+    $.get(appointmentsRestUrl + '/all/patient-' + $('#patientId').val(), function (data) {
         table.clear().rows.add(data).draw();
     });
     fillOptions();

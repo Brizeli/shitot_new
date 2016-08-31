@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -92,5 +93,15 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public void removeDoctor(int id, boolean alt) {
         if (!repository.removeDoctor(id, alt)) throw new NotFoundException("Not found appointment with id " + id);
+    }
+
+    @Override
+    public List<Appointment> getByDoctorId(int doctorId) {
+        return repository.getAllByDoctor(doctorId);
+    }
+
+    @Override
+    public List<Appointment> getByDoctorIdBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate) {
+        return repository.getAllByAltDoctorBetweenDates(doctorId,startDate,endDate);
     }
 }
