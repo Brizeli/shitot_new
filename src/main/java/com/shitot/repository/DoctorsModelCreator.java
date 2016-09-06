@@ -9,9 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+
 @Repository
 @Transactional
 public class DoctorsModelCreator {
@@ -85,14 +84,9 @@ public class DoctorsModelCreator {
                 cl.setName("Clinic"+ ++clinGen);
                 cl.setCity(Cts[j]);
                 cl.setAddress("Address"+clinGen);
-                Set<Slot> slots=new LinkedHashSet<>();
+                Map<Integer, String> slots=new HashMap<>();
                 for (int k :getRndIntSet(getRndInt(1,7),0,6)) {
-                    Slot sl=new Slot();
-                    sl.setDayOfWeek(k);
-                    sl.setIntervals("7-12");
-                    em.persist(sl);
-                    sl.setClinic(cl);
-                    slots.add(sl);
+                    slots.put(k, "7 - 13");
                 }
                 cl.setSlots(slots);
                 em.persist(cl);

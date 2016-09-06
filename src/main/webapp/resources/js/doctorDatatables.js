@@ -77,33 +77,6 @@ $(function () {
     });
 });
 function popovers() {
-    $('[data-slots]').popover({
-        title: lng == 'en' ? 'Open hours' : 'שעות קבלה',
-        trigger: 'focus',
-        content: function () {
-            var daysOfWeek = {
-                'en': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                'iw': ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת']
-            };
-            var slots = $(this).data('slots');
-            var res = '<table>';
-            for (var i = 0; i < daysOfWeek[lng].length; i++) {
-                res += '<tr><td>' + daysOfWeek[lng][i] + ': </td><td>';
-                var intervals = 'Not set';
-                $.each(slots, function (ind, slot) {
-                    if (slot.dayOfWeek == i) {
-                        var intls = slot.intervals.trim();
-                        if (intls != '') intervals = intls;
-                    }
-                });
-                res += intervals + '</td></tr>';
-            }
-            res += '</table>';
-            return res;
-        },
-        placement: lng == 'en' ? 'left' : 'right',
-        html: true
-    });
     $('[data-toggle="popover"]').popover({
         trigger: 'focus',
         content: function () {

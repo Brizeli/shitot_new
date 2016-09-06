@@ -1,8 +1,10 @@
 package com.shitot.service;
 
-import com.shitot.model.*;
+import com.shitot.model.Clinic;
+import com.shitot.to.SlotsTo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Oleg on 02.08.2016.
@@ -10,17 +12,11 @@ import java.util.List;
 public interface ClinicService {
     Clinic save(Clinic clinic, Integer doctorId);
 
-    List<Slot> getSlots(int clinicId);
-
-    Slot getDaySlot(int dayOfWeek, int clinicId);
+    Map<Integer, String> getSlots(int clinicId);
 
     List<String> getAllCities();
 
     Clinic get(int clinicId, int doctorId);
-
-    void setSlot(int dayOfWeek, int clinicId, int... hours);
-
-    void deleteSlot(int dayOfWeek, int clinicId);
 
     void delete(int id, int doctorId);
 
@@ -28,6 +24,6 @@ public interface ClinicService {
 
     void update(Clinic clinic, Integer doctorId);
 
-    void setSlots(int clinicId, List<Slot> slots);
+    void setSlots(SlotsTo slots);
 }
 

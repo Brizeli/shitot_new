@@ -1,14 +1,15 @@
 package com.shitot.web;
 
 import com.shitot.model.Clinic;
-import com.shitot.model.Slot;
 import com.shitot.service.ClinicService;
+import com.shitot.to.SlotsTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Oleg on 03.08.2016.
@@ -40,13 +41,13 @@ public class ClinicRestController {
         service.delete(id, doctorId);
     }
 
-    @RequestMapping(value = "/{id}/slots", method = RequestMethod.POST)
-    public void updateSlots(@RequestBody List<Slot> slots, @PathVariable("id") int clinicId) {
-        service.setSlots(clinicId, slots);
+    @RequestMapping(value = "/setslots", method = RequestMethod.POST)
+    public void updateSlots(@Valid SlotsTo slotsTo) {
+        service.setSlots(slotsTo);
     }
 
     @RequestMapping(value = "/{id}/slots", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Slot> getSlots(@PathVariable int id) {
+    public Map<Integer, String> getSlots(@PathVariable int id) {
         return service.getSlots(id);
     }
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,24 +62,24 @@ public class ClinicRestController {
     }
 
 
-    @RequestMapping(value = "/dayslot/{dayofweek}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Slot getDaySlot(@PathVariable int dayofweek, @PathVariable int id) {
-        return service.getDaySlot(dayofweek, id);
-    }
-
-    @RequestMapping(value = "/setslot/{day}/{id}/{hours}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String setSlot(@PathVariable int day, @PathVariable int id, @PathVariable String hours) {
-        String hoursString[] = hours.split(",");
-        int hourseInt[] = new int[hoursString.length];
-        for (int i = 0; i < hoursString.length; ++i)
-            hourseInt[i] = Integer.parseInt(hoursString[i]);
-        service.setSlot(day, id, hourseInt);
-        return "OK";
-    }
-
-    @RequestMapping(value = "/deleteslot/{day}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String deleteSlot(@PathVariable int day, @PathVariable int id) {
-        service.deleteSlot(day, id);
-        return "OK";
-    }
+//    @RequestMapping(value = "/dayslot/{dayofweek}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Slot getDaySlot(@PathVariable int dayofweek, @PathVariable int id) {
+//        return service.getDaySlot(dayofweek, id);
+//    }
+//
+//    @RequestMapping(value = "/setslot/{day}/{id}/{hours}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public String setSlot(@PathVariable int day, @PathVariable int id, @PathVariable String hours) {
+//        String hoursString[] = hours.split(",");
+//        int hourseInt[] = new int[hoursString.length];
+//        for (int i = 0; i < hoursString.length; ++i)
+//            hourseInt[i] = Integer.parseInt(hoursString[i]);
+//        service.setSlot(day, id, hourseInt);
+//        return "OK";
+//    }
+//
+//    @RequestMapping(value = "/deleteslot/{day}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public String deleteSlot(@PathVariable int day, @PathVariable int id) {
+//        service.deleteSlot(day, id);
+//        return "OK";
+//    }
 }

@@ -2,9 +2,11 @@ package com.shitot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Next on 12.07.2016.
@@ -22,13 +24,17 @@ public class Clinic extends BaseEntity {
     public static final String GET = "Clinic.get";
     public static final String DELETE = "Clinic.delete";
     private String name;
+
     @NotEmpty
     private String city;
+
     @NotEmpty
     private String address;
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "clinic", fetch = FetchType.EAGER)
-    @OrderBy("dayOfWeek")
-    private Set<Slot> slots;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyColumn(name = "day_of_week")
+    @Column(name = "intervals")
+    private Map<Integer, String> slots = new HashMap<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -83,11 +89,12 @@ public class Clinic extends BaseEntity {
         this.doctor = doctor;
     }
 
-    public Set<Slot> getSlots() {
+    public Map<Integer, String> getSlots() {
         return slots;
     }
 
-    public void setSlots(Set<Slot> slots) {
-        this.slots = slots;
+    public void setSlots(Map<Integer, String> slots) {
+        this.slots.clear();
+        this.slots.putAll(slots);
     }
 }

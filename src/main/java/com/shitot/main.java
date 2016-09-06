@@ -1,11 +1,12 @@
 package com.shitot;
 
-import com.shitot.model.*;
+import com.shitot.model.Clinic;
+import com.shitot.model.Doctor;
 import com.shitot.repository.ClinicRepository;
-import com.shitot.repository.DoctorRepository;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Next on 12.07.2016.
@@ -24,7 +25,7 @@ public class main {
 //            DoctorRepository repository = appCtx.getBean(DoctorRepository.class);
             ClinicRepository repository = appCtx.getBean(ClinicRepository.class);
             Clinic clinic = repository.get(21,3);
-            repository.setSlot(1,21,1,2,3);
+            //repository.setSlot(1,21,1,2,3);
             System.out.println(clinic);
 
 //            repository.setSpecialties(3, "Specialty1");

@@ -33,6 +33,7 @@
         <webjars-bootstrap-multiselect.version>0.9.13</webjars-bootstrap-multiselect.version>
         <webjars-x-editable-bootstrap3.version>1.5.1-1</webjars-x-editable-bootstrap3.version>
         <webjars-bootstrap-datepicker.version>1.6.1</webjars-bootstrap-datepicker.version>
+        <webjars-bootstrap-checkbox-x.version>1.5.4</webjars-bootstrap-checkbox-x.version>
     </properties>
     <build>
         <finalName>shitot</finalName>
@@ -205,6 +206,11 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap-datepicker</artifactId>
             <version>${webjars-bootstrap-datepicker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrap-checkbox-x</artifactId>
+            <version>${webjars-bootstrap-checkbox-x.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>

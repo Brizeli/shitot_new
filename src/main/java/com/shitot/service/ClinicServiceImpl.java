@@ -1,13 +1,14 @@
 package com.shitot.service;
 
 import com.shitot.model.Clinic;
-import com.shitot.model.Slot;
 import com.shitot.repository.ClinicRepository;
+import com.shitot.to.SlotsTo;
 import com.shitot.utils.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Oleg on 03.08.2016.
@@ -46,34 +47,34 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
-    public void setSlots(int clinicId, List<Slot> slots) {
-        if (!repository.setSlots(clinicId, slots))
-            throw new NotFoundException("Clinic with id " + clinicId + " not found");
+    public void setSlots(SlotsTo slotsTo) {
+        if (!repository.setSlots(slotsTo))
+            throw new NotFoundException("Not found clinic with id=" + (slotsTo == null ? "null" : slotsTo.getClinicId()));
     }
 
     @Override
-    public List<Slot> getSlots(int clinicId) {
+    public Map<Integer, String> getSlots(int clinicId) {
         return repository.getSlotsByClinic(clinicId);
     }
 
     /////////////////////////////////////////////////////////////////
 
 
-    @Override
-    public Slot getDaySlot(int dayOfWeek, int clinicId) {
-        return repository.getSlotByDayClinic(dayOfWeek, clinicId);
-    }
-
-    @Override
-    public void setSlot(int dayOfWeek, int clinicId, int... hours) {
-        repository.setSlot(dayOfWeek, clinicId, hours);
-    }
-
-    @Override
-    public void deleteSlot(int dayOfWeek, int clinicId) {
-        repository.deleteSlot(dayOfWeek, clinicId);
-    }
-
+//    @Override
+//    public Slot getDaySlot(int dayOfWeek, int clinicId) {
+//        return repository.getSlotByDayClinic(dayOfWeek, clinicId);
+//    }
+//
+//    @Override
+//    public void setSlot(int dayOfWeek, int clinicId, int... hours) {
+//        repository.setSlot(dayOfWeek, clinicId, hours);
+//    }
+//
+//    @Override
+//    public void deleteSlot(int dayOfWeek, int clinicId) {
+//        repository.deleteSlot(dayOfWeek, clinicId);
+//    }
+//
     @Override
     public void setClinic(Integer id, String name, String city, String address, int doctorId) {
         repository.setClinic(id, name, city, address, doctorId);

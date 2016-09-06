@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="webjars/datatables/1.10.12/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="webjars/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
     <link rel="stylesheet" href="webjars/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.css">
+    <link rel="stylesheet" href="webjars/bootstrap-checkbox-x/1.5.4/css/checkbox-x.css">
+    <link rel="stylesheet" href="webjars/bootstrap-checkbox-x/1.5.4/css/theme-krajee-flatblue.min.css">
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="shortcut icon" href="resources/images/fav.png">
     <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
@@ -27,6 +29,7 @@
     <script type="text/javascript" src="webjars/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.he.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap-checkbox-x/1.5.4/js/checkbox-x.min.js"></script>
     <script type="text/javascript" src="resources/js/jsUtils.js"></script>
     <script type="text/javascript"><jsp:include page="i18n.jsp"/></script>
 </head>

@@ -46,6 +46,7 @@
 </div>
 <jsp:include page="editDoctor.jsp"/>
 <jsp:include page="editClinic.jsp"/>
+<jsp:include page="editSlots.jsp"/>
 <script type="text/javascript" src="resources/js/doctorDatatables.js"></script>
 <script type="text/javascript" src="resources/js/doctors.js"></script>
 <script type="text/javascript" src="resources/js/clinics.js"></script>
