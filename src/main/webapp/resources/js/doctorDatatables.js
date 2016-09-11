@@ -79,9 +79,9 @@ $(function () {
 function popovers() {
     $('[data-toggle="popover"]').popover({
         trigger: 'focus',
+        placement: lng == 'en' ? 'right' : 'left',
         content: function () {
             var s = atob($(this).data('file'));
-            // console.log(s);
             return '<img src="' + s + '" width="500px">';
         },
         html: true,
