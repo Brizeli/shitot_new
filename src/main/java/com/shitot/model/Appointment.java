@@ -51,8 +51,8 @@ public class Appointment extends BaseEntity {
     private Doctor doctor;
     @ManyToOne(fetch = FetchType.LAZY)
     private Doctor alternativeDoctor;
-    private boolean commEstablished;
-    private boolean sessionStarted;
+    private boolean commEstablished = false;
+    private boolean sessionStarted = false;
 
     public Appointment() {
     }
@@ -65,8 +65,8 @@ public class Appointment extends BaseEntity {
         this.paymentAmount = paymentAmount;
         this.checkNumber = checkNumber;
         this.description = description;
-        this.commEstablished = commEstablished = false;
-        this.sessionStarted = sessionStarted = false;
+        this.commEstablished = commEstablished;
+        this.sessionStarted = sessionStarted;
     }
 
     public Patient getPatient() {

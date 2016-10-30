@@ -71,7 +71,7 @@ public class AppointmentRestController {
     public void createOrUpdate(@Valid AppointmentTo appointmentTo) {
         if (appointmentTo.isNew()) {
             service.save(appointmentTo);
-        } else service.update(appointmentTo);
+        } //else service.update(appointmentTo);
     }
 
     @RequestMapping(value = "/android", method = RequestMethod.POST)
