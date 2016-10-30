@@ -72,9 +72,7 @@ function updateTable() {
     fillOptions();
 }
 function renderAppointmentInfo(appointment) {
-    var res = /*'<a class="btn btn-xs btn-success" onclick="editAppointment(' + appointment.id + ')" title="Edit">'+i18n['app.buttons.edit']+'</a> ';
-    res += '<a class="btn btn-xs btn-danger" onclick="deleteAppointment(' + appointment.id + ')" title="Delete">'+i18n['app.buttons.delete']+'</a>';
-    res += */'<br>'+i18n['apo.apoDate']+': ' + (appointment.appointmentDate ? appointment.appointmentDate : '');
+    var res = '<br>'+i18n['apo.apoDate']+': ' + (appointment.appointmentDate ? appointment.appointmentDate : '');
     res += '<br>'+i18n['apo.applyDate']+': ' + (appointment.applyDate ? appointment.applyDate : '');
     res += '<br>'+i18n['apo.payAmount']+': ' + appointment.paymentAmount;
     res += '<br>'+i18n['apo.payDate']+': ' + (appointment.paymentDate ? appointment.paymentDate : '');
