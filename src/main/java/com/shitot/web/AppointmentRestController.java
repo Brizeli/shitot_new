@@ -6,6 +6,9 @@ import com.shitot.model.Symptom;
 import com.shitot.service.AppointmentService;
 import com.shitot.to.AppointmentTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,9 @@ public class AppointmentRestController {
     @Autowired
     AppointmentService service;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping(value = "/all/patient-{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Appointment> getByPatientId(@PathVariable("id") int patientId) {
         return service.getAll(patientId);
@@ -34,8 +40,8 @@ public class AppointmentRestController {
 
     @RequestMapping(value = "/all/doctor-{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Appointment> getByDoctorIdBetweenDates(@PathVariable("id") int doctorId,
-                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+                                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return service.getByDoctorIdBetweenDates(doctorId, startDate != null ? startDate : LocalDate.of(1, 1, 1),
             endDate != null ? endDate : LocalDate.of(3000, 1, 1));
     }
@@ -70,12 +76,13 @@ public class AppointmentRestController {
     @RequestMapping(method = RequestMethod.POST)
     public void create(@Valid AppointmentTo appointmentTo) {
         if (appointmentTo.isNew()) service.save(appointmentTo);
+        else throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicate_appointment", null,
+            LocaleContextHolder.getLocale()));
     }
 
     @RequestMapping(value = "/android", method = RequestMethod.POST)
-    public @ResponseBody void createOrUpdateAndroid(@RequestBody AppointmentTo appointmentTo) {
-        if (appointmentTo.isNew()) {
-            service.save(appointmentTo);
-        } else service.update(appointmentTo);
+    @ResponseBody
+    public void updateAndroid(@RequestBody AppointmentTo appointmentTo) {
+        service.update(appointmentTo);
     }
 }
