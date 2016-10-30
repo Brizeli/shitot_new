@@ -51,18 +51,22 @@ public class Appointment extends BaseEntity {
     private Doctor doctor;
     @ManyToOne(fetch = FetchType.LAZY)
     private Doctor alternativeDoctor;
+    private boolean commEstablished;
+    private boolean sessionStarted;
 
     public Appointment() {
     }
 
     public Appointment(LocalDate applyDate, LocalDate appointmentDate, LocalDate paymentDate, String paymentAmount,
-                       String checkNumber, String description) {
+                       String checkNumber, String description, boolean commEstablished, boolean sessionStarted) {
         this.applyDate = applyDate;
         this.appointmentDate = appointmentDate;
         this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
         this.checkNumber = checkNumber;
         this.description = description;
+        this.commEstablished = commEstablished = false;
+        this.sessionStarted = sessionStarted = false;
     }
 
     public Patient getPatient() {
@@ -161,11 +165,29 @@ public class Appointment extends BaseEntity {
         this.alternativeDoctor = alternativeDoctor;
     }
 
+    public boolean isCommEstablished() {
+        return commEstablished;
+    }
+
+    public void setCommEstablished(boolean commEstablished) {
+        this.commEstablished = commEstablished;
+    }
+
+    public boolean isSessionStarted() {
+        return sessionStarted;
+    }
+
+    public void setSessionStarted(boolean sessionStarted) {
+        this.sessionStarted = sessionStarted;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
                    "patient=" + patient +
                    ", applyDate=" + applyDate +
+                   ", commEstablished=" + commEstablished +
+                   ", sessionStarted=" + sessionStarted +
                    ", appointmentDate=" + appointmentDate +
                    ", paymentDate=" + paymentDate +
                    ", paymentAmount='" + paymentAmount + '\'' +

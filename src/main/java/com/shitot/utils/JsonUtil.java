@@ -1,13 +1,9 @@
 package com.shitot.utils;
 
 import com.shitot.model.Appointment;
-import com.shitot.model.Clinic;
 import com.shitot.model.Doctor;
 import com.shitot.to.AppointmentTo;
 import com.shitot.to.DoctorTo;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Next on 29.07.2016.
@@ -37,7 +33,8 @@ public class JsonUtil {
     public static Appointment createNewFromTo(AppointmentTo appointmentTo) {
         return new Appointment(appointmentTo.getApplyDate(), appointmentTo.getAppointmentDate(),
                                                      appointmentTo.getPaymentDate(), appointmentTo.getPaymentAmount(),
-                                                     appointmentTo.getCheckNumber(), appointmentTo.getDescription());
+                                                     appointmentTo.getCheckNumber(), appointmentTo.getDescription(),
+                appointmentTo.isCommEstablished(), appointmentTo.isSessionStarted());
     }
 
     public static Appointment updateFromTo(Appointment appointment, AppointmentTo appointmentTo) {

@@ -46,6 +46,11 @@ public class ClinicRestController {
         service.setSlots(slotsTo);
     }
 
+    @RequestMapping(value = "/setslotsAndroid", method = RequestMethod.POST)
+    public void updateSlotsAndroid(@RequestBody SlotsTo slotsToo) {
+        updateSlots(slotsToo);
+    }
+
     @RequestMapping(value = "/{id}/slots", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<Integer, String> getSlots(@PathVariable int id) {
         return service.getSlots(id);

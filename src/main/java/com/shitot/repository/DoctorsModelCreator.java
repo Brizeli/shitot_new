@@ -129,7 +129,7 @@ public class DoctorsModelCreator {
                     LocalDate.parse(getRndInt(2000,2016)+"-0"+getRndInt(1,9)+"-"+getRndInt(10,28)),
                     LocalDate.parse(getRndInt(2000,2016)+"-0"+getRndInt(1,9)+"-"+getRndInt(10,28)),
                     LocalDate.parse(getRndInt(2000,2016)+"-0"+getRndInt(1,9)+"-"+getRndInt(10,28)),
-                    "300$","43","blah-blah-blah"
+                    "300$","43","blah-blah-blah", false, false
             );
             Set<Problem> problems=new LinkedHashSet<>();
             Set<Symptom>symptoms=new LinkedHashSet<>();

@@ -73,4 +73,9 @@ public class AppointmentRestController {
             service.save(appointmentTo);
         } else service.update(appointmentTo);
     }
+
+    @RequestMapping(value = "/android", method = RequestMethod.POST)
+    public @ResponseBody void createOrUpdateAndroid(@RequestBody AppointmentTo appointmentTo) {
+        createOrUpdate(appointmentTo);
+    }
 }

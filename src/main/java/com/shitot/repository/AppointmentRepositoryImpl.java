@@ -132,7 +132,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     public List<Appointment> getAllByAltDoctorBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate) {
         return em.createNamedQuery(Appointment.BY_DOCTOR_BETWEEN_DATES)
                  .setParameter("id", doctorId)
-                 .setParameter("statDate", startDate)
+                 .setParameter("startDate", startDate)
                  .setParameter("endDate", endDate)
                  .getResultList();
     }

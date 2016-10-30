@@ -21,6 +21,8 @@ public class AppointmentTo {
     private String description;
     private String[] problems = {};
     private String[] symptoms = {};
+    private boolean commEstablished;
+    private boolean sessionStarted;
 
     public AppointmentTo() {
     }
@@ -103,6 +105,22 @@ public class AppointmentTo {
 
     public void setSymptoms(String[] symptoms) {
         this.symptoms = symptoms;
+    }
+
+    public boolean isCommEstablished() {
+        return commEstablished;
+    }
+
+    public void setCommEstablished(boolean commEstablished) {
+        this.commEstablished = commEstablished;
+    }
+
+    public boolean isSessionStarted() {
+        return sessionStarted;
+    }
+
+    public void setSessionStarted(boolean sessionStarted) {
+        this.sessionStarted = sessionStarted;
     }
 
     public boolean isNew() {
