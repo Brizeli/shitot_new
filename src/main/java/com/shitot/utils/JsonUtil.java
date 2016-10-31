@@ -44,6 +44,8 @@ public class JsonUtil {
         appointment.setPaymentAmount(appointmentTo.getPaymentAmount());
         appointment.setCheckNumber(appointmentTo.getCheckNumber());
         appointment.setDescription(appointmentTo.getDescription());
+        appointment.setCommEstablished(appointmentTo.isCommEstablished());
+        appointment.setSessionStarted(appointmentTo.isSessionStarted());
         return appointment;
     }
 }
