@@ -27,7 +27,7 @@ public class DoctorRestController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping
     public List<Doctor> getAll() {
         List<Doctor> all = service.getAll();
         return all;

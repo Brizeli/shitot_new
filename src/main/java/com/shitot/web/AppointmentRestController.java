@@ -4,6 +4,7 @@ import com.shitot.model.Appointment;
 import com.shitot.model.Problem;
 import com.shitot.model.Symptom;
 import com.shitot.service.AppointmentService;
+import com.shitot.to.AppointmentClientDoctorTo;
 import com.shitot.to.AppointmentTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -21,23 +22,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest/appointments")
 public class AppointmentRestController {
-
+    
     @Autowired
     AppointmentService service;
-
+    
     @Autowired
     private MessageSource messageSource;
-
+    
+    @RequestMapping("/all")
+    public List<Appointment> getAll() {
+        List<Appointment> all = service.getAll();
+        return all;
+    }
+    
     @RequestMapping(value = "/all/patient-{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Appointment> getByPatientId(@PathVariable("id") int patientId) {
         return service.getAll(patientId);
     }
-
+    
     @RequestMapping(value = "/all/doctor-{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Appointment> getByDoctorId(@PathVariable("id") int doctorId) {
         return service.getByDoctorId(doctorId);
     }
-
+    
     @RequestMapping(value = "/all/doctor-{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Appointment> getByDoctorIdBetweenDates(@PathVariable("id") int doctorId,
                                                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -45,41 +52,46 @@ public class AppointmentRestController {
         return service.getByDoctorIdBetweenDates(doctorId, startDate != null ? startDate : LocalDate.of(1, 1, 1),
             endDate != null ? endDate : LocalDate.of(3000, 1, 1));
     }
-
+    
     @RequestMapping(value = "/symptoms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Symptom> getAllSymptoms() {
         List<Symptom> allSymptoms = service.getAllSymptoms();
         return allSymptoms;
     }
-
+    
     @RequestMapping(value = "/problems", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Problem> getAllProblems() {
         List<Problem> allProblems = service.getAllProblems();
         return allProblems;
     }
-
+    
     @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Appointment get(@PathVariable int id) {
         return service.get(id);
     }
-
+    
     @RequestMapping(value = "/{id}/{alt}", method = RequestMethod.DELETE)
     public void removeDoctor(@PathVariable int id, @PathVariable boolean alt) {
         service.removeDoctor(id, alt);
     }
-
+    
     @RequestMapping(value = "/{id}/{doctorId}/{alt}", method = RequestMethod.POST)
     public void setDoctor(@PathVariable int id, @PathVariable int doctorId, @PathVariable boolean alt) {
         service.setDoctor(id, doctorId, alt);
     }
-
+    
     @RequestMapping(method = RequestMethod.POST)
     public void create(@Valid AppointmentTo appointmentTo) {
         if (appointmentTo.isNew()) service.save(appointmentTo);
         else throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicate_appointment", null,
             LocaleContextHolder.getLocale()));
     }
-
+    @RequestMapping(method = RequestMethod.POST)
+    public void createOrUpdate(@Valid AppointmentClientDoctorTo to) {
+        if (to.isNew()) service.save(to);
+        else service.update(to);
+    }
+    
     @RequestMapping(value = "/android", method = RequestMethod.POST)
     @ResponseBody
     public void updateAndroid(@RequestBody AppointmentTo appointmentTo) {

@@ -57,7 +57,12 @@ public class RootController {
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
-
+    @RequestMapping("/appointmentsClients")
+    public String appList(Model model){
+        model.addAttribute("page","appointmentClientListDataTable");
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
+        return "index";
+    }
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String userList(Model model) {
         model.addAttribute("page", "userListDataTable");

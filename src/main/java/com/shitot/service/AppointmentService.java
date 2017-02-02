@@ -3,12 +3,14 @@ package com.shitot.service;
 import com.shitot.model.Appointment;
 import com.shitot.model.Problem;
 import com.shitot.model.Symptom;
+import com.shitot.to.AppointmentClientDoctorTo;
 import com.shitot.to.AppointmentTo;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public interface AppointmentService {
+    void save(AppointmentClientDoctorTo to);
 
     Appointment save(AppointmentTo appointment);
 
@@ -37,4 +39,5 @@ public interface AppointmentService {
     List<Appointment> getByDoctorId(int doctorId);
     
     List<Appointment> getByDoctorIdBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate);
+    
 }

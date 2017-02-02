@@ -79,6 +79,8 @@ var i18n = [];
 "apo.addsymptom",
 "apo.description",
 "apo.addapofor",
+"apo.addapo",
+"apo.editapo",
 "patient.newpatient",
 "app.buttons.appointments",
 "app.buttons.delete",
@@ -93,8 +95,7 @@ var i18n = [];
 "schedule.day3",
 "schedule.day4",
 "schedule.day5",
-"schedule.day6",
-"schedule.openHours"
+"schedule.day6"
 }%>'>
 i18n['${key}'] = '<spring:message code="${key}" javaScriptEscape="true"/>';
 </c:forEach>

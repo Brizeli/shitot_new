@@ -4,12 +4,12 @@
     <h3>
         <a class="btn btn-sm btn-info" id="addAppointment" onclick="addAppointment(${patientId})"><spring:message code="apo.newApo"/></a>
     </h3>
-    <h3><spring:message code="patient.patient"/>: <span id="patient1"></span></h3>
     <div class="view-box">
         <table class="table table-striped display" id="dataTable">
             <thead>
             <tr>
                 <th><spring:message code="apo.info"/></th>
+                <th><spring:message code="patient.patient"/></th>
                 <th><spring:message code="apo.problems"/></th>
                 <th><spring:message code="app.doctors"/></th>
             </tr>
@@ -17,5 +17,5 @@
         </table>
     </div>
 </div>
-<jsp:include page="includes/editAppointment.jsp"/>
-<script type="text/javascript" src="resources/js/appointmentDatatables.js"></script>
+<jsp:include page="includes/editAppointmentClient.jsp"/>
+<script type="text/javascript" src="resources/js/appointmentClientDatatables.js"></script>

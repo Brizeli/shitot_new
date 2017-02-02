@@ -7,9 +7,10 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @NamedQueries({
-                  @NamedQuery(name = Appointment.ALL_SORTED, query = "select a from appointments a order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.ALL_SORTED, query = "select a from appointments a left join fetch a.doctor d " +
+                                                                         "left join fetch a.alternativeDoctor ad order by a.applyDate desc"),
                   @NamedQuery(name = Appointment.BY_PATIENT, query = "select a from appointments a left join fetch a.doctor d " +
-                                        "left join fetch a.alternativeDoctor ad where a.patient.id=:id order by a.applyDate desc"),
+                                                                         "left join fetch a.alternativeDoctor ad where a.patient.id=:id order by a.applyDate desc"),
                   @NamedQuery(name = Appointment.BY_DOCTOR, query = "select a from appointments a where a.doctor.id=:id " +
                                         "order by a.applyDate desc"),
                   @NamedQuery(name = Appointment.BY_ALTDOCTOR, query = "select a from appointments a where a.alternativeDoctor.id=:id " +
@@ -47,9 +48,9 @@ public class Appointment extends BaseEntity {
     private Set<Problem> problems;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Symptom> symptoms;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Doctor doctor;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Doctor alternativeDoctor;
     private boolean commEstablished = false;
     private boolean sessionStarted = false;

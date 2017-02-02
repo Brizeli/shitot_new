@@ -27,5 +27,5 @@
         </table>
     </div>
 </div>
-<jsp:include page="editPatient.jsp"/>
+<jsp:include page="includes/editPatient.jsp"/>
 <script type="text/javascript" src="resources/js/patientDatatables.js"></script>
