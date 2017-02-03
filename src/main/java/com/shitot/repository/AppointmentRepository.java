@@ -41,4 +41,6 @@ public interface AppointmentRepository {
     void setDoctors(Appointment appointment, Integer doctorId, Integer altdoctorId);
     
     boolean delete(int id);
+    
+    List<Appointment> getFiltered(LocalDate startDate, LocalDate endDate);
 }

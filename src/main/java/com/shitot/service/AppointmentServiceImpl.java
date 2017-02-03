@@ -133,4 +133,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void delete(int id) {
         if (!repository.delete(id)) throw new NotFoundException("Not found appointment with id=" + id);
     }
+    
+    @Override
+    public List<Appointment> getFiltered(LocalDate startDate, LocalDate endDate) {
+        return repository.getFiltered(startDate,endDate);
+    }
 }

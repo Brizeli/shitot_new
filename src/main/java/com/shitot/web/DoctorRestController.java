@@ -30,7 +30,7 @@ public class DoctorRestController {
         List<Doctor> all = service.getAll();
         return all;
     }
-
+    
     @RequestMapping("/{id}")
     public Doctor getWithCertificate(@PathVariable int id) {
         return service.getWithCertificate(id);

@@ -15,7 +15,7 @@ $(function () {
             {
                 defaultContent: '',
                 render: function (data, type, row) {
-                    return renderAppointmentInfo(row);
+                    return renderAppointmentInfo(type, row);
                 }
             },
             {
@@ -28,7 +28,8 @@ $(function () {
                 defaultContent: '',
                 render: function (data, type, row) {
                     return renderAppointmentProblems(row);
-                }
+                },
+                orderable: false
             },
             {
                 defaultContent: '',
@@ -45,6 +46,10 @@ $(function () {
                 // language: 'he',
                 autoclose: true,
                 todayHighlight: true
+            });
+            $('#filter').submit(function () {
+                updateTable();
+                return false;
             });
             fillOptions();
             $('.nav').find('.active').removeClass('active');
@@ -80,18 +85,20 @@ function fillOptions() {
     });
 }
 function updateTable() {
-    $.get(appointmentsRestUrl, function (data) {
+    $.post(appointmentsRestUrl+'/filter', $('#filter').serialize(), function (data) {
         table.clear().rows.add(data).draw();
         fillOptions();
     });
 }
-function renderAppointmentInfo(appointment) {
+function renderAppointmentInfo(type, appointment) {
     var res = '<a class="btn btn-sm btn-info" onclick="editAppointment(' + appointment.id + ')">' + i18n['app.buttons.edit'] + '</a> ';
     res += '<br>' + i18n['apo.applyDate'] + ': ' + (appointment.applyDate ? appointment.applyDate : '');
     res += '<br>' + i18n['apo.apoDate'] + ': ' + (appointment.appointmentDate ? appointment.appointmentDate : '');
     res += '<br>' + i18n['apo.payAmount'] + ': ' + appointment.paymentAmount;
     res += '<br>' + i18n['apo.payDate'] + ': ' + (appointment.paymentDate ? appointment.paymentDate : '');
     res += '<br>' + i18n['apo.cheque'] + ': ' + appointment.checkNumber;
+    if (type == 'filter')
+        return appointment.applyDate;
     return res;
 }
 function renderPatientInfo(appointment) {

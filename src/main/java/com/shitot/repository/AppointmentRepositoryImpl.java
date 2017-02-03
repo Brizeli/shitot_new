@@ -171,6 +171,14 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
     
     @Override
+    public List<Appointment> getFiltered(LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Appointment.FILTERED)
+                 .setParameter("startDate", startDate)
+                 .setParameter("endDate", endDate)
+                 .getResultList();
+    }
+    
+    @Override
     @Transactional
     public void setDoctor(Appointment appointment, int doctorId, boolean alt) {
         Doctor doctor = em.getReference(Doctor.class, doctorId);

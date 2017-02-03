@@ -26,6 +26,15 @@ public class AppointmentRestController {
         return service.getAll();
     }
     
+    @RequestMapping(value = "/filter", method = RequestMethod.POST)
+    public List<Appointment> getFiltered(@RequestParam(value = "startDate", required = false)
+                                         @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate startDate,
+                                         @RequestParam(value = "endDate", required = false)
+                                         @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate endDate) {
+        return service.getFiltered(startDate != null ? startDate : LocalDate.of(1, 1, 1),
+            endDate != null ? endDate : LocalDate.of(3000, 1, 1));
+    }
+    
     @RequestMapping("/doctor-{id}")
     public List<Appointment> getByDoctorId(@PathVariable("id") int doctorId) {
         return service.getByDoctorId(doctorId);

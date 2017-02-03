@@ -19,6 +19,8 @@ import java.util.Set;
                                                                                 "(select a1.id from appointments a1 where a1.alternativeDoctor.id=:id ) or a.id in " +
                                                                                 "(select a2.id from appointments a2 where a2.doctor.id=:id ) order by a.applyDate desc"),
                   @NamedQuery(name = Appointment.BY_DOCTOR_BETWEEN_DATES, query = "select a from appointments a where a.doctor.id=:id and " +
+                                                                                      "a.applyDate between :startDate and :endDate order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.FILTERED, query = "select a from appointments a where " +
                                                                                       "a.applyDate between :startDate and :endDate order by a.applyDate desc")
 })
 @Entity(name = "appointments")
@@ -30,6 +32,7 @@ public class Appointment extends BaseEntity {
     public static final String BY_DOCTOR_AND_ALT = "Appointment.getByDoctorAndAlt";
     //    public static final String BY_PATIENT = "Appointment.getByPatient";
     public static final String BY_DOCTOR_BETWEEN_DATES = "Appointment.getByDoctorBetweenDates";
+    public static final String FILTERED = "Appointment.getFiltered";;
     
     //    @ManyToOne
 //    private Patient patient;
