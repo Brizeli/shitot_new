@@ -61,7 +61,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         repository.setSymptoms(id, appointmentTo.getSymptoms());
     }
     
-    private void setProblemsSymptoms(Integer id, AppointmentClientDoctorTo to) {
+    private void setProblemsSymptoms(int id, AppointmentClientDoctorTo to) {
         repository.setProblems(id, to.getProblems());
         repository.setSymptoms(id, to.getSymptoms());
     }
