@@ -14,6 +14,8 @@ public interface AppointmentService {
 
     Appointment save(AppointmentTo appointment);
 
+    void update(AppointmentClientDoctorTo to);
+    
     List<Problem> getAllProblems();
 
     List<Symptom> getAllSymptoms();
@@ -40,4 +42,5 @@ public interface AppointmentService {
     
     List<Appointment> getByDoctorIdBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate);
     
+    void delete(int id);
 }

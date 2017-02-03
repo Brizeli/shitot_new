@@ -7,17 +7,12 @@ import com.shitot.service.AppointmentService;
 import com.shitot.to.AppointmentClientDoctorTo;
 import com.shitot.to.AppointmentTo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/rest/appointments")
@@ -26,26 +21,17 @@ public class AppointmentRestController {
     @Autowired
     AppointmentService service;
     
-    @Autowired
-    private MessageSource messageSource;
-    
-    @RequestMapping("/all")
+    @RequestMapping
     public List<Appointment> getAll() {
-        List<Appointment> all = service.getAll();
-        return all;
+        return service.getAll();
     }
     
-    @RequestMapping(value = "/all/patient-{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Appointment> getByPatientId(@PathVariable("id") int patientId) {
-        return service.getAll(patientId);
-    }
-    
-    @RequestMapping(value = "/all/doctor-{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("/doctor-{id}")
     public List<Appointment> getByDoctorId(@PathVariable("id") int doctorId) {
         return service.getByDoctorId(doctorId);
     }
     
-    @RequestMapping(value = "/all/doctor-{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/doctor-{id}", method = RequestMethod.POST)
     public List<Appointment> getByDoctorIdBetweenDates(@PathVariable("id") int doctorId,
                                                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
@@ -53,21 +39,24 @@ public class AppointmentRestController {
             endDate != null ? endDate : LocalDate.of(3000, 1, 1));
     }
     
-    @RequestMapping(value = "/symptoms", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("/symptoms")
     public List<Symptom> getAllSymptoms() {
-        List<Symptom> allSymptoms = service.getAllSymptoms();
-        return allSymptoms;
+        return service.getAllSymptoms();
     }
     
-    @RequestMapping(value = "/problems", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("/problems")
     public List<Problem> getAllProblems() {
-        List<Problem> allProblems = service.getAllProblems();
-        return allProblems;
+        return service.getAllProblems();
     }
     
-    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("/{id}")
     public Appointment get(@PathVariable int id) {
         return service.get(id);
+    }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable int id) {
+        service.delete(id);
     }
     
     @RequestMapping(value = "/{id}/{alt}", method = RequestMethod.DELETE)
@@ -80,12 +69,6 @@ public class AppointmentRestController {
         service.setDoctor(id, doctorId, alt);
     }
     
-    @RequestMapping(method = RequestMethod.POST)
-    public void create(@Valid AppointmentTo appointmentTo) {
-        if (appointmentTo.isNew()) service.save(appointmentTo);
-        else throw new DataIntegrityViolationException(messageSource.getMessage("exception.duplicate_appointment", null,
-            LocaleContextHolder.getLocale()));
-    }
     @RequestMapping(method = RequestMethod.POST)
     public void createOrUpdate(@Valid AppointmentClientDoctorTo to) {
         if (to.isNew()) service.save(to);

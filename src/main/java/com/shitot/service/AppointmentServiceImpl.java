@@ -22,10 +22,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     @Transactional
     public void save(AppointmentClientDoctorTo to) {
-        Patient patient = new Patient(to.getPatName(), to.getAge(), to.getTelNumber());
-//        appointment.setPatient(patient);
         Appointment appointment = repository.save(JsonUtil.createNewFromTo(to));
+        setProblemsSymptoms(appointment.getId(),to);
+        repository.setDoctors(appointment,to.getDoctorId(),to.getAltdoctorId());
     }
+    
     
     @Override
     @Transactional
@@ -33,6 +34,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         Appointment appointment = repository.save(JsonUtil.createNewFromTo(appointmentTo));
         setProblemsSymptomsPatient(appointment.getId(), appointmentTo);
         return appointment;
+    }
+    
+    @Override
+    @Transactional
+    public void update(AppointmentClientDoctorTo to) {
+        int id = to.getId();
+        Appointment appointment = get(id);
+        repository.save(JsonUtil.updateFromTo(appointment, to));
+        setProblemsSymptoms(id, to);
     }
     
     @Override
@@ -49,6 +59,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         repository.setPatient(id, appointmentTo.getPatientId());
         repository.setProblems(id, appointmentTo.getProblems());
         repository.setSymptoms(id, appointmentTo.getSymptoms());
+    }
+    
+    private void setProblemsSymptoms(Integer id, AppointmentClientDoctorTo to) {
+        repository.setProblems(id, to.getProblems());
+        repository.setSymptoms(id, to.getSymptoms());
     }
     
     @Override
@@ -112,5 +127,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> getByDoctorIdBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate) {
         return repository.getAllByAltDoctorBetweenDates(doctorId, startDate, endDate);
+    }
+    
+    @Override
+    public void delete(int id) {
+        if (!repository.delete(id)) throw new NotFoundException("Not found appointment with id=" + id);
     }
 }

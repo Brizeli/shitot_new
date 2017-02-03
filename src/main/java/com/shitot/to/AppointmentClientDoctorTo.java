@@ -2,13 +2,10 @@ package com.shitot.to;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class AppointmentClientDoctorTo {
     private Integer id;
-    @NotNull
-    private Integer patientId;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate applyDate;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -20,20 +17,19 @@ public class AppointmentClientDoctorTo {
     private String description;
     
     private String patName;
-    private int age;
+    private Integer age;
     private String telNumber;
     
     private String[] problems = {};
     private String[] symptoms = {};
     
-    private int doctorId;
-    private int altdoctorId;
+    private Integer doctorId;
+    private Integer altdoctorId;
     
     private boolean commEstablished;
     private boolean sessionStarted;
     
-    public AppointmentClientDoctorTo() {
-    }
+    public AppointmentClientDoctorTo() {}
     
     public Integer getId() {
         return id;
@@ -41,14 +37,6 @@ public class AppointmentClientDoctorTo {
     
     public void setId(Integer id) {
         this.id = id;
-    }
-    
-    public Integer getPatientId() {
-        return patientId;
-    }
-    
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
     }
     
     public LocalDate getApplyDate() {
@@ -143,11 +131,11 @@ public class AppointmentClientDoctorTo {
         this.patName = patName;
     }
     
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
     
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
     
@@ -159,19 +147,19 @@ public class AppointmentClientDoctorTo {
         this.telNumber = telNumber;
     }
     
-    public int getDoctorId() {
+    public Integer getDoctorId() {
         return doctorId;
     }
     
-    public void setDoctorId(int doctorId) {
+    public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
     }
     
-    public int getAltdoctorId() {
+    public Integer getAltdoctorId() {
         return altdoctorId;
     }
     
-    public void setAltdoctorId(int altdoctorId) {
+    public void setAltdoctorId(Integer altdoctorId) {
         this.altdoctorId = altdoctorId;
     }
 }

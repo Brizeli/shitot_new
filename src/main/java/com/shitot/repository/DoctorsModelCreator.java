@@ -153,7 +153,7 @@ public class DoctorsModelCreator {
             }
             q = em.createQuery("select d from patients d where d.name='Patient"+ getRndInt(1,numPatient)+"'");
             Patient p=(Patient)q.getSingleResult();
-            appo.setPatient(p);
+//            appo.setPatient(p);
             em.persist(appo);
         }
     }

@@ -12,7 +12,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="doctors"><spring:message code="app.doctors"/></a></li>
-                    <li><a href="patients"><spring:message code="app.patients"/></a></li>
+                    <%--<li><a href="patients"><spring:message code="app.patients"/></a></li>--%>
                     <li><a href="appointmentsClients"><spring:message code="app.buttons.appointments"/></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

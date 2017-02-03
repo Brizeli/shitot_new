@@ -70,7 +70,7 @@ function addDoctor() {
     $('.popover').popover('hide');
     $('input', $('#sec')).attr('required');
     $('#sec').show();
-    $('.modal-header a').hide();
+    $('#deleteDoctor').hide();
     editDoctorWindow.modal({backdrop: 'static'});
 }
 function editDoctor(id) {
@@ -108,10 +108,10 @@ function editDoctor(id) {
         $('#file').val('');
         $('.title', editDoctorWindow).text(i18n['doctors.edit']);
         $('#addSpec').popover('hide');
-        editDoctorWindow.modal({backdrop: 'static'});
         $('#deleteDoctor').click(function () {
             return deleteDoctor(id);
         }).show();
+        editDoctorWindow.modal({backdrop: 'static'});
     })
 }
 function deleteDoctor(id) {

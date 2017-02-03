@@ -45,8 +45,7 @@ $(function () {
             $('.nav').find('.active').removeClass('active');
             $('.nav a[href="users"]').parent().addClass('active');
         }
-    })
-    ;
+    });
 });
 function updateTable() {
     $.get(usersRestUrl, function (data) {

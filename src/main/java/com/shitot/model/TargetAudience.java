@@ -1,12 +1,8 @@
 package com.shitot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import java.util.Set;
 
 /**
  * Created by Next on 20.07.2016.
@@ -29,16 +25,5 @@ public class TargetAudience extends NamedEntity {
     public TargetAudience(String name) {
         super(name);
     }
-
-    @ManyToMany(mappedBy = "targetAudiences")
-    @JsonIgnore
-    private Set<Doctor> doctors;
-
-    public Set<Doctor> getDoctors() {
-        return doctors;
-    }
-
-    public void setDoctors(Set<Doctor> doctors) {
-        this.doctors = doctors;
-    }
+    
 }

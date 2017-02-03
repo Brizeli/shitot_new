@@ -37,4 +37,8 @@ public interface AppointmentRepository {
     boolean removeDoctor(int id, boolean alt);
 
     List<Appointment> getAllByAltDoctorBetweenDates(int doctorId, LocalDate startDate, LocalDate endDate);
+    
+    void setDoctors(Appointment appointment, Integer doctorId, Integer altdoctorId);
+    
+    boolean delete(int id);
 }

@@ -6,11 +6,11 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title title"></h3>
+                <a class="btn btn-xs btn-danger" id="deleteAppointment"><spring:message code="common.delete"/></a>
             </div>
             <form class="form-horizontal editForm" method="post">
                 <div class="modal-body">
                     <input type="text" hidden="hidden" name="id" id="id">
-                    <input id="patientId" hidden="hidden" name="patientId" value="${patientId}"/>
                     <div class="row">
                         <div class="col-xs-6" style="border-right: 1px solid grey">
                             <div class="form-group">
@@ -74,7 +74,7 @@
                                 </div>
                                 <label class="control-label col-xs-1" for="telNumber"><spring:message code="patient.tel"/>:</label>
                                 <div class="col-xs-6">
-                                    <input class="form-control" type="text" name="telNumber" id="telNumber" required>
+                                    <input class="form-control" type="text" name="telNumber" id="telNumber">
                                 </div>
                             </div>
                             <%--Age and tel--%>

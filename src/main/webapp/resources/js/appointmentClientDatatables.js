@@ -1,17 +1,16 @@
 var editAppointmentWindow = $('#editAppointment');
 var editForm = $('.editForm');
 var appointmentsRestUrl = 'rest/appointments';
-var patientsRestUrl = 'rest/patients';
 var doctorsRestUrl = 'rest/doctors';
 var table;
 $(function () {
     table = $('#dataTable').DataTable({
         ajax: {
-            url: appointmentsRestUrl + '/all',
+            url: appointmentsRestUrl,
             dataSrc: ''
         },
         dom: 'lrtip',
-        paging: false,
+        lengthMenu: [5, 10, 25, "All"],
         columns: [
             {
                 defaultContent: '',
@@ -38,7 +37,6 @@ $(function () {
                 }
             }
         ],
-        ordering: false,
         initComplete: function () {
             $('.datepicker').datepicker({
                 format: 'dd/mm/yyyy',
@@ -53,9 +51,15 @@ $(function () {
             $('.nav a[href="appointmentsClients"]').parent().addClass('active');
         }
     });
+    $('#search').keyup(function () {
+        table.search(this.value).draw();
+    });
+    $('#clearsearch').click(function () {
+        $('#search').val('').trigger('keyup');
+    });
 });
 function fillOptions() {
-    $('select').empty();
+    $('select', $('.editForm')).empty();
     $('.doctors').append($('<option>'));
     $.get(appointmentsRestUrl + '/symptoms', function (symptoms) {
         $.each(symptoms, function (key, val) {
@@ -76,24 +80,24 @@ function fillOptions() {
     });
 }
 function updateTable() {
-    $.get(appointmentsRestUrl + '/all', function (data) {
+    $.get(appointmentsRestUrl, function (data) {
         table.clear().rows.add(data).draw();
+        fillOptions();
     });
-    fillOptions();
 }
 function renderAppointmentInfo(appointment) {
     var res = '<a class="btn btn-sm btn-info" onclick="editAppointment(' + appointment.id + ')">' + i18n['app.buttons.edit'] + '</a> ';
-    res += '<br>' + i18n['apo.apoDate'] + ': ' + (appointment.appointmentDate ? appointment.appointmentDate : '');
     res += '<br>' + i18n['apo.applyDate'] + ': ' + (appointment.applyDate ? appointment.applyDate : '');
+    res += '<br>' + i18n['apo.apoDate'] + ': ' + (appointment.appointmentDate ? appointment.appointmentDate : '');
     res += '<br>' + i18n['apo.payAmount'] + ': ' + appointment.paymentAmount;
     res += '<br>' + i18n['apo.payDate'] + ': ' + (appointment.paymentDate ? appointment.paymentDate : '');
     res += '<br>' + i18n['apo.cheque'] + ': ' + appointment.checkNumber;
     return res;
 }
 function renderPatientInfo(appointment) {
-    return '<br>' + i18n['patient.name'] + ': ' + appointment.patient.name +
-        '<br>' + i18n['patient.age'] + ": " + appointment.patient.age +
-        '<br>' + i18n['patient.tel'] + ": " + appointment.patient.telNumber;
+    return '<br>' + i18n['patient.name'] + ': ' + (appointment.patName ? appointment.patName : '') +
+        '<br>' + i18n['patient.age'] + ": " + (appointment.age ? appointment.age : '') +
+        '<br>' + i18n['patient.tel'] + ": " + (appointment.telNumber ? appointment.telNumber : '');
 }
 function renderAppointmentProblems(appointment) {
     var res = '<strong>' + i18n['apo.problems'] + ': </strong>';
@@ -155,27 +159,23 @@ function removeDoctor(id, doctorAlt) {
 function addAppointment(patientId) {
     $('.title', editAppointmentWindow).text(i18n['apo.addapo']);
     $(':text', editForm).val('');
-    $('#patientId').val(patientId);
+    $(':input', editForm).val('');
     $('#applyDate').datepicker('update', new Date());
     $('option', editForm).removeAttr('selected').prop('selected', false);
     $('[multiple]').multiselect('refresh');
     $('textarea', editForm).val('');
     $('#id').val(null);
     $('.popover').popover('hide');
+    $('#deleteAppointment').hide();
     editAppointmentWindow.modal({backdrop: 'static'});
 }
 function editAppointment(id) {
+    $(':text', editForm).val('');
     $.get(appointmentsRestUrl + '/' + id, function (appointment) {
         $('option', editForm).removeAttr('selected').prop('selected', false);
         $('[multiple]').multiselect('refresh');
         $.each(appointment, function (key, val) {
             switch (key) {
-                case 'patient':
-                    $('#patientId').val(val.id);
-                    $('#patname').val(val.name);
-                    $('#age').val(val.age);
-                    $('#telNumber').val(val.telNumber);
-                    break;
                 case 'doctor':
                     $('option:contains(' + val.fullName + ')', $('#doctor')).prop('selected', true);
                     break;
@@ -200,8 +200,23 @@ function editAppointment(id) {
         });
         $('.title', editAppointmentWindow).text(i18n['apo.editapo']);
         $('#addSpec').popover('hide');
+        $('#deleteAppointment').click(function () {
+            return deleteAppointment(id);
+        }).show();
         editAppointmentWindow.modal({backdrop: 'static'});
     });
+}
+function deleteAppointment(id) {
+    if (confirm('Are you sure?'))
+        $.ajax({
+            url: appointmentsRestUrl + '/' + id,
+            type: 'DELETE',
+            success: function () {
+                updateTable();
+                editAppointmentWindow.modal('hide');
+                successNoty(i18n['app.deleted']);
+            }
+        });
 }
 editForm.submit(function () {
     $.post(appointmentsRestUrl, editForm.serialize(), function () {

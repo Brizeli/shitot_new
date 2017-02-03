@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,11 +37,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     @Override
     @Transactional
     public Appointment save(Appointment appointment) {
-        Patient patient = appointment.getPatient();
-        if (patient.isNew())
-            em.persist(patient);
-        else
-            patient = em.merge(patient);
         if (appointment.isNew()) {
             User user = em.createNamedQuery(User.GET_BY_LOGIN, User.class)
                           .setParameter("login", UserUtils.getLoggedUserName())
@@ -86,9 +82,9 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     
     @Override
     public List<Appointment> getAllByPatient(int id) {
-        return em.createNamedQuery(Appointment.BY_PATIENT, Appointment.class)
-                 .setParameter("id", id)
-                 .getResultList();
+        return Collections.emptyList();//em.createNamedQuery(Appointment.BY_PATIENT, Appointment.class)
+//                                        .setParameter("id", id)
+//                                        .getResultList();
     }
     
     @Override
@@ -134,7 +130,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     @Override
     @Transactional
     public void setPatient(int id, int patientId) {
-        em.find(Appointment.class, id).setPatient(em.find(Patient.class, patientId));
+//        em.find(Appointment.class, id).setPatient(em.find(Patient.class, patientId));
     }
     
     @Override
@@ -154,6 +150,24 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                  .setParameter("startDate", startDate)
                  .setParameter("endDate", endDate)
                  .getResultList();
+    }
+    
+    @Override
+    @Transactional
+    public void setDoctors(Appointment appointment, Integer doctorId, Integer altdoctorId) {
+        if (doctorId != null)
+            appointment.setDoctor(em.getReference(Doctor.class, doctorId));
+        if (altdoctorId != null)
+            appointment.setAlternativeDoctor(em.getReference(Doctor.class, altdoctorId));
+    }
+    
+    @Override
+    @Transactional
+    public boolean delete(int id) {
+        Appointment a = em.find(Appointment.class, id);
+        if (a == null) return false;
+        em.remove(a);
+        return true;
     }
     
     @Override

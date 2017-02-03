@@ -3,7 +3,6 @@ package com.shitot.web;
 import com.shitot.model.Patient;
 import com.shitot.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +21,7 @@ public class PatientRestController {
     @Autowired
     PatientService service;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping
     public List<Patient> getAllPatients() {
         return service.getAll();
     }
@@ -32,7 +31,7 @@ public class PatientRestController {
         service.delete(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("/{id}")
     public Patient getPatient(@PathVariable int id) {
         return service.get(id);
     }

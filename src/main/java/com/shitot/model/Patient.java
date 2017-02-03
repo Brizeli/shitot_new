@@ -1,10 +1,10 @@
 package com.shitot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @NamedQueries({
         @NamedQuery(name = Patient.ALL_SORTED, query = "select d from patients d order by d.name")
@@ -22,17 +22,17 @@ public class Patient extends BaseEntity {
     @NotEmpty
     private String telNumber;
 
-    @JsonIgnore
-    @OneToMany (mappedBy = "patient",cascade = CascadeType.REMOVE)
-    private Set<Appointment> appointments;
+//    @JsonIgnore
+//    @OneToMany (mappedBy = "patient",cascade = CascadeType.REMOVE)
+//    private Set<Appointment> appointments;
 
-    public Set<Appointment> getAppointments() {
-        return appointments;
-    }
+//    public Set<Appointment> getAppointments() {
+//        return appointments;
+//    }
 
-    public void setAppointments(Set<Appointment> appointments) {
-        this.appointments = appointments;
-    }
+//    public void setAppointments(Set<Appointment> appointments) {
+//        this.appointments = appointments;
+//    }
 
     public void setTelNumber(String telNumber) {
         this.telNumber = telNumber;
