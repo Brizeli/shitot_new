@@ -40,9 +40,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Transactional
     public void update(AppointmentClientDoctorTo to) {
         int id = to.getId();
-        Appointment appointment = get(id);
-        repository.save(JsonUtil.updateFromTo(appointment, to));
+        Appointment appointment = repository.save(JsonUtil.updateFromTo(get(id), to));
         setProblemsSymptoms(id, to);
+        repository.setDoctors(appointment,to.getDoctorId(),to.getAltdoctorId());
     }
     
     @Override
