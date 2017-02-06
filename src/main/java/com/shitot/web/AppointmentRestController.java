@@ -5,7 +5,6 @@ import com.shitot.model.Problem;
 import com.shitot.model.Symptom;
 import com.shitot.service.AppointmentService;
 import com.shitot.to.AppointmentClientDoctorTo;
-import com.shitot.to.AppointmentTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -85,8 +84,7 @@ public class AppointmentRestController {
     }
     
     @RequestMapping(value = "/android", method = RequestMethod.POST)
-    @ResponseBody
-    public void updateAndroid(@RequestBody AppointmentTo appointmentTo) {
-        service.update(appointmentTo);
+    public void updateAndroid(@RequestBody AppointmentClientDoctorTo to) {
+        service.update(to);
     }
 }
