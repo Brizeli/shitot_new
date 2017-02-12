@@ -44,5 +44,5 @@ public interface AppointmentService {
     
     void delete(int id);
     
-    List<Appointment> getFiltered(LocalDate startDate, LocalDate endDate);
+    List<Appointment> getBetweenDates(LocalDate startDate, LocalDate endDate);
 }

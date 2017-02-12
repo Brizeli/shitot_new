@@ -1,6 +1,7 @@
 package com.shitot.web;
 
 import com.shitot.utils.UserUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,12 +40,12 @@ public class RootController {
         return "index";
     }
 //
-//    @RequestMapping(value = "/patients", method = RequestMethod.GET)
-//    public String patientList(Model model) {
-//        model.addAttribute("page", "patientListDataTable");
-//        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
-//        return "index";
-//    }
+    @RequestMapping(value = "/patients", method = RequestMethod.GET)
+    public String patientList(Model model) {
+        model.addAttribute("page", "patientListDataTable");
+        model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
+        return "index";
+    }
 //
 //    @RequestMapping(value = "/appointments", method = RequestMethod.GET)
 //    public String appointmentList(Model model, @RequestParam int id) {
@@ -59,7 +60,8 @@ public class RootController {
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());
         return "index";
     }
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping("/users")
     public String userList(Model model) {
         model.addAttribute("page", "userListDataTable");
         model.addAttribute("loggedUser", UserUtils.getLoggedUserName());

@@ -9,6 +9,8 @@ import java.util.Set;
 @NamedQueries({
                   @NamedQuery(name = Appointment.ALL_SORTED, query = "select a from appointments a left join fetch a.doctor d " +
                                                                          "left join fetch a.alternativeDoctor ad order by a.applyDate desc"),
+                  @NamedQuery(name = Appointment.GET_WITH_DOCTORS, query = "select a from appointments a left join fetch a.doctor d " +
+                                                                         "left join fetch a.alternativeDoctor ad where a.id=:id order by a.applyDate desc"),
 //                  @NamedQuery(name = Appointment.BY_PATIENT, query = "select a from appointments a left join fetch a.doctor d " +
 //                                                                         "left join fetch a.alternativeDoctor ad where a.patient.id=:id order by a.applyDate desc"),
                   @NamedQuery(name = Appointment.BY_DOCTOR, query = "select a from appointments a where a.doctor.id=:id " +
@@ -20,7 +22,7 @@ import java.util.Set;
                                                                                 "(select a2.id from appointments a2 where a2.doctor.id=:id ) order by a.applyDate desc"),
                   @NamedQuery(name = Appointment.BY_DOCTOR_BETWEEN_DATES, query = "select a from appointments a where a.doctor.id=:id and " +
                                                                                       "a.applyDate between :startDate and :endDate order by a.applyDate desc"),
-                  @NamedQuery(name = Appointment.FILTERED, query = "select a from appointments a where " +
+                  @NamedQuery(name = Appointment.GET_BETWEEN_DATES, query = "select a from appointments a where " +
                                                                                       "a.applyDate between :startDate and :endDate order by a.applyDate desc")
 })
 @Entity(name = "appointments")
@@ -32,7 +34,8 @@ public class Appointment extends BaseEntity {
     public static final String BY_DOCTOR_AND_ALT = "Appointment.getByDoctorAndAlt";
     //    public static final String BY_PATIENT = "Appointment.getByPatient";
     public static final String BY_DOCTOR_BETWEEN_DATES = "Appointment.getByDoctorBetweenDates";
-    public static final String FILTERED = "Appointment.getFiltered";;
+    public static final String GET_BETWEEN_DATES = "Appointment.getBetweenDates";;
+    public static final String GET_WITH_DOCTORS = "Appointment.getWithDoctors";
     
     //    @ManyToOne
 //    private Patient patient;
@@ -54,9 +57,9 @@ public class Appointment extends BaseEntity {
     private Set<Problem> problems;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Symptom> symptoms;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Doctor doctor;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Doctor alternativeDoctor;
     private boolean commEstablished = false;
     private boolean sessionStarted = false;

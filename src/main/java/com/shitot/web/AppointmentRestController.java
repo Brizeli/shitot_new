@@ -26,23 +26,25 @@ public class AppointmentRestController {
     }
     
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
-    public List<Appointment> getFiltered(@RequestParam(value = "startDate", required = false)
-                                         @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate startDate,
-                                         @RequestParam(value = "endDate", required = false)
-                                         @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate endDate) {
-        return service.getFiltered(startDate != null ? startDate : LocalDate.of(1, 1, 1),
+    public List<Appointment> getBetweenDates(@RequestParam(required = false)
+                                             @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate startDate,
+                                             @RequestParam(required = false)
+                                             @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate endDate) {
+        return service.getBetweenDates(startDate != null ? startDate : LocalDate.of(1, 1, 1),
             endDate != null ? endDate : LocalDate.of(3000, 1, 1));
     }
     
-    @RequestMapping("/doctor-{id}")
-    public List<Appointment> getByDoctorId(@PathVariable("id") int doctorId) {
+    @RequestMapping(value = "/bydoctor", params = "doctorId")
+    public List<Appointment> getByDoctorId(@RequestParam int doctorId) {
         return service.getByDoctorId(doctorId);
     }
     
-    @RequestMapping(value = "/doctor-{id}", method = RequestMethod.POST)
-    public List<Appointment> getByDoctorIdBetweenDates(@PathVariable("id") int doctorId,
-                                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    @RequestMapping(value = "/bydoctordates", method = RequestMethod.POST)
+    public List<Appointment> getByDoctorIdBetweenDates(@RequestParam Integer doctorId,
+                                                       @RequestParam(required = false)
+                                                       @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate startDate,
+                                                       @RequestParam(required = false)
+                                                       @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate endDate) {
         return service.getByDoctorIdBetweenDates(doctorId, startDate != null ? startDate : LocalDate.of(1, 1, 1),
             endDate != null ? endDate : LocalDate.of(3000, 1, 1));
     }
@@ -86,5 +88,10 @@ public class AppointmentRestController {
     @RequestMapping(value = "/android", method = RequestMethod.POST)
     public void updateAndroid(@RequestBody AppointmentClientDoctorTo to) {
         service.update(to);
+    }
+    
+    @RequestMapping("/android/{id}")
+    public Appointment getAndroid(@PathVariable int id) {
+        return service.get(id);
     }
 }

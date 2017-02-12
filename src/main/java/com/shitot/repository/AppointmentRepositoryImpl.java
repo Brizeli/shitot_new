@@ -94,7 +94,10 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     
     @Override
     public Appointment get(int id) {
-        return em.find(Appointment.class, id);
+        Appointment appointment = em.createNamedQuery(Appointment.GET_WITH_DOCTORS, Appointment.class)
+                                    .setParameter("id", id)
+                                    .getSingleResult();
+        return appointment;
     }
     
     @Override
@@ -171,8 +174,8 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
     
     @Override
-    public List<Appointment> getFiltered(LocalDate startDate, LocalDate endDate) {
-        return em.createNamedQuery(Appointment.FILTERED)
+    public List<Appointment> getBetweenDates(LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Appointment.GET_BETWEEN_DATES)
                  .setParameter("startDate", startDate)
                  .setParameter("endDate", endDate)
                  .getResultList();

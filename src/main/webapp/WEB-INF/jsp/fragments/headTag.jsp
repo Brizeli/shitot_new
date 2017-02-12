@@ -8,8 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <%--<meta name="_csrf" content="${_csrf.token}"/>--%>
+    <%--<meta name="_csrf_header" content="${_csrf.headerName}"/>--%>
     <title><spring:message code="app.title"/></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%--<meta name="viewport" content="width=device-width, initial-scale=1">--%>
     <c:set var="url">${pageContext.request.requestURL}</c:set>
     <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/"/>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -31,5 +33,7 @@
     <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.he.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-checkbox-x/1.5.4/js/checkbox-x.min.js"></script>
     <script type="text/javascript" src="resources/js/jsUtils.js"></script>
-    <script type="text/javascript"><jsp:include page="i18n.jsp"/></script>
+    <script type="text/javascript">
+        <jsp:include page="i18n.jsp"/>
+    </script>
 </head>

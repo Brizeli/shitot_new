@@ -10,8 +10,14 @@ $(function () {
         $('ul.navbar-right').removeClass('navbar-right').addClass('navbar-left');
         $('.pull-right').removeClass('pull-right').addClass('pull-left');
     }
+    // var token = $("meta[name='_csrf']").attr("content");
+    // var header = $("meta[name='_csrf_header']").attr("content");
+    // $(document).ajaxSend(function(e, xhr, options) {
+    //     xhr.setRequestHeader(header, token);
+    // });
 });
 $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+    console.log(jqXHR);
     failNoty(event, jqXHR, options, jsExc);
 });
 var failedNote;

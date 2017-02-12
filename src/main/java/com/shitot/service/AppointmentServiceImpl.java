@@ -135,7 +135,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
     
     @Override
-    public List<Appointment> getFiltered(LocalDate startDate, LocalDate endDate) {
-        return repository.getFiltered(startDate,endDate);
+    public List<Appointment> getBetweenDates(LocalDate startDate, LocalDate endDate) {
+        return repository.getBetweenDates(startDate,endDate);
     }
 }

@@ -10,7 +10,8 @@ $(function () {
             dataSrc: ''
         },
         dom: 'lrtip',
-        lengthMenu: [5, 10, 25, "All"],
+        lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
+        order: [[0,'desc']],
         columns: [
             {
                 defaultContent: '',
@@ -85,7 +86,7 @@ function fillOptions() {
     });
 }
 function updateTable() {
-    $.post(appointmentsRestUrl+'/filter', $('#filter').serialize(), function (data) {
+    $.post(appointmentsRestUrl + '/filter', $('#filter').serialize(), function (data) {
         table.clear().rows.add(data).draw();
         fillOptions();
     });
@@ -97,8 +98,8 @@ function renderAppointmentInfo(type, appointment) {
     res += '<br>' + i18n['apo.payAmount'] + ': ' + appointment.paymentAmount;
     res += '<br>' + i18n['apo.payDate'] + ': ' + (appointment.paymentDate ? appointment.paymentDate : '');
     res += '<br>' + i18n['apo.cheque'] + ': ' + appointment.checkNumber;
-    if (type == 'filter')
-        return appointment.applyDate;
+    if (type == 'sort')
+        return appointment.applyDate.split('/').reverse().join();
     return res;
 }
 function renderPatientInfo(appointment) {
