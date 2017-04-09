@@ -9,12 +9,48 @@ $(function () {
         $('.dropdown-menu').css({right: 'auto', left: '0'});
         $('ul.navbar-right').removeClass('navbar-right').addClass('navbar-left');
         $('.pull-right').removeClass('pull-right').addClass('pull-left');
+        $('.datepicker').datepicker({language: 'he'});
+        // $('.datepicker-dropdown').load(function() {
+        //     alert(this);
+        //     this.css({'max-width': '200px'})
+        // });
     }
     // var token = $("meta[name='_csrf']").attr("content");
     // var header = $("meta[name='_csrf_header']").attr("content");
     // $(document).ajaxSend(function(e, xhr, options) {
     //     xhr.setRequestHeader(header, token);
     // });
+    $('.addSpec').popover({
+        html: true,
+        trigger: 'manual',
+        placement: 'bottom',
+        content: function () {
+            return $('#addspec').html();
+        }
+    }).click(function () {
+        $(this).popover('toggle');
+        $('.editForm').on('keyup keypress', function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        $('input', $('#addSpecForm')).on('keyup', function (e) {
+            if (e.keyCode == 13) addSpec(this);
+        });
+        $('a', $('#addSpecForm')).click(function () {
+            addSpec(this)
+        });
+        function addSpec(el) {
+            var value = $('input', $('#addSpecForm')).val();
+            if (value.trim() != '') {
+                $(el).parentsUntil('.form-group').parent().find('select').first().append($('<option selected>').text(value));
+                $('[multiple]').multiselect('rebuild');
+                $('.addSpec').popover('hide');
+            }
+        }
+    });
+
 });
 $(document).ajaxError(function (event, jqXHR, options, jsExc) {
     console.log(jqXHR);

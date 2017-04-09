@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <h3>
         <a class="btn btn-sm btn-info" id="addAppointment" onclick="addAppointment(${patientId})"><spring:message
-                code="apo.newApo"/></a>
+                code="patient.addnew"/></a>
     </h3>
     <div class="searchrow col-xs-4">
         <%--<div class="col-xs-2"><label class="control-label"><spring:message code="common.search"/></label></div>--%>
@@ -34,8 +34,8 @@
             <table class="table table-striped display" id="dataTable">
                 <thead>
                 <tr>
-                    <th><spring:message code="apo.info"/></th>
                     <th><spring:message code="patient.patient"/></th>
+                    <th><spring:message code="patient.persInfo"/></th>
                     <th><spring:message code="apo.problems"/></th>
                     <th><spring:message code="app.doctors"/></th>
                 </tr>

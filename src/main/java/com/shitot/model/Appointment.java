@@ -42,6 +42,11 @@ public class Appointment extends BaseEntity {
     private String patName;
     private Integer age;
     private String telNumber;
+    
+    private String patAddress;
+    private String referral;
+//    private String refChannel;
+        
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate applyDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -225,5 +230,21 @@ public class Appointment extends BaseEntity {
     
     public void setTelNumber(String telNumber) {
         this.telNumber = telNumber;
+    }
+    
+    public String getPatAddress() {
+        return patAddress;
+    }
+    
+    public void setPatAddress(String patAddress) {
+        this.patAddress = patAddress;
+    }
+    
+    public String getReferral() {
+        return referral;
+    }
+    
+    public void setReferral(String referral) {
+        this.referral = referral;
     }
 }

@@ -69,15 +69,29 @@
                             <%--Patient name--%>
                             <div class="form-group">
                                 <label class="control-label col-xs-2" for="age"><spring:message code="patient.age"/>:</label>
-                                <div class="col-xs-3">
+                                <div class="col-xs-2">
                                     <input class="form-control" type="number" name="age" id="age">
                                 </div>
-                                <label class="control-label col-xs-1" for="telNumber"><spring:message code="patient.tel"/>:</label>
-                                <div class="col-xs-6">
+                                <label class="control-label col-xs-3" for="telNumber"><spring:message code="patient.tel"/>:</label>
+                                <div class="col-xs-5">
                                     <input class="form-control" type="text" name="telNumber" id="telNumber">
                                 </div>
                             </div>
                             <%--Age and tel--%>
+                            <div class="form-group">
+                                <label class="control-label col-xs-2" for="pataddress"><spring:message code="clinics.address"/>:</label>
+                                <div class="col-xs-10">
+                                    <input class="form-control" type="text" name="patAddress" id="pataddress">
+                                </div>
+                            </div>
+                            <%--Patient address--%>
+                            <div class="form-group">
+                                <label class="control-label col-xs-2" for="referral"><spring:message code="patient.referral"/>:</label>
+                                <div class="col-xs-10">
+                                    <input class="form-control" type="text" name="referral" id="referral">
+                                </div>
+                            </div>
+                            <%--Referral--%>
                             <div class="form-group">
                                 <label class="control-label col-xs-2" for="problems"><spring:message code="apo.problems"/>: </label>
                                 <div class="col-xs-10">

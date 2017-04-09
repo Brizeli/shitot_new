@@ -19,6 +19,8 @@ public class AppointmentClientDoctorTo {
     private String patName;
     private Integer age;
     private String telNumber;
+    private String patAddress;
+    private String referral;
     
     private String[] problems = {};
     private String[] symptoms = {};
@@ -161,5 +163,21 @@ public class AppointmentClientDoctorTo {
     
     public void setAltdoctorId(Integer altdoctorId) {
         this.altdoctorId = altdoctorId;
+    }
+    
+    public String getPatAddress() {
+        return patAddress;
+    }
+    
+    public void setPatAddress(String patAddress) {
+        this.patAddress = patAddress;
+    }
+    
+    public String getReferral() {
+        return referral;
+    }
+    
+    public void setReferral(String referral) {
+        this.referral = referral;
     }
 }

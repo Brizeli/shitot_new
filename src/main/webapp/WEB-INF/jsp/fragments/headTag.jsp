@@ -29,8 +29,8 @@
     <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.he.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="webjars/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.he.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="webjars/bootstrap-checkbox-x/1.5.4/js/checkbox-x.min.js"></script>
     <script type="text/javascript" src="resources/js/jsUtils.js"></script>
     <script type="text/javascript">

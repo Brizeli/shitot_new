@@ -11,7 +11,7 @@ $(function () {
         },
         dom: 'lrtip',
         lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]],
-        order: [[0,'desc']],
+        order: [[0, 'desc']],
         columns: [
             {
                 defaultContent: '',
@@ -48,6 +48,7 @@ $(function () {
                 autoclose: true,
                 todayHighlight: true
             });
+            $('.datepicker-dropdown').css({'max-width': '200px'});
             $('#filter').submit(function () {
                 updateTable();
                 return false;
@@ -196,7 +197,7 @@ function editAppointment(id) {
                     });
                     $('#symptoms').multiselect('refresh');
                     break;
-                case'problems':
+                case 'problems':
                     $.each(val, function (k, v) {
                         $('option:contains(' + v.name + ')', $('#problems')).prop('selected', true);
                     });

@@ -45,36 +45,6 @@ $(function () {
         $('#namesearch').val('').trigger('keyup');
     });
 
-    $('.addSpec').popover({
-        html: true,
-        trigger: 'manual',
-        placement: 'bottom',
-        content: function () {
-            return $('#addspec').html();
-        }
-    }).click(function () {
-        $(this).popover('toggle');
-        $('.editForm').on('keyup keypress', function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                return false;
-            }
-        });
-        $('input', $('#addSpecForm')).on('keyup', function (e) {
-            if (e.keyCode == 13) addSpec(this);
-        });
-        $('a', $('#addSpecForm')).click(function () {
-            addSpec(this)
-        });
-        function addSpec(el) {
-            var value = $('input', $('#addSpecForm')).val();
-            if (value.trim() != '') {
-                $(el).parentsUntil('.form-group').parent().find('select').first().append($('<option selected>').text(value));
-                $('[multiple]').multiselect('rebuild');
-                $('.addSpec').popover('hide');
-            }
-        }
-    });
 });
 function popovers() {
     $('[data-toggle="popover"]').popover({
